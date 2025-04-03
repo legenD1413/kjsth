@@ -11,49 +11,52 @@
         .ai-pricing-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem; /* 减小外部padding */
             background: white;
         }
 
         .pricing-header {
             text-align: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
+            margin-bottom: 0.5rem; /* 进一步减小 */
+            padding-bottom: 0.5rem;
             border-bottom: 1px solid #eee;
         }
 
         .pricing-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem; /* 进一步减小 */
             color: #2c3e50;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.2rem; /* 进一步减小 */
         }
 
         .pricing-subtitle {
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 0.8rem; /* 进一步减小 */
+            margin-bottom: 0;
         }
 
         .route-info {
             background: #f8f9fa;
             border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem; /* 进一步减小 */
+            max-height: 120px; /* 限制高度 */
+            overflow-y: auto; /* 添加滚动条 */
         }
 
         .route-info h3 {
             color: #2c3e50;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
         }
 
         .route-features {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .route-features p {
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .route-features i {
@@ -67,6 +70,10 @@
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
+            height: calc(100vh - 250px); /* 使用视口高度计算，减去其他元素高度 */
+            min-height: 450px; /* 设置最小高度 */
+            display: flex;
+            flex-direction: column;
         }
 
         .chat-header {
@@ -84,7 +91,7 @@
         }
 
         .chat-messages {
-            height: 200px;
+            flex-grow: 1; /* 让消息区域占据所有可用空间 */
             overflow-y: auto;
             padding: 1rem;
             background: #f9f9f9;
@@ -93,7 +100,7 @@
         }
 
         .message {
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.6rem; /* 减小消息间距 */
             max-width: 85%;
             display: flex;
         }
@@ -102,7 +109,7 @@
             padding: 0.6rem 0.8rem;
             border-radius: 16px;
             display: inline-block;
-            font-size: 0.95rem;
+            font-size: 0.9rem; /* 减小字体 */
             word-break: break-word;
         }
 
@@ -136,16 +143,18 @@
 
         .chat-input input {
             flex: 1;
-            padding: 0.6rem 0.8rem;
+            padding: 0.8rem 1rem;
             border: 1px solid #e0e0e0;
             border-radius: 20px;
             margin-right: 0.5rem;
             font-size: 0.95rem;
+            background-color: #f5f9ff;
         }
 
         .chat-input input:focus {
             outline: none;
             border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
 
         .send-btn {
@@ -221,35 +230,105 @@
 
         /* 确保内容区与导航栏有适当间距 */
         .main-content {
-            margin-top: 70px; /* 根据您导航栏的高度调整 */
+            margin-top: 60px; /* 减小顶部间距 */
+            padding: 0.5rem;
+        }
+        
+        /* 导航栏样式修改 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: 60px; /* 减小导航栏高度 */
+        }
+        
+        .main-nav {
+            height: 60px; /* 减小导航栏高度 */
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            height: 60px; /* 减小logo区域高度 */
+        }
+        
+        .logo img {
+            height: 30px; /* 减小logo图片高度 */
+            width: auto;
+        }
+        
+        .nav-menu {
+            height: 60px; /* 减小菜单高度 */
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            height: calc(100vh - 250px); /* 使用视口高度计算，减去其他元素高度 */
+            min-height: 450px; /* 设置最小高度 */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-messages {
+            flex-grow: 1; /* 让消息区域占据所有可用空间 */
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
         }
 
         /* 响应式布局调整 */
         @media (max-width: 768px) {
             .ai-pricing-container {
-                padding: 1rem;
+                padding: 0.8rem;
             }
             
-            .chat-messages {
-                height: 250px;
+            .main-content {
+                margin-top: 50px; /* 移动设备上减小顶部间距 */
+            }
+            
+            header, .main-nav, .logo, .nav-menu {
+                height: 50px; /* 移动设备上进一步减小导航栏高度 */
+            }
+            
+            .logo img {
+                height: 25px; /* 移动设备上减小logo尺寸 */
+            }
+            
+            .chat-container {
+                height: calc(100vh - 200px); /* 移动设备上调整高度计算 */
+                min-height: 400px;
             }
             
             .pricing-title {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
             
             .back-btn {
-                margin-top: 1rem;
+                margin-top: 0.8rem;
             }
         }
 
         /* 快捷问题按钮 */
         .quick-questions {
-            margin: 0.75rem 0 0;
+            margin: 0;
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 0 1rem 0.75rem;
+            gap: 0.4rem;
+            padding: 0.5rem 0.75rem 0.75rem;
             background: white;
             border-top: 1px solid #e0e0e0;
         }
@@ -258,9 +337,9 @@
             background: #f0f7ff;
             border: 1px solid #d0e3ff;
             color: #3498db;
-            padding: 0.4rem 0.8rem;
+            padding: 0.3rem 0.6rem;
             border-radius: 16px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s ease;
             white-space: nowrap;
@@ -391,30 +470,104 @@
     </footer>
 
     <script>
+        // 预定义路线数据
+        const routeData = {
+            'usa-air': {
+                title: '美国商业件空运专线',
+                features: [
+                    '<i class="fas fa-bullseye"></i> 特点：小批量快速空运，主要承接：电子产品、服装、鞋帽、箱包等',
+                    '<i class="fas fa-clock"></i> 时效：5-7个工作日送达',
+                    '<i class="fas fa-dollar-sign"></i> 价格：$6.5-8.2/kg，根据货物体积重量计算',
+                    '<i class="fas fa-box"></i> 尺寸限制：单边不超过120cm，单件不超过50kg'
+                ]
+            },
+            'usa-sea': {
+                title: '美国海运专线',
+                features: [
+                    '<i class="fas fa-bullseye"></i> 特点：大批量经济海运，适合大宗货物、家居用品等',
+                    '<i class="fas fa-clock"></i> 时效：18-25天送达',
+                    '<i class="fas fa-dollar-sign"></i> 价格：$130-160/立方米',
+                    '<i class="fas fa-box"></i> 无严格尺寸限制，但超大件需提前咨询'
+                ]
+            },
+            'canada-air': {
+                title: '加拿大空运专线',
+                features: [
+                    '<i class="fas fa-bullseye"></i> 特点：快速通关，适合电商卖家',
+                    '<i class="fas fa-clock"></i> 时效：5-8个工作日送达',
+                    '<i class="fas fa-dollar-sign"></i> 价格：$7.2-9.0/kg',
+                    '<i class="fas fa-box"></i> 提供商业清关和个人物品清关服务'
+                ]
+            },
+            'canada-sea': {
+                title: '加拿大海运专线',
+                features: [
+                    '<i class="fas fa-bullseye"></i> 特点：稳定可靠，适合大批量货物',
+                    '<i class="fas fa-clock"></i> 时效：20-28天送达',
+                    '<i class="fas fa-dollar-sign"></i> 价格：$140-180/立方米',
+                    '<i class="fas fa-box"></i> 支持拼箱和整箱服务'
+                ]
+            },
+            'fba': {
+                title: 'FBA头程专线',
+                features: [
+                    '<i class="fas fa-bullseye"></i> 特点：专业FBA派送，提供入仓预约、标签粘贴服务',
+                    '<i class="fas fa-clock"></i> 时效：空运7-10天，海运25-35天',
+                    '<i class="fas fa-dollar-sign"></i> 价格：空运$6.8-8.5/kg，海运$150-190/立方米',
+                    '<i class="fas fa-box"></i> 提供DDP和DDU两种服务'
+                ]
+            },
+            'mexico': {
+                title: '墨西哥专线',
+                features: [
+                    '<i class="fas fa-bullseye"></i> 特点：全程追踪，提供墨西哥本地派送',
+                    '<i class="fas fa-clock"></i> 时效：空运8-12天，海运30-40天',
+                    '<i class="fas fa-dollar-sign"></i> 价格：空运$8.5-10.2/kg，海运$160-200/立方米',
+                    '<i class="fas fa-box"></i> 提供墨西哥清关代理服务'
+                ]
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // 获取URL参数
             const urlParams = new URLSearchParams(window.location.search);
+            const routeId = urlParams.get('id'); // 使用简化的id参数
             const routeTitle = urlParams.get('title');
             const routeFeatures = urlParams.get('features');
             
-            // 设置标题和特性
-            if (routeTitle) {
+            // 优先使用id参数，其次使用title和features参数
+            if (routeId && routeData[routeId]) {
+                const route = routeData[routeId];
+                document.getElementById('route-title').textContent = route.title + '智能询价';
+                document.title = route.title + ' - AI物流询价';
+                
+                const featuresContainer = document.getElementById('route-features');
+                featuresContainer.innerHTML = ''; // 清空现有内容
+                
+                route.features.forEach(feature => {
+                    const p = document.createElement('p');
+                    p.innerHTML = feature;
+                    featuresContainer.appendChild(p);
+                });
+            } else if (routeTitle) {
+                // 兼容旧参数
                 document.getElementById('route-title').textContent = routeTitle + '智能询价';
                 document.title = routeTitle + ' - AI物流询价';
-            }
-            
-            if (routeFeatures) {
-                try {
-                    const features = JSON.parse(decodeURIComponent(routeFeatures));
-                    const featuresContainer = document.getElementById('route-features');
-                    
-                    features.forEach(feature => {
-                        const p = document.createElement('p');
-                        p.innerHTML = feature;
-                        featuresContainer.appendChild(p);
-                    });
-                } catch (e) {
-                    console.error('解析特性时出错:', e);
+                
+                if (routeFeatures) {
+                    try {
+                        const features = JSON.parse(decodeURIComponent(routeFeatures));
+                        const featuresContainer = document.getElementById('route-features');
+                        featuresContainer.innerHTML = ''; // 清空现有内容
+                        
+                        features.forEach(feature => {
+                            const p = document.createElement('p');
+                            p.innerHTML = feature;
+                            featuresContainer.appendChild(p);
+                        });
+                    } catch (e) {
+                        console.error('解析特性时出错:', e);
+                    }
                 }
             }
             
@@ -523,6 +676,31 @@
                 handleSend();
             };
         });
+
+        // AI查价导航函数
+        function navigateToAIPricing(title, features) {
+            // 根据标题确定路线ID
+            let routeId = '';
+            if (title.includes('美国') && title.includes('空运')) {
+                routeId = 'usa-air';
+            } else if (title.includes('加拿大') && title.includes('海运')) {
+                routeId = 'canada-sea';
+            } else if (title.includes('FBA')) {
+                routeId = 'fba';
+            } else if (title.includes('墨西哥')) {
+                routeId = 'mexico';
+            }
+            
+            // 优先使用简化版本和ID参数
+            if (routeId) {
+                window.location.href = `ai-pricing-simple.html?id=${routeId}`;
+            } else {
+                // 兼容旧版本
+                const encodedTitle = encodeURIComponent(title);
+                const encodedFeatures = encodeURIComponent(JSON.stringify(features));
+                window.location.href = `ai-pricing.html?title=${encodedTitle}&features=${encodedFeatures}`;
+            }
+        }
     </script>
 </body>
 </html> 

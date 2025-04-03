@@ -279,7 +279,7 @@
                     </div>
                     <button class="ai-price-btn" onclick="navigateToAIPricing('美国商业件空运专线', ['<i class=&quot;fas fa-bullseye&quot;></i> 专注小批量快速空运，主要承接：电子产品、服装、普货。', '<i class=&quot;fas fa-medal&quot;></i> 覆盖范围：纽约、洛杉矶、芝加哥、迈阿密主要城市及周边。'])"><i class="fas fa-robot"></i> AI查价</button>
                 </div>
-            </div>
+            </div>      
 
             <div class="showcase-card">
                 <span class="showcase-tag">海运优选</span>
@@ -328,6 +328,10 @@
             <h3>北美物流资讯</h3>
             <ul class="article-list">
                 <li>
+                    <a href="simple-links.html"><strong>简化链接版本</strong> - 使用更简单的方式访问所有线路</a>
+                    <div class="article-date">2024-04-03</div>
+                </li>
+                <li>
                     <a href="#">2024年北美物流市场趋势分析</a>
                     <div class="article-date">2024-03-15</div>
                 </li>
@@ -359,9 +363,27 @@
     <script>
         // AI查价导航函数
         function navigateToAIPricing(title, features) {
-            const encodedTitle = encodeURIComponent(title);
-            const encodedFeatures = encodeURIComponent(JSON.stringify(features));
-            window.location.href = `ai-pricing.html?title=${encodedTitle}&features=${encodedFeatures}`;
+            // 根据标题确定路线ID
+            let routeId = '';
+            if (title.includes('美国') && title.includes('空运')) {
+                routeId = 'usa-air';
+            } else if (title.includes('加拿大') && title.includes('海运')) {
+                routeId = 'canada-sea';
+            } else if (title.includes('FBA')) {
+                routeId = 'fba';
+            } else if (title.includes('墨西哥')) {
+                routeId = 'mexico';
+            }
+            
+            // 优先使用简化版本和ID参数
+            if (routeId) {
+                window.location.href = `ai-pricing.html?id=${routeId}`;
+            } else {
+                // 兼容旧版本
+                const encodedTitle = encodeURIComponent(title);
+                const encodedFeatures = encodeURIComponent(JSON.stringify(features));
+                window.location.href = `ai-pricing.html?title=${encodedTitle}&features=${encodedFeatures}`;
+            }
         }
     </script>
 </body>
