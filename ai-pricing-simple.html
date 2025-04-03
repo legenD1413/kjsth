@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI物流询价 - 物流服务网站</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* AI查价页面特定样式 */
+        .ai-pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-subtitle {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .route-info {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .route-info h3 {
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .route-features {
+            margin-bottom: 0.5rem;
+        }
+
+        .route-features p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .route-features i {
+            color: #3498db;
+            margin-right: 0.5rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .chat-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 0.75rem;
+            max-width: 85%;
+            display: flex;
+        }
+
+        .message-content {
+            padding: 0.6rem 0.8rem;
+            border-radius: 16px;
+            display: inline-block;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+        }
+
+        .bot-message .message-content {
+            background: #e9f5ff;
+            color: #333;
+            border-top-left-radius: 5px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+        }
+
+        .user-message .message-content {
+            background: #3498db;
+            color: white;
+            border-top-right-radius: 5px;
+            text-align: right;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 0.75rem;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            margin-right: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .send-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn i {
+            margin-right: 0.3rem;
+        }
+
+        .back-btn:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        /* 加载动画 */
+        .typing-indicator {
+            display: flex;
+            margin: 10px 0;
+        }
+
+        .typing-indicator span {
+            height: 10px;
+            width: 10px;
+            margin: 0 2px;
+            background-color: #3498db;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.4;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation: blink 1s infinite 0.1s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation: blink 1s infinite 0.3s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation: blink 1s infinite 0.5s;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* 确保内容区与导航栏有适当间距 */
+        .main-content {
+            margin-top: 70px; /* 根据您导航栏的高度调整 */
+        }
+
+        /* 响应式布局调整 */
+        @media (max-width: 768px) {
+            .ai-pricing-container {
+                padding: 1rem;
+            }
+            
+            .chat-messages {
+                height: 250px;
+            }
+            
+            .pricing-title {
+                font-size: 1.3rem;
+            }
+            
+            .back-btn {
+                margin-top: 1rem;
+            }
+        }
+
+        /* 快捷问题按钮 */
+        .quick-questions {
+            margin: 0.75rem 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 1rem 0.75rem;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quick-question-btn {
+            background: #f0f7ff;
+            border: 1px solid #d0e3ff;
+            color: #3498db;
+            padding: 0.4rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .quick-question-btn:hover {
+            background: #e0f0ff;
+            border-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="images/logo.png" alt="物流服务网站Logo">
+                <span>物流服务</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-globe-americas"></i>
+                        区域
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="north-america.html" class="active">北美</a></li>
+                        <li><a href="#">南美</a></li>
+                        <li><a href="#">欧洲</a></li>
+                        <li><a href="#">澳洲</a></li>
+                        <li><a href="#">中东</a></li>
+                        <li><a href="#">东南亚</a></li>
+                        <li><a href="#">非洲</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        货品
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">普货</a></li>
+                        <li><a href="#">化妆品</a></li>
+                        <li><a href="#">液体</a></li>
+                        <li><a href="#">电子烟</a></li>
+                        <li><a href="#">纯电池</a></li>
+                        <li><a href="#">内电</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cube"></i>
+                        货型
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">标准件</a></li>
+                        <li><a href="#">大件</a></li>
+                        <li><a href="#">超大件</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-map-marker-alt"></i>
+                        地址
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">商业件</a></li>
+                        <li><a href="#">私人地址件</a></li>
+                        <li><a href="#">FBA</a></li>
+                        <li><a href="#">沃尔玛</a></li>
+                        <li><a href="#">海外仓</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="ai-pricing-container">
+            <div class="pricing-header">
+                <h1 class="pricing-title" id="route-title">物流线路AI询价</h1>
+                <p class="pricing-subtitle">智能AI助手帮您快速获取最准确的物流报价</p>
+            </div>
+
+            <div class="route-info">
+                <h3>渠道介绍</h3>
+                <div class="route-features" id="route-features">
+                    <!-- 此处内容将由JavaScript动态填充 -->
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <i class="fas fa-robot"></i> 智能物流AI助手
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            您好！我是您的智能物流助手，请告诉我您需要运输的货物信息（如重量、体积、件数等），我将为您提供最合适的报价方案。
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="输入您的问题，如：我需要运送2台电脑到加拿大...">
+                    <button class="send-btn" id="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="quick-questions">
+                    <button class="quick-question-btn" onclick="askQuickQuestion('我需要了解运输时效')">运输时效</button>
+                    <button class="quick-question-btn" onclick="askQuickQuestion('运输带电池产品的要求')">电池产品要求</button>
+                    <button class="quick-question-btn" onclick="askQuickQuestion('FBA运输费用')">FBA运输费用</button>
+                    <button class="quick-question-btn" onclick="askQuickQuestion('如何计算运费')">如何计算运费</button>
+                </div>
+            </div>
+
+            <a href="north-america.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回线路列表
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const routeTitle = urlParams.get('title');
+            const routeFeatures = urlParams.get('features');
+            
+            // 设置标题和特性
+            if (routeTitle) {
+                document.getElementById('route-title').textContent = routeTitle + '智能询价';
+                document.title = routeTitle + ' - AI物流询价';
+            }
+            
+            if (routeFeatures) {
+                try {
+                    const features = JSON.parse(decodeURIComponent(routeFeatures));
+                    const featuresContainer = document.getElementById('route-features');
+                    
+                    features.forEach(feature => {
+                        const p = document.createElement('p');
+                        p.innerHTML = feature;
+                        featuresContainer.appendChild(p);
+                    });
+                } catch (e) {
+                    console.error('解析特性时出错:', e);
+                }
+            }
+            
+            // 聊天功能
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            
+            function addMessage(content, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = isUser ? 'message user-message' : 'message bot-message';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                messageContent.innerHTML = content;
+                
+                messageDiv.appendChild(messageContent);
+                chatMessages.appendChild(messageDiv);
+                
+                // 滚动到底部
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function showTypingIndicator() {
+                const indicatorDiv = document.createElement('div');
+                indicatorDiv.className = 'typing-indicator bot-message';
+                indicatorDiv.id = 'typing-indicator';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                
+                for (let i = 0; i < 3; i++) {
+                    const dot = document.createElement('span');
+                    contentDiv.appendChild(dot);
+                }
+                
+                indicatorDiv.appendChild(contentDiv);
+                chatMessages.appendChild(indicatorDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function removeTypingIndicator() {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            }
+            
+            function getBotResponse(userMessage) {
+                // 模拟AI回复
+                const responses = [
+                    "根据您提供的信息，我们的加拿大商业件大件海运专线价格为$140/立方米，预计运输时间20-25天。您可以联系我们的客服获取更详细的报价。",
+                    "请问您的货物体积和重量分别是多少？是否含有特殊货品（如电池、液体等）？这些信息可以帮助我计算更准确的运费。",
+                    "对于您的货物，我建议选择我们的专线服务，价格约为$120/立方米，包含从中国到加拿大的全程服务，包括：国内提货、国际干线、清关和派送。",
+                    "您好，基本运费为$6.5/kg，如果体积重较大则按照体积重计费，计算公式为：长(cm)×宽(cm)×高(cm)÷6000=体积重(kg)。",
+                    "这批货物属于大件，建议使用我们的大件海运专线，价格比普通空运更经济实惠。目前的参考价格为：$95/立方米 + 目的港清关和派送费用。",
+                    "您好，根据系统数据，从中国到多伦多的普货空运价格为$7.2/kg，约4-6天可以送达。如果是FBA仓库，需要额外$15的FBA对接服务费。",
+                    "对于电商卖家，我们提供专业的FBA头程服务，包含入仓预约、标签粘贴等增值服务，综合费用约$6.8/kg。"
+                ];
+                
+                // 简单的关键词匹配，使回复更相关
+                if (userMessage.includes("FBA") || userMessage.includes("亚马逊")) {
+                    return "我们的FBA专线可提供DDU和DDP两种服务，价格分别为$5.8/kg和$6.5/kg，包含清关和派送到亚马逊仓库。您需要提前3天预约入仓。";
+                } else if (userMessage.includes("电池") || userMessage.includes("内电")) {
+                    return "带电产品需要通过特殊渠道运输，我们的内电专线价格为$8.2/kg，需要提供产品MSDS和电池UN38.3测试报告。";
+                } else if (userMessage.includes("时效") || userMessage.includes("多久")) {
+                    return "我们的空运专线约4-7个工作日送达，海运专线约18-25天送达，快船服务约12-15天送达。具体时效受清关和目的地配送影响。";
+                }
+                
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            
+            function handleSend() {
+                const userMessage = userInput.value.trim();
+                
+                if (userMessage) {
+                    // 添加用户消息
+                    addMessage(userMessage, true);
+                    userInput.value = '';
+                    
+                    // 显示正在输入指示
+                    showTypingIndicator();
+                    
+                    // 模拟延迟，获取AI回复
+                    setTimeout(function() {
+                        removeTypingIndicator();
+                        const botResponse = getBotResponse(userMessage);
+                        addMessage(botResponse);
+                    }, 1500);
+                }
+            }
+            
+            // 发送按钮点击事件
+            sendButton.addEventListener('click', handleSend);
+            
+            // 回车键发送
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleSend();
+                }
+            });
+            
+            // 快捷问题功能
+            window.askQuickQuestion = function(question) {
+                userInput.value = question;
+                handleSend();
+            };
+        });
+    </script>
+</body>
+</html> 
