@@ -3,15 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>物流服务网站</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>物流服务网站 - 首页</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 覆盖默认header样式，使其更紧凑 */
+        header {
+            height: 50px;
+        }
+        .main-nav {
+            height: 50px;
+        }
+        .logo, .nav-menu, .nav-item, .nav-link {
+            height: 50px;
+        }
+        .logo img {
+            height: 25px;
+        }
+        
+        /* 空的主内容区域样式 */
+        .empty-content {
+            min-height: calc(100vh - 50px - 300px); /* 视窗高度减去header和footer的高度 */
+            padding: 50px 0; /* 添加一些上下内边距 */
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="main-nav">
             <div class="logo">
-                <i class="fas fa-truck"></i>
+                <img src="assets/images/logo.png" alt="物流服务网站Logo">
                 <span>物流服务</span>
             </div>
             <ul class="nav-menu">
@@ -22,13 +43,13 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="north-america.html">北美</a></li>
-                        <li><a href="#">南美</a></li>
-                        <li><a href="#">欧洲</a></li>
-                        <li><a href="#">澳洲</a></li>
-                        <li><a href="#">中东</a></li>
-                        <li><a href="#">东南亚</a></li>
-                        <li><a href="#">非洲</a></li>
+                        <li><a href="regions/north-america/index.html">北美</a></li>
+                        <li><a href="regions/south-america/index.html">南美</a></li>
+                        <li><a href="regions/europe/index.html">欧洲</a></li>
+                        <li><a href="regions/australia/index.html">澳洲</a></li>
+                        <li><a href="regions/middle-east/index.html">中东</a></li>
+                        <li><a href="regions/southeast-asia/index.html">东南亚</a></li>
+                        <li><a href="regions/africa/index.html">非洲</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -38,12 +59,12 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">普货</a></li>
-                        <li><a href="#">化妆品</a></li>
-                        <li><a href="#">液体</a></li>
-                        <li><a href="#">电子烟</a></li>
-                        <li><a href="#">纯电池</a></li>
-                        <li><a href="#">内电</a></li>
+                        <li><a href="products/regular/index.html">普货</a></li>
+                        <li><a href="products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="products/liquids/index.html">液体</a></li>
+                        <li><a href="products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="products/batteries/index.html">纯电池</a></li>
+                        <li><a href="products/electronic-with-battery/index.html">内电</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -53,9 +74,9 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">标准件</a></li>
-                        <li><a href="#">大件</a></li>
-                        <li><a href="#">超大件</a></li>
+                        <li><a href="cargo-types/standard/index.html">标准件</a></li>
+                        <li><a href="cargo-types/large/index.html">大件</a></li>
+                        <li><a href="cargo-types/extra-large/index.html">超大件</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -65,28 +86,66 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">商业件</a></li>
-                        <li><a href="#">私人地址件</a></li>
-                        <li><a href="#">FBA</a></li>
-                        <li><a href="#">沃尔玛</a></li>
-                        <li><a href="#">海外仓</a></li>
+                        <li><a href="destinations/commercial/index.html">商业件</a></li>
+                        <li><a href="destinations/residential/index.html">私人地址件</a></li>
+                        <li><a href="destinations/fba/index.html">FBA</a></li>
+                        <li><a href="destinations/walmart/index.html">沃尔玛</a></li>
+                        <li><a href="destinations/overseas-warehouse/index.html">海外仓</a></li>
                     </ul>
+                </li>
+                <li class="nav-item" id="user-nav-item">
+                    <a href="login.html" class="nav-link">
+                        <i class="fas fa-user-circle"></i>
+                        登录/注册
+                    </a>
                 </li>
             </ul>
         </nav>
     </header>
-
-    <main>
-        <section class="hero">
-            <h1>全球物流解决方案</h1>
-            <p>为您提供专业的国际物流服务</p>
-        </section>
-    </main>
-
+    
+    <!-- 空的主要内容区域 -->
+    <div class="empty-content">
+        <!-- 这里不添加任何内容 -->
+    </div>
+    
     <footer>
-        <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>我们是一家专业的国际物流服务提供商，致力于为客户提供高效、可靠的全球物流解决方案。</p>
+            </div>
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="regions/north-america/index.html">服务</a></li>
+                    <li><a href="#">关于我们</a></li>
+                    <li><a href="#">联系我们</a></li>
+                    <li><a href="#">博客</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>联系方式</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区建国路88号</p>
+                <p><i class="fas fa-phone"></i> +86 10 1234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@wuliufuwu.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+        </div>
     </footer>
-
-    <script src="script.js"></script>
+    
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/auth.js"></script>
 </body>
 </html> 

@@ -1,0 +1,374 @@
+/**
+ * 认证页面样式 - 包含登录、注册和密码重置相关样式
+ */
+
+/* 基础样式 */
+:root {
+  --primary-color: #3498db;
+  --primary-dark: #2980b9;
+  --success-color: #2ecc71;
+  --danger-color: #e74c3c;
+  --warning-color: #f1c40f;
+  --text-color: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --border-color: #ddd;
+  --bg-light: #f8f9fa;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* 认证容器 */
+.auth-container {
+  max-width: 500px;
+  margin: 80px auto 50px;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-logo {
+  display: block;
+  width: 120px;
+  margin: 0 auto 20px;
+}
+
+.auth-title {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* 表单样式 */
+.auth-form {
+  margin-top: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.auth-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+.auth-input.error {
+  border-color: var(--danger-color);
+}
+
+.error-message {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--danger-color);
+  margin-top: 5px;
+}
+
+.global-error {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--danger-color);
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  display: none;
+}
+
+/* 密码强度指示器 */
+.password-strength {
+  margin-top: 8px;
+}
+
+.strength-bar-container {
+  height: 5px;
+  background-color: var(--bg-light);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0;
+  transition: width 0.3s, background-color 0.3s;
+}
+
+.strength-text {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  text-align: right;
+}
+
+/* 复选框样式 */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.checkbox-input {
+  margin-right: 10px;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.checkbox-label a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.checkbox-label a:hover {
+  text-decoration: underline;
+}
+
+/* 按钮样式 */
+.auth-button {
+  display: block;
+  width: 100%;
+  padding: 12px 15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 30px;
+}
+
+.auth-button:hover {
+  background-color: var(--primary-dark);
+}
+
+.auth-button:disabled {
+  background-color: #b3d6ef;
+  cursor: not-allowed;
+}
+
+/* 分隔线 */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--border-color);
+}
+
+.divider-text {
+  padding: 0 15px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* 社交登录按钮 */
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+}
+
+.social-button:hover {
+  transform: translateY(-3px);
+}
+
+.social-button.wechat {
+  background-color: #07C160;
+}
+
+.social-button.weibo {
+  background-color: #E6162D;
+}
+
+.social-button.qq {
+  background-color: #12B7F5;
+}
+
+/* 底部链接 */
+.auth-footer {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.auth-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* 忘记密码步骤 */
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.steps-container::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 40px;
+  right: 40px;
+  height: 2px;
+  background-color: var(--border-color);
+  z-index: 1;
+}
+
+.step {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+  z-index: 2;
+}
+
+.step.active {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.step.completed {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.step-label {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.step.active .step-label {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* 成功消息 */
+.success-message {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: var(--success-color);
+  margin-bottom: 15px;
+}
+
+.success-title {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.success-description {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* 完成部分 */
+.completion {
+  display: none;
+  text-align: center;
+}
+
+/* 响应式调整 */
+@media (max-width: 576px) {
+  .auth-container {
+    max-width: 100%;
+    margin: 60px 15px 50px;
+    padding: 30px 20px;
+  }
+  
+  .social-buttons {
+    gap: 10px;
+  }
+  
+  .steps-container::before {
+    left: 25px;
+    right: 25px;
+  }
+  
+  .step-label {
+    font-size: 0.7rem;
+  }
+} 

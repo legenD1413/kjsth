@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>北美物流服务 - 物流服务网站</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* 北美页面特定样式 */
@@ -19,18 +19,19 @@
         }
 
         .left-section {
-            flex: 8;
+            flex: 1;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
         }
 
         .right-section {
-            flex: 2;
             background: #f8f9fa;
             padding: 1.5rem;
             border-radius: 8px;
             height: fit-content;
+            margin-bottom: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         }
 
         .showcase-card {
@@ -40,6 +41,9 @@
             overflow: hidden;
             transition: all 0.3s ease;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .showcase-card:hover {
@@ -56,6 +60,9 @@
 
         .showcase-content {
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
         .showcase-title {
@@ -103,6 +110,8 @@
             border: none;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-align: center;
+            margin-top: auto;
+            align-self: flex-start;
         }
 
         .ai-price-btn:hover {
@@ -120,6 +129,7 @@
             margin-bottom: 1rem;
             font-size: 0.95rem;
             line-height: 1.6;
+            flex: 1;
         }
 
         .route-features i {
@@ -194,13 +204,50 @@
             font-weight: bold;
             color: #2c3e50;
         }
+        
+        /* 移除快捷访问横幅样式 */
+        
+        @media (max-width: 768px) {
+            .content-container {
+                margin-top: 60px; /* 保持原有上边距 */
+            }
+        }
+
+        /* 右侧栏目布局 */
+        .right-column {
+            flex: 0.32;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        /* 栏目标题美化 */
+        .right-section h3 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.7rem;
+            border-bottom: 2px solid #3498db;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .right-section h3:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, transparent);
+            bottom: -2px;
+            left: 0;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="main-nav">
             <div class="logo">
-                <img src="images/logo.png" alt="物流服务网站Logo">
+                <img src="../../assets/images/logo.png" alt="物流服务网站Logo">
                 <span>物流服务</span>
             </div>
             <ul class="nav-menu">
@@ -211,13 +258,13 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="north-america.html" class="active">北美</a></li>
-                        <li><a href="#">南美</a></li>
-                        <li><a href="#">欧洲</a></li>
-                        <li><a href="#">澳洲</a></li>
-                        <li><a href="#">中东</a></li>
-                        <li><a href="#">东南亚</a></li>
-                        <li><a href="#">非洲</a></li>
+                        <li><a href="../../regions/north-america/index.html" class="active">北美</a></li>
+                        <li><a href="../../regions/south-america/index.html">南美</a></li>
+                        <li><a href="../../regions/europe/index.html">欧洲</a></li>
+                        <li><a href="../../regions/australia/index.html">澳洲</a></li>
+                        <li><a href="../../regions/middle-east/index.html">中东</a></li>
+                        <li><a href="../../regions/southeast-asia/index.html">东南亚</a></li>
+                        <li><a href="../../regions/africa/index.html">非洲</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -227,12 +274,12 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">普货</a></li>
-                        <li><a href="#">化妆品</a></li>
-                        <li><a href="#">液体</a></li>
-                        <li><a href="#">电子烟</a></li>
-                        <li><a href="#">纯电池</a></li>
-                        <li><a href="#">内电</a></li>
+                        <li><a href="../../products/regular/index.html">普货</a></li>
+                        <li><a href="../../products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="../../products/liquids/index.html">液体</a></li>
+                        <li><a href="../../products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="../../products/batteries/index.html">纯电池</a></li>
+                        <li><a href="../../products/electronic-with-battery/index.html">内电</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -242,9 +289,9 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">标准件</a></li>
-                        <li><a href="#">大件</a></li>
-                        <li><a href="#">超大件</a></li>
+                        <li><a href="../../cargo-types/standard/index.html">标准件</a></li>
+                        <li><a href="../../cargo-types/large/index.html">大件</a></li>
+                        <li><a href="../../cargo-types/extra-large/index.html">超大件</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -254,11 +301,11 @@
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="submenu">
-                        <li><a href="#">商业件</a></li>
-                        <li><a href="#">私人地址件</a></li>
-                        <li><a href="#">FBA</a></li>
-                        <li><a href="#">沃尔玛</a></li>
-                        <li><a href="#">海外仓</a></li>
+                        <li><a href="../../destinations/commercial/index.html">商业件</a></li>
+                        <li><a href="../../destinations/residential/index.html">私人地址件</a></li>
+                        <li><a href="../../destinations/fba/index.html">FBA</a></li>
+                        <li><a href="../../destinations/walmart/index.html">沃尔玛</a></li>
+                        <li><a href="../../destinations/overseas-warehouse/index.html">海外仓</a></li>
                     </ul>
                 </li>
             </ul>
@@ -269,35 +316,35 @@
         <div class="left-section">
             <div class="showcase-card">
                 <span class="showcase-tag">空运专线</span>
-                <!-- 方式1：使用本地图片（需要将实际图片放在images文件夹中） -->
-                <img src="images/air-freight.jpg" alt="北美空运专线" class="showcase-image">
+                <!-- 更新图片路径 -->
+                <img src="../../assets/images/air-freight.png" alt="北美空运专线" class="showcase-image">
                 <div class="showcase-content">
                     <h3 class="showcase-title">美国商业件空运专线</h3>
                     <div class="route-features">
                         <p><i class="fas fa-bullseye"></i> 专注小批量快速空运，主要承接：电子产品、服装、普货。</p>
                         <p><i class="fas fa-medal"></i> 覆盖范围：纽约、洛杉矶、芝加哥、迈阿密主要城市及周边。</p>
                     </div>
-                    <button class="ai-price-btn" onclick="navigateToAIPricing('美国商业件空运专线', ['<i class=&quot;fas fa-bullseye&quot;></i> 专注小批量快速空运，主要承接：电子产品、服装、普货。', '<i class=&quot;fas fa-medal&quot;></i> 覆盖范围：纽约、洛杉矶、芝加哥、迈阿密主要城市及周边。'])"><i class="fas fa-robot"></i> AI查价</button>
+                    <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=usa-air'"><i class="fas fa-robot"></i> AI查价</button>
                 </div>
             </div>      
 
             <div class="showcase-card">
                 <span class="showcase-tag">海运优选</span>
-                <!-- 方式2：使用在线图片URL -->
-                <img src="https://images.unsplash.com/photo-1577666576189-3897366195f0" alt="北美海运服务" class="showcase-image">
+                <!-- 使用在线图片URL，无需修改 -->
+                <img src="../../assets/images/1024-400_89073.png" alt="北美海运服务" class="showcase-image">
                 <div class="showcase-content">
                     <h3 class="showcase-title">加拿大商业件大件海运专线</h3>
                     <div class="route-features">
-                        <p><i class="fas fa-bullseye"></i> 专注中大件海运卡车派送，主要承接：卡板，木箱，大件物品。</p>
-                        <p><i class="fas fa-medal"></i> 覆盖范围：多伦多，蒙特利尔，卡尔加里，温哥华主要城市及周边。</p>
+                        <p><i class="fas fa-bullseye"></i> 专业提供加拿大全境海运服务，适合大宗货物。</p>
+                        <p><i class="fas fa-medal"></i> 重点覆盖：温哥华、多伦多、蒙特利尔主要港口。</p>
                     </div>
-                    <button class="ai-price-btn" onclick="navigateToAIPricing('加拿大商业件大件海运专线', ['<i class=&quot;fas fa-bullseye&quot;></i> 专注中大件海运卡车派送，主要承接：卡板，木箱，大件物品。', '<i class=&quot;fas fa-medal&quot;></i> 覆盖范围：多伦多，蒙特利尔，卡尔加里，温哥华主要城市及周边。'])"><i class="fas fa-robot"></i> AI查价</button>
+                    <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=canada-sea'"><i class="fas fa-robot"></i> AI查价</button>
                 </div>
             </div>
 
             <div class="showcase-card">
                 <span class="showcase-tag">FBA专线</span>
-                <!-- 方式2：使用在线图片URL -->
+                <!-- 使用在线图片URL，无需修改 -->
                 <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55" alt="FBA专线" class="showcase-image">
                 <div class="showcase-content">
                     <h3 class="showcase-title">北美亚马逊FBA专线</h3>
@@ -305,53 +352,65 @@
                         <p><i class="fas fa-bullseye"></i> 专注FBA仓库派送，主要承接：亚马逊卖家货品、电商产品。</p>
                         <p><i class="fas fa-medal"></i> 覆盖范围：所有北美亚马逊FBA仓库，支持空运、海运两种模式。</p>
                     </div>
-                    <button class="ai-price-btn" onclick="navigateToAIPricing('北美亚马逊FBA专线', ['<i class=&quot;fas fa-bullseye&quot;></i> 专注FBA仓库派送，主要承接：亚马逊卖家货品、电商产品。', '<i class=&quot;fas fa-medal&quot;></i> 覆盖范围：所有北美亚马逊FBA仓库，支持空运、海运两种模式。'])"><i class="fas fa-robot"></i> AI查价</button>
+                    <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=fba'"><i class="fas fa-robot"></i> AI查价</button>
                 </div>
             </div>
 
             <div class="showcase-card">
                 <span class="showcase-tag">特惠专线</span>
-                <!-- 方式1：使用本地图片 -->
-                <img src="images/express.jpg" alt="特惠专线" class="showcase-image">
+                <!-- 更新图片路径 -->
+                <img src="../../assets/images/express.jpg" alt="特惠专线" class="showcase-image">
                 <div class="showcase-content">
                     <h3 class="showcase-title">墨西哥商业件特惠专线</h3>
                     <div class="route-features">
                         <p><i class="fas fa-bullseye"></i> 专注墨西哥市场，主要承接：工业品、普货、汽车配件。</p>
                         <p><i class="fas fa-medal"></i> 覆盖范围：墨西哥城、蒙特雷、瓜达拉哈拉等主要工业城市。</p>
                     </div>
-                    <button class="ai-price-btn" onclick="navigateToAIPricing('墨西哥商业件特惠专线', ['<i class=&quot;fas fa-bullseye&quot;></i> 专注墨西哥市场，主要承接：工业品、普货、汽车配件。', '<i class=&quot;fas fa-medal&quot;></i> 覆盖范围：墨西哥城、蒙特雷、瓜达拉哈拉等主要工业城市。'])"><i class="fas fa-robot"></i> AI查价</button>
+                    <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=mexico'"><i class="fas fa-robot"></i> AI查价</button>
                 </div>
             </div>
         </div>
 
-        <div class="right-section">
-            <h3>北美物流资讯</h3>
-            <ul class="article-list">
-                <li>
-                    <a href="simple-links.html"><strong>简化链接版本</strong> - 使用更简单的方式访问所有线路</a>
-                    <div class="article-date">2024-04-03</div>
-                </li>
-                <li>
-                    <a href="#">2024年北美物流市场趋势分析</a>
-                    <div class="article-date">2024-03-15</div>
-                </li>
-                <li>
-                    <a href="#">美国海关最新清关政策解读</a>
-                    <div class="article-date">2024-03-10</div>
-                </li>
-                <li>
-                    <a href="#">加拿大物流配送网络优化方案</a>
-                    <div class="article-date">2024-03-05</div>
-                </li>
-                <li>
-                    <a href="#">墨西哥跨境物流发展机遇</a>
-                    <div class="article-date">2024-03-01</div>
-                </li>
-                <li>
-                    <a href="#">北美电商物流解决方案</a>
-                    <div class="article-date">2024-02-28</div>
-                </li>
-            </ul>
+        <div class="right-column">
+            <div class="right-section">
+                <h3>北美物流资讯</h3>
+                <ul class="article-list">
+                    <li>
+                        <a href="#">2024年北美物流市场趋势分析</a>
+                        <div class="article-date">2024-03-15</div>
+                    </li>
+                    <li>
+                        <a href="#">美国海关最新清关政策解读</a>
+                        <div class="article-date">2024-03-10</div>
+                    </li>
+                    <li>
+                        <a href="#">加拿大物流配送网络优化方案</a>
+                        <div class="article-date">2024-03-05</div>
+                    </li>
+                    <li>
+                        <a href="#">墨西哥跨境物流发展机遇</a>
+                        <div class="article-date">2024-03-01</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="right-section">
+                <h3>实用工具</h3>
+                <ul class="article-list">
+                    <li>
+                        <a href="#"><i class="fas fa-calculator"></i> <strong>运费计算器</strong> - 快速估算您的物流成本</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-truck-loading"></i> <strong>包装指南</strong> - 高效打包物品的方法</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-clipboard-check"></i> <strong>清关文件模板</strong> - 准备北美清关所需文件</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-map-marked-alt"></i> <strong>物流路线查询</strong> - 查看可用物流路线</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -359,32 +418,7 @@
         <p>&copy; 2024 物流服务网站. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
-    <script>
-        // AI查价导航函数
-        function navigateToAIPricing(title, features) {
-            // 根据标题确定路线ID
-            let routeId = '';
-            if (title.includes('美国') && title.includes('空运')) {
-                routeId = 'usa-air';
-            } else if (title.includes('加拿大') && title.includes('海运')) {
-                routeId = 'canada-sea';
-            } else if (title.includes('FBA')) {
-                routeId = 'fba';
-            } else if (title.includes('墨西哥')) {
-                routeId = 'mexico';
-            }
-            
-            // 优先使用简化版本和ID参数
-            if (routeId) {
-                window.location.href = `ai-pricing.html?id=${routeId}`;
-            } else {
-                // 兼容旧版本
-                const encodedTitle = encodeURIComponent(title);
-                const encodedFeatures = encodeURIComponent(JSON.stringify(features));
-                window.location.href = `ai-pricing.html?title=${encodedTitle}&features=${encodedFeatures}`;
-            }
-        }
-    </script>
+    <script src="../../assets/js/script.js"></script>
+    <script src="../../assets/js/ai-pricing.js"></script>
 </body>
 </html> 
