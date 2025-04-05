@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI物流询价 - 物流服务网站</title>
+    <title>物流服务智能询价</title>
     <link rel="stylesheet" href="../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* 全局字体设置 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        
         /* AI查价页面特定样式 */
         .ai-pricing-container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 100px auto 40px;
             padding: 1.5rem;
             background: white;
             display: flex; /* 使用flex布局 */
             flex-wrap: wrap; /* 在小屏幕上自动换行 */
             gap: 1.5rem; /* 两列之间的间距 */
-            min-height: calc(90vh - 110px); /* 设置最小高度 */
+            min-height: calc(85vh - 110px); /* 设置最小高度 */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
@@ -65,6 +70,7 @@
             border-left: 4px solid #3498db;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             flex: 1;
+            position: relative; /* 添加相对定位，用于放置热门标签 */
         }
 
         .info-card:last-of-type {
@@ -86,21 +92,35 @@
             color: #3498db;
         }
 
-        .route-features {
+        .route-features,
+        .route-advantages,
+        .route-notes {
             margin-bottom: 0.5rem;
         }
 
-        .route-features p {
+        .route-features p,
+        .route-advantages p,
+        .route-notes p {
             margin-bottom: 0.4rem; /* 减小段落间距 */
             font-size: 0.9rem; /* 减小字体 */
             line-height: 1.4; /* 减小行高 */
         }
 
-        .route-features i {
+        .route-features i,
+        .route-advantages i,
+        .route-notes i {
             color: #3498db;
             margin-right: 0.5rem;
             width: 16px;
             text-align: center;
+        }
+        
+        .route-advantages i {
+            color: #27ae60; /* 绿色 */
+        }
+        
+        .route-notes i {
+            color: #e67e22; /* 橙色 */
         }
 
         /* 聊天容器样式 */
@@ -116,7 +136,7 @@
 
         /* 聊天头部样式 */
         .chat-header {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, #1565C0, #0D47A1);
             color: white;
             padding: 0.8rem;
             border-top-left-radius: 10px;
@@ -162,15 +182,16 @@
             transition: all 0.3s;
             background-color: white;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
         }
 
         #chat-input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            border-color: #1565C0;
+            box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.2);
         }
 
         #send-btn {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, #1565C0, #0D47A1);
             color: white;
             border: none;
             border-radius: 20px;
@@ -184,6 +205,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
         }
 
         #send-btn i {
@@ -191,7 +213,7 @@
         }
 
         #send-btn:hover {
-            background: linear-gradient(135deg, #2980b9, #3498db);
+            background: linear-gradient(135deg, #0D47A1, #1565C0);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
@@ -215,7 +237,7 @@
 
         .user-message {
             align-self: flex-end;
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, #1565C0, #0D47A1);
             color: white;
             border-bottom-right-radius: 4px;
         }
@@ -239,7 +261,7 @@
             height: 8px;
             width: 8px;
             margin: 0 2px;
-            background-color: #3498db;
+            background-color: #1565C0;
             border-radius: 50%;
             display: inline-block;
             opacity: 0.4;
@@ -258,162 +280,71 @@
         }
 
         @keyframes blink {
-            50% {
-                opacity: 1;
-            }
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
         }
 
-        /* 快捷问题按钮 */
+        /* 快捷问题样式 */
         .quick-questions {
-            margin: 0;
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             padding: 0.8rem;
-            background: #f9f9f9;
-            border-top: 1px solid #eee;
+            background: #f1f1f1;
         }
 
-        .quick-question-btn {
-            background: #f0f7ff;
-            border: 1px solid #d0e3ff;
-            color: #3498db;
-            padding: 0.4rem 0.8rem;
-            border-radius: 16px;
+        .quick-question {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 0.5rem 0.8rem;
+            border-radius: 20px;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
         }
 
-        .quick-question-btn:hover {
-            background: #e0f0ff;
-            border-color: #3498db;
+        .quick-question:hover {
+            background: #f8f8f8;
             transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        /* 返回按钮样式 */
-        .back-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 1.5rem auto 0;
-            color: white;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            width: 100%;
-            max-width: 250px;
-        }
-
-        .back-btn:hover {
-            background: linear-gradient(135deg, #2980b9, #1f6da8);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .back-btn i {
-            margin-right: 0.5rem;
-        }
-
-        /* 确保内容区与导航栏有适当间距 */
-        .main-content {
-            margin-top: 60px; /* 从70px减小到60px */
-            padding: 1rem;
-            background-color: #f5f8fa;
-            min-height: calc(100vh - 60px);
-        }
-
-        /* 导航栏样式修改 */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            height: 50px; /* 从60px减小到50px */
-        }
-        
-        .main-nav {
-            height: 50px; /* 从60px减小到50px */
-            display: flex;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            height: 50px; /* 从60px减小到50px */
-        }
-        
-        .logo img {
-            height: 28px; /* 从30px减小到28px */
-            width: auto;
-        }
-        
-        .nav-menu {
-            height: 50px; /* 从60px减小到50px */
-            display: flex;
-            align-items: center;
-        }
-
-        /* 响应式布局调整 */
+        /* 响应式调整 */
         @media (max-width: 768px) {
             .ai-pricing-container {
                 flex-direction: column;
-                padding: 1rem; /* 移动端更小的内边距 */
-                gap: 1rem; /* 移动端更小的间距 */
-                min-height: auto;
-                margin: 0.5rem;
-                border-radius: 8px;
+                margin-top: 80px;
+                padding: 1rem;
             }
-            .pricing-left-column, .pricing-right-column {
+
+            .pricing-left-column,
+            .pricing-right-column {
+                flex: none;
                 width: 100%;
             }
+
             .chat-container {
-                min-height: 400px; /* 移动端高度更小 */
+                min-height: 400px;
             }
-            .main-content {
-                margin-top: 45px; /* 更小的头部间距 */
-                padding: 0 0.5rem;
-            }
-            header, .main-nav, .logo, .nav-menu {
-                height: 42px; /* 更小的头部高度 */
-            }
-            .logo img {
-                height: 22px; /* 更小的logo */
-            }
-            .pricing-header {
-                text-align: center;
-                margin-bottom: 0.8rem;
-                padding-bottom: 0.4rem;
-            }
-            .info-card {
-                padding: 0.8rem;
-                margin-bottom: 0.8rem;
-            }
-            .info-card h3 {
-                font-size: 1rem;
-                padding-bottom: 0.4rem;
-                margin-bottom: 0.5rem;
-            }
-            .back-btn {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.9rem;
-                margin-top: 0.5rem;
-                width: 100%;
-                justify-content: center;
-            }
+        }
+
+        /* 热门标签样式 */
+        .hot-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #ff5a5f, #ff2d55);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0 0 8px 0;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: none; /* 默认隐藏，通过JS控制显示 */
         }
     </style>
 </head>
@@ -426,128 +357,72 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-globe-americas"></i>
-                        区域
-                        <i class="fas fa-chevron-down"></i>
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-arrow-left"></i>
+                        返回北美专线
                     </a>
-                    <ul class="submenu">
-                        <li><a href="../../regions/north-america/index.html" class="active">北美</a></li>
-                        <li><a href="../../regions/south-america/index.html">南美</a></li>
-                        <li><a href="../../regions/europe/index.html">欧洲</a></li>
-                        <li><a href="../../regions/australia/index.html">澳洲</a></li>
-                        <li><a href="../../regions/middle-east/index.html">中东</a></li>
-                        <li><a href="../../regions/southeast-asia/index.html">东南亚</a></li>
-                        <li><a href="../../regions/africa/index.html">非洲</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-box"></i>
-                        货品
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../products/regular/index.html">普货</a></li>
-                        <li><a href="../../products/cosmetics/index.html">化妆品</a></li>
-                        <li><a href="../../products/liquids/index.html">液体</a></li>
-                        <li><a href="../../products/e-cigarettes/index.html">电子烟</a></li>
-                        <li><a href="../../products/batteries/index.html">纯电池</a></li>
-                        <li><a href="../../products/electronic-with-battery/index.html">内电</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-cube"></i>
-                        货型
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../cargo-types/standard/index.html">标准件</a></li>
-                        <li><a href="../../cargo-types/large/index.html">大件</a></li>
-                        <li><a href="../../cargo-types/extra-large/index.html">超大件</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-map-marker-alt"></i>
-                        地址
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../destinations/commercial/index.html">商业件</a></li>
-                        <li><a href="../../destinations/residential/index.html">私人地址件</a></li>
-                        <li><a href="../../destinations/fba/index.html">FBA</a></li>
-                        <li><a href="../../destinations/walmart/index.html">沃尔玛</a></li>
-                        <li><a href="../../destinations/overseas-warehouse/index.html">海外仓</a></li>
-                    </ul>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <div class="main-content">
-        <div class="ai-pricing-container">
-            <div class="pricing-left-column">
-                <div class="pricing-header">
-                    <h1 class="pricing-title" id="route-title">物流线路AI询价</h1>
-                    <p class="pricing-subtitle">智能AI助手帮您快速获取最准确的物流报价</p>
-                </div>
-
-                <div class="info-card">
-                    <h3><i class="fas fa-info-circle"></i> 渠道说明</h3>
-                    <div class="route-features" id="route-features">
-                        <!-- 此处内容将由JavaScript动态填充 -->
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3><i class="fas fa-award"></i> 渠道优势</h3>
-                    <div class="route-features">
-                        <p><i class="fas fa-check"></i> <strong>稳定可靠</strong>：多年运营经验，专业物流团队，高效处理各类货物</p>
-                        <p><i class="fas fa-check"></i> <strong>价格优势</strong>：直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格</p>
-                        <p><i class="fas fa-check"></i> <strong>全程跟踪</strong>：先进物流系统，实时追踪货物位置和状态</p>
-                        <p><i class="fas fa-check"></i> <strong>专业服务</strong>：一对一客服跟进，及时解决运输过程中的各类问题</p>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3><i class="fas fa-exclamation-triangle"></i> 注意事项</h3>
-                    <div class="route-features">
-                        <p><i class="fas fa-exclamation"></i> 特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用</p>
-                        <p><i class="fas fa-exclamation"></i> 运输时效受海关查验、天气等因素影响，可能有所波动</p>
-                        <p><i class="fas fa-exclamation"></i> 请提供准确的收件人信息，错误信息可能导致派送延误</p>
-                        <p><i class="fas fa-exclamation"></i> 大件物品请提前与客服确认尺寸限制和附加费用</p>
-                    </div>
-                </div>
-
-                <a href="./index.html" class="back-btn">
-                    <i class="fas fa-arrow-left"></i> 返回线路列表
-                </a>
+    <div class="ai-pricing-container">
+        <div class="pricing-left-column">
+            <div class="pricing-header">
+                <h1 id="route-title" class="pricing-title">物流专线智能询价</h1>
+                <p class="pricing-subtitle">智能AI助手帮您快速获取最准确的物流报价</p>
             </div>
 
-            <div class="pricing-right-column">
-                <div class="chat-container">
-                    <div class="chat-header">
-                        <i class="fas fa-robot"></i> 智能物流AI助手
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> 渠道说明</h3>
+                <div id="route-features" class="route-features">
+                    <!-- 渠道说明将由JS动态填充 -->
+                    <p><i class="fas fa-spinner fa-pulse"></i> 正在加载渠道信息...</p>
+                </div>
+                <div class="hot-tag">HOT</div>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-award"></i> 渠道优势</h3>
+                <div id="route-advantages" class="route-advantages">
+                    <!-- 渠道优势将由JS动态填充 -->
+                    <p><i class="fas fa-spinner fa-pulse"></i> 正在加载渠道优势...</p>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-exclamation-triangle"></i> 注意事项与指南</h3>
+                <div id="route-notes" class="route-notes">
+                    <!-- 注意事项将由JS动态填充 -->
+                    <p><i class="fas fa-spinner fa-pulse"></i> 正在加载注意事项...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pricing-right-column">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <i class="fas fa-robot"></i>
+                    智能物流顾问
+                </div>
+
+                <div id="chat-messages" class="chat-messages">
+                    <!-- 消息区域初始内容 -->
+                    <div class="message ai-message">
+                        您好！我是您的专属物流顾问，很高兴为您提供关于该运输专线的咨询服务。您可以询问我任何关于价格、时效、货物要求等方面的问题。
                     </div>
-                    <div class="chat-messages" id="chat-messages">
-                        <div class="message ai-message">
-                            您好！我是您的智能物流助手，请告诉我您需要运输的货物信息（如重量、体积、件数等），我将为您提供最合适的报价方案。
-                        </div>
-                    </div>
-                    <div class="chat-input-container">
-                        <input type="text" id="chat-input" placeholder="输入您的问题，如：我需要运送2台电脑到加拿大...">
-                        <button id="send-btn">
-                            <i class="fas fa-paper-plane"></i> 发送
-                        </button>
-                    </div>
-                    <div class="quick-questions">
-                        <button class="quick-question-btn" onclick="askQuickQuestion('我需要了解运输时效')">运输时效</button>
-                        <button class="quick-question-btn" onclick="askQuickQuestion('运输带电池产品的要求')">电池产品要求</button>
-                        <button class="quick-question-btn" onclick="askQuickQuestion('FBA运输费用')">FBA运输费用</button>
-                        <button class="quick-question-btn" onclick="askQuickQuestion('如何计算运费')">如何计算运费</button>
-                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="请输入您的问题...">
+                    <button id="send-btn"><i class="fas fa-paper-plane"></i> 发送</button>
+                </div>
+
+                <div class="quick-questions">
+                    <div class="quick-question" onclick="askQuickQuestion('这条线路的价格是多少？')">价格查询</div>
+                    <div class="quick-question" onclick="askQuickQuestion('从下单到送达需要多少天？')">时效查询</div>
+                    <div class="quick-question" onclick="askQuickQuestion('有哪些货物限制？')">货物限制</div>
+                    <div class="quick-question" onclick="askQuickQuestion('如何跟踪我的货物？')">物流跟踪</div>
                 </div>
             </div>
         </div>
@@ -557,6 +432,67 @@
         <p>&copy; 2024 物流服务网站. All rights reserved.</p>
     </footer>
 
+    <script src="../../assets/js/script.js"></script>
     <script src="../../assets/js/ai-pricing.js"></script>
+    <script>
+        // 扩展JS逻辑，添加对优势和注意事项的支持
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const routeId = urlParams.get('id');
+            
+            if (routeId && routeData[routeId]) {
+                const route = routeData[routeId];
+                
+                // 填充渠道优势
+                if (route.advantages) {
+                    const advantagesContainer = document.getElementById('route-advantages');
+                    advantagesContainer.innerHTML = ''; // 清空现有内容
+                    
+                    route.advantages.forEach(advantage => {
+                        const p = document.createElement('p');
+                        p.innerHTML = advantage;
+                        advantagesContainer.appendChild(p);
+                    });
+                }
+                
+                // 填充注意事项
+                if (route.notes) {
+                    const notesContainer = document.getElementById('route-notes');
+                    notesContainer.innerHTML = ''; // 清空现有内容
+                    
+                    route.notes.forEach(note => {
+                        const p = document.createElement('p');
+                        p.innerHTML = note;
+                        notesContainer.appendChild(p);
+                    });
+                }
+                
+                // 填充快捷问题
+                if (route.quickQuestions) {
+                    const quickQuestionsContainer = document.querySelector('.quick-questions');
+                    quickQuestionsContainer.innerHTML = ''; // 清空现有内容
+                    
+                    route.quickQuestions.forEach(question => {
+                        const div = document.createElement('div');
+                        div.className = 'quick-question';
+                        div.textContent = question;
+                        div.onclick = function() {
+                            askQuickQuestion(question);
+                        };
+                        quickQuestionsContainer.appendChild(div);
+                    });
+                }
+                
+                // 处理热门标签
+                if (route.isHot) {
+                    const hotTag = document.querySelector('.hot-tag');
+                    if (hotTag) {
+                        hotTag.style.display = 'block';
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html> 

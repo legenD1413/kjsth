@@ -7,56 +7,180 @@
 const routeData = {
     'usa-air': {
         title: '美国商业件空运专线',
+        isHot: true,
         features: [
             '<i class="fas fa-bullseye"></i> 特点：小批量快速空运，主要承接：电子产品、服装、鞋帽、箱包等',
             '<i class="fas fa-clock"></i> 时效：5-7个工作日送达',
             '<i class="fas fa-dollar-sign"></i> 价格：$6.5-8.2/kg，根据货物体积重量计算',
             '<i class="fas fa-box"></i> 尺寸限制：单边不超过120cm，单件不超过50kg'
+        ],
+        advantages: [
+            '<i class="fas fa-check"></i> 稳定可靠：多年运营经验，专业物流团队，高效处理各类货物',
+            '<i class="fas fa-check"></i> 价格优势：直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格',
+            '<i class="fas fa-check"></i> 全程跟踪：先进物流系统，实时追踪货物位置和状态',
+            '<i class="fas fa-check"></i> 专业服务：一对一客服跟进，及时解决运输过程中的各类问题'
+        ],
+        notes: [
+            '<i class="fas fa-exclamation-triangle"></i> 特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用',
+            '<i class="fas fa-exclamation-triangle"></i> 运输时效受海关查验、天气等因素影响，可能有所波动',
+            '<i class="fas fa-exclamation-triangle"></i> 请提供准确的收件人信息，错误信息可能导致派送延误',
+            '<i class="fas fa-exclamation-triangle"></i> 大件物品请提前与客服确认尺寸和限制和附加费用'
+        ],
+        quickQuestions: [
+            '美国空运价格是怎么计算的？',
+            '从中国发货到美国需要多久？',
+            '有没有特殊货物限制？',
+            '如何跟踪我的货物？'
         ]
     },
+
+    'ca-fba': {
+        title: '加拿大FBA专线',
+        isHot: true,
+        features: [
+            '<i class="fas fa-bullseye"></i> 特点：小批量快速空运，主要承接：电子产品、服装、鞋帽、箱包等',
+            '<i class="fas fa-clock"></i> 时效：5-7个工作日送达',
+            '<i class="fas fa-dollar-sign"></i> 价格：$6.5-8.2/kg，根据货物体积重量计算',
+            '<i class="fas fa-box"></i> 尺寸限制：单边不超过120cm，单件不超过50kg'
+        ],
+        advantages: [
+            '<i class="fas fa-check"></i> 稳定可靠：多年运营经验，专业物流团队，高效处理各类货物',
+            '<i class="fas fa-check"></i> 价格优势：直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格',
+            '<i class="fas fa-check"></i> 全程跟踪：先进物流系统，实时追踪货物位置和状态',
+            '<i class="fas fa-check"></i> 专业服务：一对一客服跟进，及时解决运输过程中的各类问题'
+        ],
+        notes: [
+            '<i class="fas fa-exclamation-triangle"></i> 特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用',
+            '<i class="fas fa-exclamation-triangle"></i> 运输时效受海关查验、天气等因素影响，可能有所波动',
+            '<i class="fas fa-exclamation-triangle"></i> 请提供准确的收件人信息，错误信息可能导致派送延误',
+            '<i class="fas fa-exclamation-triangle"></i> 大件物品请提前与客服确认尺寸和限制和附加费用'
+        ],
+        quickQuestions: [
+            'FBA入仓需要办理哪些手续？',
+            '亚马逊入仓时效是多少？',
+            '如何提供FBA货件号？',
+            '有代打标签服务吗？'
+        ]
+    },
+
+
     'usa-sea': {
         title: '美国海运专线',
+        isHot: false,
         features: [
             '<i class="fas fa-bullseye"></i> 特点：大批量经济海运，适合大宗货物、家居用品等',
             '<i class="fas fa-clock"></i> 时效：18-25天送达',
             '<i class="fas fa-dollar-sign"></i> 价格：$130-160/立方米',
             '<i class="fas fa-box"></i> 无严格尺寸限制，但超大件需提前咨询'
+        ],
+        advantages: [
+            '<i class="fas fa-check"></i> 稳定可靠：多年运营经验，专业物流团队，高效处理各类货物',
+            '<i class="fas fa-check"></i> 价格优势：直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格',
+            '<i class="fas fa-check"></i> 全程跟踪：先进物流系统，实时追踪货物位置和状态',
+            '<i class="fas fa-check"></i> 专业服务：一对一客服跟进，及时解决运输过程中的各类问题'
+        ],
+        notes: [
+            '<i class="fas fa-exclamation-triangle"></i> 特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用',
+            '<i class="fas fa-exclamation-triangle"></i> 运输时效受海关查验、天气等因素影响，可能有所波动',
+            '<i class="fas fa-exclamation-triangle"></i> 请提供准确的收件人信息，错误信息可能导致派送延误',
+            '<i class="fas fa-exclamation-triangle"></i> 大件物品请提前与客服确认尺寸和限制和附加费用'
+        ],
+        quickQuestions: [
+            '海运价格是按重量还是体积计算？',
+            '整柜和拼箱有什么区别？',
+            '从哪些港口发货？',
+            '特大件有什么额外要求？'
         ]
     },
+
     'canada-air': {
         title: '加拿大空运专线',
+        isHot: true,
         features: [
             '<i class="fas fa-bullseye"></i> 特点：快速通关，适合电商卖家',
             '<i class="fas fa-clock"></i> 时效：5-8个工作日送达',
             '<i class="fas fa-dollar-sign"></i> 价格：$7.2-9.0/kg',
             '<i class="fas fa-box"></i> 提供商业清关和个人物品清关服务'
+        ],
+        advantages: [
+            '<i class="fas fa-check"></i> 稳定可靠：多年运营经验，专业物流团队，高效处理各类货物',
+            '<i class="fas fa-check"></i> 价格优势：直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格',
+            '<i class="fas fa-check"></i> 全程跟踪：先进物流系统，实时追踪货物位置和状态',
+            '<i class="fas fa-check"></i> 专业服务：一对一客服跟进，及时解决运输过程中的各类问题'
+        ],
+        notes: [
+            '<i class="fas fa-exclamation-triangle"></i> 特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用',
+            '<i class="fas fa-exclamation-triangle"></i> 运输时效受海关查验、天气等因素影响，可能有所波动',
+            '<i class="fas fa-exclamation-triangle"></i> 请提供准确的收件人信息，错误信息可能导致派送延误',
+            '<i class="fas fa-exclamation-triangle"></i> 大件物品请提前与客服确认尺寸和限制和附加费用'
+        ],
+        quickQuestions: [
+            '加拿大不同省份的派送时间有差异吗？',
+            '需要提供商业发票吗？',
+            '清关需要多长时间？',
+            '如何避免加拿大海关查验延误？'
         ]
     },
-    'canada-sea': {
-        title: '加拿大海运专线',
+
+    'canada-BIG': {
+        title: '加拿大商业件海运专线',
+        isHot: true,
         features: [
             '<i class="fas fa-bullseye"></i> 特点：稳定可靠，适合大批量货物',
             '<i class="fas fa-clock"></i> 时效：20-28天送达',
             '<i class="fas fa-dollar-sign"></i> 价格：$140-180/立方米',
             '<i class="fas fa-box"></i> 支持拼箱和整箱服务'
+        ],
+        advantages: [
+            '<i class="fas fa-check"></i> 稳定可靠：多年运营经验，专业物流团队，高效处理各类货物',
+            '<i class="fas fa-check"></i> 价格优势：直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格',
+            '<i class="fas fa-check"></i> 全程跟踪：先进物流系统，实时追踪货物位置和状态',
+            '<i class="fas fa-check"></i> 专业服务：一对一客服跟进，及时解决运输过程中的各类问题'
+        ],
+        notes: [
+            '<i class="fas fa-exclamation-triangle"></i> 特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用',
+            '<i class="fas fa-exclamation-triangle"></i> 运输时效受海关查验、天气等因素影响，可能有所波动',
+            '<i class="fas fa-exclamation-triangle"></i> 请提供准确的收件人信息，错误信息可能导致派送延误',
+            '<i class="fas fa-exclamation-triangle"></i> 大件物品请提前与客服确认尺寸和限制和附加费用'
+        ],
+        quickQuestions: [
+            '大件海运价格怎么计算？',
+            '有哪些商业清关服务？',
+            '可以发温哥华和多伦多吗？',
+            '加拿大大件海运需要提前预约吗？'
         ]
     },
-    'fba': {
-        title: 'FBA头程专线',
-        features: [
-            '<i class="fas fa-bullseye"></i> 特点：专业FBA派送，提供入仓预约、标签粘贴服务',
-            '<i class="fas fa-clock"></i> 时效：空运7-10天，海运25-35天',
-            '<i class="fas fa-dollar-sign"></i> 价格：空运$6.8-8.5/kg，海运$150-190/立方米',
-            '<i class="fas fa-box"></i> 提供DDP和DDU两种服务'
-        ]
-    },
+
+
+    
+
+    
     'mexico': {
         title: '墨西哥专线',
+        isHot: false,
         features: [
             '<i class="fas fa-bullseye"></i> 特点：全程追踪，提供墨西哥本地派送',
             '<i class="fas fa-clock"></i> 时效：空运8-12天，海运30-40天',
             '<i class="fas fa-dollar-sign"></i> 价格：空运$8.5-10.2/kg，海运$160-200/立方米',
             '<i class="fas fa-box"></i> 提供墨西哥清关代理服务'
+        ],
+        advantages: [
+            '<i class="fas fa-check"></i> 稳定可靠：多年运营经验，专业物流团队，高效处理各类货物',
+            '<i class="fas fa-check"></i> 价格优势：直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格',
+            '<i class="fas fa-check"></i> 全程跟踪：先进物流系统，实时追踪货物位置和状态',
+            '<i class="fas fa-check"></i> 专业服务：一对一客服跟进，及时解决运输过程中的各类问题'
+        ],
+        notes: [
+            '<i class="fas fa-exclamation-triangle"></i> 特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用',
+            '<i class="fas fa-exclamation-triangle"></i> 运输时效受海关查验、天气等因素影响，可能有所波动',
+            '<i class="fas fa-exclamation-triangle"></i> 请提供准确的收件人信息，错误信息可能导致派送延误',
+            '<i class="fas fa-exclamation-triangle"></i> 大件物品请提前与客服确认尺寸和限制和附加费用'
+        ],
+        quickQuestions: [
+            '墨西哥清关需要提供哪些资料？',
+            '墨西哥各城市的派送时效如何？',
+            '墨西哥海关有特殊限制吗？',
+            '可以发电池产品到墨西哥吗？'
         ]
     }
 };
