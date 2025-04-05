@@ -78,10 +78,35 @@
         }
 
         .showcase-title {
-            font-size: 1.25rem;
+            font-size: 1.18rem;
             color: #2c3e50;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid #f0f0f0;
+            letter-spacing: 0.02em;
+            display: inline-block;
+        }
+
+        .showcase-title::before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #e67e22, rgba(230, 126, 34, 0));
+        }
+
+        .showcase-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 40%;
+            height: 2px;
+            background: #e67e22;
         }
 
         .showcase-desc {
@@ -127,15 +152,24 @@
 
         /* 线路介绍样式 */
         .route-features {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             flex: 1;
+            color: #555;
+        }
+
+        .route-features p {
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: flex-start;
         }
 
         .route-features i {
             color: #3498db;
-            margin-right: 0.3rem;
+            margin-right: 0.4rem;
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
         }
 
         .article-list {
@@ -328,7 +362,7 @@
         }
 
         .showcase-content {
-            padding: 1.2rem 1.5rem;
+            padding: 0.3rem 1.5rem 1.2rem;
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -485,7 +519,7 @@
                             <span class="showcase-tag"><i class="fas fa-building"></i> 商业件</span>
                         </div>
                         <div class="showcase-content">
-                            <h3 class="showcase-title">墨西哥商业件test</h3>
+                            <h3 class="showcase-title">墨西哥商业件</h3>
                             <div class="route-features">
                                 <p><i class="fas fa-bullseye"></i> 专注墨西哥市场，主要承接：工业品、普货、汽车配件。</p>
                                 <p><i class="fas fa-medal"></i> 覆盖范围：墨西哥城、蒙特雷、瓜达拉哈拉等主要工业城市。</p>
