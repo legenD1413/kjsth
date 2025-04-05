@@ -8,6 +8,7 @@ const routeData = {
     'usa-air': {
         title: '美国商业件空运专线',
         isHot: true,
+        welcomeMessage: '您好！我是您的专属物流顾问，很高兴为您提供美国空运专线的咨询服务。您可以询问我任何关于价格、时效、货物要求等方面的问题。',
         features: [
             '<i class="fas fa-bullseye"></i> 特点：小批量快速空运，主要承接：电子产品、服装、鞋帽、箱包等',
             '<i class="fas fa-clock"></i> 时效：5-7个工作日送达',
@@ -37,6 +38,7 @@ const routeData = {
     'ca-fba': {
         title: '加拿大FBA专线',
         isHot: true,
+        welcomeMessage: '您好！我是您的专属亚马逊FBA物流顾问，很高兴为您提供加拿大FBA专线的咨询服务。您可以询问我任何关于价格、入仓要求、派送时效等方面的问题。',
         features: [
             '<i class="fas fa-bullseye"></i> 特点：小批量快速空运，主要承接：电子产品、服装、鞋帽、箱包等',
             '<i class="fas fa-clock"></i> 时效：5-7个工作日送达',
@@ -67,6 +69,7 @@ const routeData = {
     'usa-sea': {
         title: '美国海运专线',
         isHot: false,
+        welcomeMessage: '您好！我是您的专属海运顾问，很高兴为您提供美国海运专线的咨询服务。您可以询问我关于整柜、拼箱、价格计算及清关事宜等任何问题。',
         features: [
             '<i class="fas fa-bullseye"></i> 特点：大批量经济海运，适合大宗货物、家居用品等',
             '<i class="fas fa-clock"></i> 时效：18-25天送达',
@@ -96,6 +99,7 @@ const routeData = {
     'canada-air': {
         title: '加拿大空运专线',
         isHot: true,
+        welcomeMessage: '您好！我是您的专属加拿大空运顾问，很高兴为您提供专业的加拿大空运咨询。您可以询问我关于价格、派送时效、清关所需资料等任何问题。',
         features: [
             '<i class="fas fa-bullseye"></i> 特点：快速通关，适合电商卖家',
             '<i class="fas fa-clock"></i> 时效：5-8个工作日送达',
@@ -125,6 +129,7 @@ const routeData = {
     'canada-BIG': {
         title: '加拿大商业件海运专线',
         isHot: true,
+        welcomeMessage: '您好！我是您的专属物流顾问，很高兴为您提供关于加拿大大件海运专线的咨询服务。您可以询问我任何关于价格、时效、货物要求等方面的问题。',
         features: [
             '<i class="fas fa-bullseye"></i> 特点：稳定可靠，适合大批量货物',
             '<i class="fas fa-clock"></i> 时效：20-28天送达',
@@ -158,6 +163,7 @@ const routeData = {
     'mexico': {
         title: '墨西哥专线',
         isHot: false,
+        welcomeMessage: '您好！我是您的专属墨西哥物流顾问，很高兴为您提供墨西哥专线的咨询服务。您可以询问我关于派送区域、清关要求、运输时效等任何问题。',
         features: [
             '<i class="fas fa-bullseye"></i> 特点：全程追踪，提供墨西哥本地派送',
             '<i class="fas fa-clock"></i> 时效：空运8-12天，海运30-40天',
@@ -321,6 +327,19 @@ document.addEventListener('DOMContentLoaded', function() {
             handleSend();
         }
     });
+    
+    // 显示欢迎信息
+    if (routeId && routeData[routeId] && routeData[routeId].welcomeMessage) {
+        // 使用延迟显示欢迎信息，模拟机器人思考
+        setTimeout(function() {
+            addMessage(routeData[routeId].welcomeMessage);
+        }, 800);
+    } else {
+        // 默认欢迎信息
+        setTimeout(function() {
+            addMessage('您好！我是安的专属物流顾问，很高兴为您提供关于该运输专线的咨询服务。您可以询问我任何关于价格、时效、货物要求等方面的问题。');
+        }, 800);
+    }
     
     // 快捷问题功能
     window.askQuickQuestion = function(question) {

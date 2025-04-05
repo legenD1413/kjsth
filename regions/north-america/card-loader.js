@@ -74,7 +74,7 @@ function refreshCards() {
                     '<i class="fas fa-medal"></i> 重点覆盖：温哥华、多伦多、蒙特利尔主要港口。'
                 ],
                 tags: ['商业地址', '大件海运', '加拿大'],
-                isHot: true
+                isHot: false
             },
             {
                 id: 'fba',
