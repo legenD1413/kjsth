@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏新闻组件测试</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .main-content {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-right: 20px;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        h1, h2, h3 {
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .main-content {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <h1>物流服务</h1>
+            <p>欢迎访问我们的物流服务网站。我们提供全球范围内的物流解决方案，包括空运、海运、陆运和多式联运等服务。</p>
+            
+            <h2>我们的服务</h2>
+            <ul>
+                <li>国际空运</li>
+                <li>海运服务</li>
+                <li>公路运输</li>
+                <li>铁路运输</li>
+                <li>仓储服务</li>
+                <li>清关服务</li>
+            </ul>
+            
+            <h2>我们的优势</h2>
+            <ul>
+                <li>全球网络覆盖</li>
+                <li>专业的物流团队</li>
+                <li>先进的跟踪系统</li>
+                <li>高效的清关流程</li>
+                <li>定制化的物流解决方案</li>
+            </ul>
+        </div>
+        
+        <div class="sidebar">
+            <!-- 北美物流资讯 -->
+            <div id="north-america-news"></div>
+            
+            <!-- 中东物流资讯 -->
+            <div id="middle-east-news" style="margin-top: 30px;"></div>
+        </div>
+    </div>
+    
+    <!-- 引入侧边栏新闻组件脚本 -->
+    <script src="assets/js/sidebar-news.js"></script>
+    
+    <script>
+        // 页面加载完成后初始化侧边栏新闻组件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化北美物流资讯
+            SidebarNews.init('north-america', 'north-america-news', '北美物流资讯', 4);
+            
+            // 初始化中东物流资讯
+            SidebarNews.init('middle-east', 'middle-east-news', '中东物流资讯', 4);
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区 - 物流服务网站</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* 全局字体设置 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        
+        /* 资讯详情页面特定样式 */
+        .news-detail-container {
+            max-width: 900px;
+            margin: 100px auto 40px;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            min-height: calc(80vh - 110px);
+        }
+        
+        .news-detail-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .news-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.3;
+        }
+        
+        .news-meta {
+            display: flex;
+            align-items: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .news-date {
+            display: flex;
+            align-items: center;
+            margin-right: 1.5rem;
+        }
+        
+        .news-date i, .news-region i {
+            margin-right: 0.5rem;
+            color: #3498db;
+        }
+        
+        .news-region {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-importance {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .importance-normal {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            border: 1px solid #e9ecef;
+        }
+        
+        .importance-important {
+            background-color: #ebf5fb;
+            color: #3498db;
+            border: 1px solid #d6eaf8;
+        }
+        
+        .importance-very_important {
+            background-color: #fdedec;
+            color: #e74c3c;
+            border: 1px solid #f7d6d5;
+        }
+        
+        .news-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .news-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .news-content h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .back-to-list {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .back-to-list i {
+            margin-right: 0.5rem;
+        }
+        
+        .back-to-list:hover {
+            background-color: #e9ecef;
+        }
+        
+        .view-original {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .view-original i {
+            margin-right: 0.5rem;
+        }
+        
+        .view-original:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../assets/images/logo.png" alt="物流服务网站Logo">
+                <span>物流服务</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-globe-americas"></i>
+                        区域
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../../regions/north-america/index.html" class="{{NORTH_AMERICA_ACTIVE}}">北美</a></li>
+                        <li><a href="../../regions/south-america/index.html" class="{{SOUTH_AMERICA_ACTIVE}}">南美</a></li>
+                        <li><a href="../../regions/europe/index.html" class="{{EUROPE_ACTIVE}}">欧洲</a></li>
+                        <li><a href="../../regions/australia/index.html" class="{{AUSTRALIA_ACTIVE}}">澳洲</a></li>
+                        <li><a href="../../regions/middle-east/index.html" class="{{MIDDLE_EAST_ACTIVE}}">中东</a></li>
+                        <li><a href="../../regions/southeast-asia/index.html" class="{{ASIA_ACTIVE}}">东南亚</a></li>
+                        <li><a href="../../regions/africa/index.html" class="{{AFRICA_ACTIVE}}">非洲</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        货品
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../../products/regular/index.html">普货</a></li>
+                        <li><a href="../../products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="../../products/liquids/index.html">液体</a></li>
+                        <li><a href="../../products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="../../products/batteries/index.html">纯电池</a></li>
+                        <li><a href="../../products/electronic-with-battery/index.html">内电</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cube"></i>
+                        货型
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../../cargo-types/standard/index.html">标准件</a></li>
+                        <li><a href="../../cargo-types/large/index.html">大件</a></li>
+                        <li><a href="../../cargo-types/extra-large/index.html">超大件</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-map-marker-alt"></i>
+                        地址
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../../destinations/commercial/index.html">商业件</a></li>
+                        <li><a href="../../destinations/residential/index.html">私人地址件</a></li>
+                        <li><a href="../../destinations/fba/index.html">FBA</a></li>
+                        <li><a href="../../destinations/walmart/index.html">沃尔玛</a></li>
+                        <li><a href="../../destinations/overseas-warehouse/index.html">海外仓</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="news-detail-container">
+        <div class="news-detail-header">
+            <h1 class="news-title">为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区</h1>
+            <div class="news-meta">
+                <div class="news-date">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>2025-04-05</span>
+                </div>
+                <div class="news-region">
+                    <i class="fas fa-globe-asia"></i>
+                    <span>北美区域</span>
+                </div>
+            </div>
+            <div class="news-importance importance-normal">
+                普通
+            </div>
+        </div>
+        <div class="news-content">
+            <p>在加拿大跨境物流领域，大件货物（如家具、健身器材、建材等）的运输一直是中小卖家的痛点之一。许多卖家发现，自己的货物明明符合国内运输标准，却在加拿大频频被物流商拒收。究其原因，尺寸限制的认知偏差是核心问题。本文将深度解析6个常见误区，并提供可落地的解决方案，助您避开隐形雷区。</p>
+
+            <h3>误区1：只关注单边长度，忽略"整体尺寸"概念</h3>
+            <p>许多卖家误以为只要单边不超过2.5米就能通关，却忽视了加拿大物流商对"长+宽+高"总和（Overall Dimension）的严格限制。</p>
+
+            <h3>误区2：忽视"不可拆卸"规则的重量陷阱</h3>
+            <p>加拿大对不可拆卸大件（Non-Divisible Load）有特殊规定：若货物因结构原因无法拆分，单件重量超过2.3吨需申请特殊许可。</p>
+
+            <h3>误区3：错用"托盘尺寸"计算方式</h3>
+            <p>许多卖家直接将货物放在托盘上测量尺寸，却不知加拿大物流商会将托盘视为货物的一部分。</p>
+
+            <h3>误区4：低估"省份差异"的尺寸限制</h3>
+            <p>加拿大各省对商业件尺寸有不同规定，例如：</p>
+            <p>不同省份对大件货物的尺寸限制标准各不相同，安大略省、魁北克省、阿尔伯塔省都有自己的规定。</p>
+
+            <h3>误区5：混淆"海运尺寸"与"尾程尺寸"标准</h3>
+            <p>货物通过海运时的集装箱装载尺寸（以立方米计算）与加拿大本土运输的尺寸限制（以线性尺寸计算）存在本质差异。</p>
+
+            <h3>误区6：盲目依赖"灵活承运商"承诺</h3>
+            <p>部分卖家轻信"可协商尺寸"的承诺，却不知加拿大物流行业存在隐性拒收条款。</p>
+
+            <h3>解决方案：三步构建合规运输体系</h3>
+            <p>1. 提前了解各省具体限制：在计划发货前充分了解目的地省份的具体尺寸和重量限制。</p>
+            <p>2. 优化包装和拆分设计：考虑如何将大件商品设计为可拆卸式，并使用合规尺寸的包装。</p>
+            <p>3. 选择专业大件物流服务：与专注于大件货物的物流商合作，他们通常有更丰富的处理经验和更完善的解决方案。</p>
+        </div>
+        <div class="action-buttons">
+            <a href="./index.html" class="back-to-list">
+                <i class="fas fa-list"></i>返回资讯列表
+            </a>
+            <a href="https://cms.kjsth.com/logistics-news/%e4%b8%ba%e4%bb%80%e4%b9%88%e4%bd%a0%e7%9a%84%e5%a4%a7%e4%bb%b6%e8%b4%a7%e7%89%a9%e6%80%bb%e8%a2%ab%e5%8a%a0%e6%8b%bf%e5%a4%a7%e7%89%a9%e6%b5%81%e5%95%86%e6%8b%92%e6%94%b6%ef%bc%9f%e5%b0%ba%e5%af%b8/" target="_blank" class="view-original">
+                <i class="fas fa-external-link-alt"></i>查看原文
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+    </footer>
+</body>
+</html> 

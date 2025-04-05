@@ -591,8 +591,37 @@
             <div class="right-section">
                 <h3>北美物流资讯</h3>
                 <ul class="article-list">
-                    <li class="loading-news">加载中<span>.</span><span>.</span><span>.</span></li>
+                    <!-- 静态展示北美物流资讯，不依赖动态加载 -->
+                    <li class="article-item">
+                        <a href="../../static-news/north-america/19.html" class="article-link">
+                            <span class="article-title">为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区</span>
+                            <span class="article-date">2024-04-05</span>
+                        </a>
+                    </li>
+                    <li class="article-item">
+                        <a href="../../static-news/north-america/18.html" class="article-link">
+                            <span class="article-title">美国FBA退货政策新变化及应对策略</span>
+                            <span class="article-date">2024-03-18</span>
+                        </a>
+                    </li>
+                    <li class="article-item">
+                        <a href="../../static-news/north-america/17.html" class="article-link">
+                            <span class="article-title">美国最新电池运输管控规定</span>
+                            <span class="article-date">2024-03-14</span>
+                        </a>
+                    </li>
+                    <li class="article-item">
+                        <a href="../../static-news/north-america/12.html" class="article-link">
+                            <span class="article-title">加拿大港口罢工导致物流延迟</span>
+                            <span class="article-date">2024-02-22</span>
+                        </a>
+                    </li>
                 </ul>
+                <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
+                    <a href="../../news/north-america.html" class="view-all-btn" style="display: inline-block; padding: 0.4rem 0.8rem; background-color: #f8f9fa; color: #3498db; text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: all 0.3s; border: 1px solid #e9ecef;">
+                        <i class="fas fa-list-ul" style="margin-right: 0.3rem;"></i>查看全部
+                    </a>
+                </div>
             </div>
 
             <div class="right-section">
@@ -622,7 +651,7 @@
     <script src="../../assets/js/script.js"></script>
     <script src="../../assets/js/ai-pricing.js"></script>
     <script src="card-loader.js"></script>
-    <script src="../../assets/js/maigeeku-news-loader.js"></script>
+    <script src="../../assets/js/static-news-loader.js"></script>
     <script>
         // 根据ai-pricing.js中的配置显示HOT标签
         document.addEventListener('DOMContentLoaded', function() {
@@ -666,6 +695,14 @@
                     }
                 }
             });
+            
+            // 直接初始化北美地区的静态新闻加载
+            if (window.StaticNewsLoader) {
+                console.log('直接调用StaticNewsLoader.loadNews()');
+                window.StaticNewsLoader.loadNews('north-america');
+            } else {
+                console.error('StaticNewsLoader没有正确加载');
+            }
         });
     </script>
 </body>

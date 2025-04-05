@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球物流新闻中心 - 迈格库</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .news-banner {
+            background-color: #0056b3;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .news-banner h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .news-banner p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .region-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .region-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .region-card h3 {
+            color: #0056b3;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            position: relative;
+        }
+        
+        .region-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #0056b3;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -5px;
+            right: 0;
+        }
+        
+        .region-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .region-card a {
+            display: inline-block;
+            background-color: #0056b3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .region-card a:hover {
+            background-color: #003d7a;
+        }
+        
+        .region-news-preview {
+            margin-top: 15px;
+        }
+        
+        .region-news-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .region-news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .region-news-item a {
+            color: #333;
+            text-decoration: none;
+            background-color: transparent;
+            padding: 0;
+            display: block;
+        }
+        
+        .region-news-item a:hover {
+            color: #0056b3;
+            background-color: transparent;
+        }
+        
+        .region-news-date {
+            color: #999;
+            font-size: 12px;
+            display: block;
+            margin-top: 3px;
+        }
+        
+        .last-update {
+            text-align: center;
+            margin: 30px 0;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="迈格库Logo">
+                <span>迈格库</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        首页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-info-circle"></i>
+                        关于我们
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-newspaper"></i>
+                        物流资讯
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        联系我们
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="news-banner">
+        <div class="container">
+            <h1>全球物流新闻中心</h1>
+            <p>了解全球各地区最新物流动态、行业趋势和政策变化，助力您的跨境物流决策</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!-- 北美地区 -->
+            <div class="col-lg-6">
+                <div class="region-card">
+                    <h3>
+                        北美地区物流资讯
+                        <div class="region-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                    </h3>
+                    <p>覆盖美国、加拿大等北美地区的最新物流动态、关税政策和市场趋势。</p>
+                    
+                    <div class="region-news-preview" id="north-america-preview">
+                        <div class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <a href="north-america.html">
+                            <i class="fas fa-arrow-right"></i> 查看全部北美物流资讯
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 中东地区 -->
+            <div class="col-lg-6">
+                <div class="region-card">
+                    <h3>
+                        中东地区物流资讯
+                        <div class="region-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                    </h3>
+                    <p>关注沙特、阿联酋等中东地区的物流动态、贸易政策和市场发展。</p>
+                    
+                    <div class="region-news-preview" id="middle-east-preview">
+                        <div class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <a href="middle-east.html">
+                            <i class="fas fa-arrow-right"></i> 查看全部中东物流资讯
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 欧洲地区 -->
+            <div class="col-lg-6">
+                <div class="region-card">
+                    <h3>
+                        欧洲地区物流资讯
+                        <div class="region-icon">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                    </h3>
+                    <p>了解英国、德国、法国等欧洲国家的物流政策、市场变化和贸易动态。</p>
+                    
+                    <div class="region-news-preview" id="europe-preview">
+                        <div class="text-center">
+                            <p>暂无欧洲地区物流资讯</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <a href="europe.html">
+                            <i class="fas fa-arrow-right"></i> 查看全部欧洲物流资讯
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 亚太地区 -->
+            <div class="col-lg-6">
+                <div class="region-card">
+                    <h3>
+                        亚太地区物流资讯
+                        <div class="region-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                    </h3>
+                    <p>关注日本、韩国、澳大利亚等亚太地区的物流行情、市场发展和政策变化。</p>
+                    
+                    <div class="region-news-preview" id="asia-pacific-preview">
+                        <div class="text-center">
+                            <p>暂无亚太地区物流资讯</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <a href="asia-pacific.html">
+                            <i class="fas fa-arrow-right"></i> 查看全部亚太物流资讯
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="last-update">
+            <i class="fas fa-sync-alt"></i> 最后更新时间：<span id="last-update-time"></span>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>迈格库是一家专业的国际物流服务提供商，致力于为客户提供高效、可靠的全球物流解决方案。</p>
+            </div>
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="#">服务</a></li>
+                    <li><a href="#">关于我们</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>联系方式</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区建国路88号</p>
+                <p><i class="fas fa-phone"></i> +86 10 1234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@maigeeku.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 迈格库. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 使用侧边栏新闻组件的方式来加载预览新闻
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新最后更新时间
+            const now = new Date();
+            document.getElementById('last-update-time').textContent = now.toLocaleString('zh-CN');
+            
+            // 加载北美地区预览
+            loadRegionPreview('north-america', 'north-america-preview');
+            
+            // 加载中东地区预览
+            loadRegionPreview('middle-east', 'middle-east-preview');
+        });
+        
+        /**
+         * 加载地区预览新闻
+         * @param {string} region - 地区代码
+         * @param {string} containerId - 容器ID
+         */
+        function loadRegionPreview(region, containerId) {
+            const container = document.getElementById(containerId);
+            const staticNewsDir = '/static-news';
+            
+            // 清空加载状态
+            container.innerHTML = '';
+            
+            // 获取指定区域的新闻列表HTML
+            fetch(`${staticNewsDir}/${region}/index.html`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('无法获取新闻列表');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    // 创建一个临时元素来解析HTML
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    
+                    // 提取新闻卡片
+                    const newsCards = tempDiv.querySelectorAll('.news-card');
+                    
+                    if (newsCards.length === 0) {
+                        container.innerHTML = '<p class="text-center">暂无该地区物流资讯</p>';
+                        return;
+                    }
+                    
+                    // 最多显示3条新闻
+                    const maxDisplay = Math.min(3, newsCards.length);
+                    
+                    for (let i = 0; i < maxDisplay; i++) {
+                        const card = newsCards[i];
+                        const title = card.querySelector('.news-title').textContent;
+                        const date = card.querySelector('.news-date').textContent;
+                        const link = card.querySelector('a').getAttribute('href');
+                        
+                        // 创建新闻预览项
+                        const newsItem = document.createElement('div');
+                        newsItem.className = 'region-news-item';
+                        newsItem.innerHTML = `
+                            <a href="${link}">
+                                ${title}
+                                <span class="region-news-date">${date}</span>
+                            </a>
+                        `;
+                        
+                        container.appendChild(newsItem);
+                    }
+                })
+                .catch(error => {
+                    console.error('加载新闻失败:', error);
+                    container.innerHTML = '<p class="text-center">暂无该地区物流资讯</p>';
+                });
+        }
+    </script>
+</body>
+</html> 

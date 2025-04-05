@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北美地区物流资讯 - 迈格库</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .region-banner {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../assets/images/regions/north-america.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .banner-overlay {
+            padding: 0 20px;
+            text-align: center;
+        }
+        .banner-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .banner-description {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .news-list-container {
+            max-width: 900px;
+            margin: 0 auto 50px;
+            padding: 0 15px;
+        }
+        .news-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .news-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .news-card-content {
+            padding: 25px;
+        }
+        .news-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            color: #2c3e50;
+        }
+        .news-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .news-date {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .news-importance {
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .importance-normal {
+            background-color: #eee;
+            color: #555;
+        }
+        .importance-important {
+            background-color: #f39c12;
+            color: white;
+        }
+        .importance-very_important {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .news-excerpt {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .news-read-more {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .news-read-more:hover {
+            background-color: #2980b9;
+            color: white;
+            text-decoration: none;
+        }
+        .no-news {
+            padding: 40px;
+            text-align: center;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .no-news h3 {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        .update-info {
+            text-align: center;
+            font-size: 14px;
+            color: #95a5a6;
+            margin-top: 30px;
+        }
+        .new-label {
+            display: inline-block;
+            padding: 2px 6px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../../index.html">迈格库</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../index.html">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../about.html">关于我们</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="../index.html">物流资讯</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../contact.html">联系我们</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">北美地区物流资讯</h1>
+            <p class="banner-description">关注美国、加拿大等北美地区最新物流动态，包括港口状况、运费变化和政策更新。</p>
+        </div>
+    </div>
+
+    <div class="news-list-container">
+        <div class="news-filter mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0">北美地区资讯</h5>
+                </div>
+                <div>
+                    <a href="../index.html" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-arrow-left mr-1"></i> 返回区域选择
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- 最新文章 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区 <span class="new-label">新</span></h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2025-04-05
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">在加拿大跨境物流领域，大件货物（如家具、健身器材、建材等）的运输一直是中小卖家的痛点之一。许多卖家发现，自己的货物明明符合国内运输标准，却在加拿大频频被物流商拒收。究其原因，尺寸限制的认知偏差是核心问题。本文将深度解析6个常见误区，并提供可落地的解决方案，助您避开隐形雷区。 误区1：只关注单边长度，...</p>
+                <a href="./19.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 18 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">加拿大空派专线 </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2025-04-05
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">加拿大空派专线， UPS派送，时效好！价格优秀</p>
+                <a href="./18.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 17 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">加拿大商业大件查询 </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2025-04-05
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">加拿大商业大件查询 content</p>
+                <a href="./17.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 12 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">test物流咨询 </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2025-04-05
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">测试物流资讯</p>
+                <a href="./12.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 9 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">墨西哥跨境物流发展机遇 </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2024-03-01
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">随着USMCA协议的实施，墨西哥跨境物流面临新的发展机遇：1. 制造业转移带动物流需求 2. 边境物流基础设施升级 3. 数字化通关流程简化 4. 近岸外包趋势增强</p>
+                <a href="./9.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 8 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">加拿大物流配送网络优化方案 </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2024-03-05
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">针对加拿大广阔的地域特点，物流配送网络优化方案应考虑：1. 枢纽城市仓储布局 2. 季节性运输路线调整 3. 多式联运整合 4. 小型配送中心下沉</p>
+                <a href="./8.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 7 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">美国海关最新清关政策解读 </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2024-03-10
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">美国海关与边境保护局(CBP)最新发布的清关政策将于2024年4月15日生效。新政策主要涉及：1. 电子申报系统升级 2. 特定商品原产地标准调整 3. 关税结构变化</p>
+                <a href="./7.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 6 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">2024年北美物流市场趋势分析test </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 2024-03-15
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">随着电子商务的持续增长，2024年北美物流市场预计将呈现以下趋势：1. 最后一英里配送自动化 2. 环保物流解决方案需求增加 3. 区域性配送中心扩展 4. 跨境电商物流需求上升</p>
+                <a href="./6.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <!-- 文章 1 -->
+        <div class="news-card">
+            <div class="news-card-content">
+                <h2 class="news-title">洛杉矶港口拥堵情况缓解，集装箱吞吐量回升 </h2>
+                <div class="news-meta">
+                    <div class="news-date">
+                        <i class="far fa-calendar-alt"></i> 未知日期
+                    </div>
+                    <span class="news-importance importance-important">重要</span>
+                </div>
+                <p class="news-excerpt">据最新报道，洛杉矶港口的拥堵情况已显著缓解，集装箱吞吐量环比上月增长15%。港口管理局表示，这主要得益于新的调度系统和扩容工程的完成。此变化将有助于降低全球供应链的压力，预计运费可能在短期内出现下调。 拥堵缓解的主要原因 洛杉矶港务局负责人马克·塞罗卡在近期发布的声明中指出，港口拥堵情况的缓解主要得...</p>
+                <a href="./1.html" class="news-read-more">阅读全文</a>
+            </div>
+        </div>
+        
+
+        <div class="update-info">
+            <p>最后更新时间: <span id="lastUpdate"></span></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script>
+        // 显示最后更新时间
+        document.getElementById('lastUpdate').innerText = new Date().toLocaleString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    </script>
+</body>
+</html>
+    

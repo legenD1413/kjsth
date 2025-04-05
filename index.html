@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>物流服务网站 - 首页</title>
+    <title>迈格库 - 专业物流服务</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -21,10 +21,111 @@
             height: 25px;
         }
         
-        /* 空的主内容区域样式 */
-        .empty-content {
-            min-height: calc(100vh - 50px - 300px); /* 视窗高度减去header和footer的高度 */
-            padding: 50px 0; /* 添加一些上下内边距 */
+        /* 主内容区域样式 */
+        .main-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .main-content {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-right: 20px;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .service-card {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-card i {
+            font-size: 32px;
+            color: #0056b3;
+            margin-bottom: 15px;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .service-card p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .welcome-banner {
+            background-color: #0056b3;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .welcome-banner h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-banner p {
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .main-content {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -103,9 +204,63 @@
         </nav>
     </header>
     
-    <!-- 空的主要内容区域 -->
-    <div class="empty-content">
-        <!-- 这里不添加任何内容 -->
+    <!-- 主内容区域 -->
+    <div class="main-container">
+        <div class="main-content">
+            <div class="welcome-banner">
+                <h1>迈格库 - 您的全球物流专家</h1>
+                <p>我们为您提供全球范围内的专业物流解决方案，包括空运、海运、陆运和多式联运等服务，助力您的业务无缝拓展全球市场。</p>
+            </div>
+            
+            <h2>我们的服务</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <i class="fas fa-plane"></i>
+                    <h3>国际空运</h3>
+                    <p>快速可靠的国际空运服务，确保您的货物安全高效地运往全球各地。</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-ship"></i>
+                    <h3>海运服务</h3>
+                    <p>经济实惠的海运选择，适合大宗货物和非紧急运输需求。</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>公路运输</h3>
+                    <p>覆盖全球主要地区的公路运输网络，提供灵活的运输解决方案。</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-warehouse"></i>
+                    <h3>仓储服务</h3>
+                    <p>提供专业的仓储管理服务，包括库存管理、订单处理和配送等。</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>清关服务</h3>
+                    <p>专业的清关团队确保您的货物快速通过海关，减少延误和额外费用。</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-boxes"></i>
+                    <h3>物流解决方案</h3>
+                    <p>根据您的具体需求，提供量身定制的综合物流解决方案。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <!-- 物流新闻中心链接 -->
+            <div style="margin-bottom: 20px; text-align: center;">
+                <a href="news/index.html" style="display: inline-block; padding: 10px 15px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                    <i class="fas fa-newspaper"></i> 进入物流新闻中心
+                </a>
+            </div>
+            
+            <!-- 北美物流资讯 -->
+            <div id="north-america-news"></div>
+            
+            <!-- 中东物流资讯 -->
+            <div id="middle-east-news" style="margin-top: 30px;"></div>
+        </div>
     </div>
     
     <footer>
@@ -147,5 +302,18 @@
     
     <script src="assets/js/script.js"></script>
     <script src="assets/js/auth.js"></script>
+    <!-- 引入侧边栏新闻组件脚本 -->
+    <script src="assets/js/sidebar-news.js"></script>
+    
+    <script>
+        // 页面加载完成后初始化侧边栏新闻组件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化北美物流资讯
+            SidebarNews.init('north-america', 'north-america-news', '北美物流资讯', 3);
+            
+            // 初始化中东物流资讯
+            SidebarNews.init('middle-east', 'middle-east-news', '中东物流资讯', 3);
+        });
+    </script>
 </body>
 </html> 

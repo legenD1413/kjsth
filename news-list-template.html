@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区域物流资讯列表 - 物流服务网站</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* 全局字体设置 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        
+        /* 资讯列表页面特定样式 */
+        .news-list-container {
+            max-width: 1000px;
+            margin: 100px auto 40px;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            min-height: calc(80vh - 110px);
+        }
+        
+        .news-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .news-list-title {
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin: 0;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .news-list-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10%;
+            height: 80%;
+            width: 4px;
+            background: linear-gradient(to bottom, #3498db, #2980b9);
+            border-radius: 2px;
+        }
+        
+        .news-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .news-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .news-item:hover {
+            background-color: #f9f9f9;
+            transform: translateX(5px);
+        }
+        
+        .news-item-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .news-item-content {
+            flex-grow: 1;
+            margin-right: 1rem;
+        }
+        
+        .news-item-title {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .news-item-excerpt {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-item-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: #95a5a6;
+        }
+        
+        .news-item-date {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+        
+        .news-item-date i {
+            margin-right: 0.3rem;
+            font-size: 0.9rem;
+            color: #3498db;
+        }
+        
+        .news-item-badge {
+            position: absolute;
+            right: 1.2rem;
+            top: 1.2rem;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        .badge-normal {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            border: 1px solid #e9ecef;
+        }
+        
+        .badge-important {
+            background-color: #ebf5fb;
+            color: #3498db;
+            border: 1px solid #d6eaf8;
+        }
+        
+        .badge-very_important {
+            background-color: #fdedec;
+            color: #e74c3c;
+            border: 1px solid #f7d6d5;
+        }
+        
+        .loading-container {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+        
+        .no-news {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .error-container {
+            text-align: center;
+            padding: 2rem;
+            color: #e74c3c;
+        }
+        
+        .return-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.6rem 1.2rem;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        
+        .return-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .return-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .pagination li {
+            margin: 0 0.3rem;
+        }
+        
+        .pagination a, .pagination span {
+            display: block;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
+        }
+        
+        .pagination a {
+            color: #3498db;
+            background-color: #fff;
+        }
+        
+        .pagination a:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .pagination .active span {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .pagination .disabled span {
+            color: #bdc3c7;
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="物流服务网站Logo">
+                <span>物流服务</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-globe-americas"></i>
+                        区域
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="regions/north-america/index.html">北美</a></li>
+                        <li><a href="regions/south-america/index.html">南美</a></li>
+                        <li><a href="regions/europe/index.html">欧洲</a></li>
+                        <li><a href="regions/australia/index.html">澳洲</a></li>
+                        <li><a href="regions/middle-east/index.html">中东</a></li>
+                        <li><a href="regions/southeast-asia/index.html">东南亚</a></li>
+                        <li><a href="regions/africa/index.html">非洲</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        货品
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="products/regular/index.html">普货</a></li>
+                        <li><a href="products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="products/liquids/index.html">液体</a></li>
+                        <li><a href="products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="products/batteries/index.html">纯电池</a></li>
+                        <li><a href="products/electronic-with-battery/index.html">内电</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cube"></i>
+                        货型
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="cargo-types/standard/index.html">标准件</a></li>
+                        <li><a href="cargo-types/large/index.html">大件</a></li>
+                        <li><a href="cargo-types/extra-large/index.html">超大件</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-map-marker-alt"></i>
+                        地址
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="destinations/commercial/index.html">商业件</a></li>
+                        <li><a href="destinations/residential/index.html">私人地址件</a></li>
+                        <li><a href="destinations/fba/index.html">FBA</a></li>
+                        <li><a href="destinations/walmart/index.html">沃尔玛</a></li>
+                        <li><a href="destinations/overseas-warehouse/index.html">海外仓</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="news-list-container">
+        <div class="news-list-header">
+            <h1 class="news-list-title" id="region-title">区域物流资讯</h1>
+            <a href="javascript:history.back()" class="return-btn">
+                <i class="fas fa-arrow-left"></i>返回
+            </a>
+        </div>
+
+        <div id="news-list-content">
+            <div class="loading-container">
+                <i class="fas fa-spinner fa-spin"></i> 资讯加载中...
+            </div>
+        </div>
+
+        <div id="pagination-container"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 获取地区代码
+        function getRegionCode() {
+            // 根据URL确定地区代码
+            const path = window.location.pathname;
+            let region = 'global';
+            
+            if (path.includes('north-america')) {
+                region = 'north-america';
+            } else if (path.includes('middle-east')) {
+                region = 'middle-east';
+            } else if (path.includes('europe')) {
+                region = 'europe';
+            } else if (path.includes('asia')) {
+                region = 'asia';
+            } else if (path.includes('australia')) {
+                region = 'australia';
+            } else if (path.includes('africa')) {
+                region = 'africa';
+            } else if (path.includes('south-america')) {
+                region = 'south-america';
+            }
+            
+            return region;
+        }
+        
+        // 获取地区显示名称
+        function getRegionDisplayName(regionCode) {
+            const regionNames = {
+                'north-america': '北美',
+                'middle-east': '中东',
+                'europe': '欧洲',
+                'asia': '亚洲',
+                'australia': '澳洲',
+                'africa': '非洲',
+                'south-america': '南美',
+                'global': '全球'
+            };
+            return regionNames[regionCode] || '全球';
+        }
+        
+        // 格式化资讯重要性标签
+        function formatImportance(importance) {
+            const labels = {
+                'normal': '普通',
+                'important': '重要',
+                'very_important': '非常重要'
+            };
+            return labels[importance] || '普通';
+        }
+        
+        // 加载资讯列表
+        function loadNewsList() {
+            const region = getRegionCode();
+            const regionName = getRegionDisplayName(region);
+            
+            // 更新标题
+            document.title = `${regionName}物流资讯列表 - 物流服务网站`;
+            document.getElementById('region-title').textContent = `${regionName}物流资讯`;
+            
+            const contentContainer = document.getElementById('news-list-content');
+            
+            // 从WordPress API获取数据
+            const wordpressUrl = 'https://cms.kjsth.com';
+            fetch(`${wordpressUrl}/wp-json/maigeeku/v1/news-by-region/${region}?limit=10`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应异常');
+                    }
+                    return response.json();
+                })
+                .then(news => {
+                    if (!news || news.length === 0) {
+                        contentContainer.innerHTML = `<div class="no-news">暂无${regionName}区域资讯</div>`;
+                        return;
+                    }
+                    
+                    // 存储数据到localStorage
+                    let newsData = {};
+                    try {
+                        const storedData = localStorage.getItem('maigeeku_news_data');
+                        if (storedData) {
+                            newsData = JSON.parse(storedData);
+                        }
+                    } catch (e) {
+                        console.error('解析存储数据出错:', e);
+                    }
+                    
+                    newsData[region] = news;
+                    localStorage.setItem('maigeeku_news_data', JSON.stringify(newsData));
+                    
+                    // 渲染资讯列表
+                    renderNewsList(news, region);
+                })
+                .catch(error => {
+                    console.error('加载资讯列表失败:', error);
+                    contentContainer.innerHTML = '<div class="error-container">加载资讯列表失败，请稍后再试</div>';
+                });
+        }
+        
+        // 渲染资讯列表
+        function renderNewsList(newsList, region) {
+            const contentContainer = document.getElementById('news-list-content');
+            
+            let html = '<ul class="news-list">';
+            
+            newsList.forEach(item => {
+                const badgeClass = `badge-${item.importance}`;
+                const badgeText = formatImportance(item.importance);
+                
+                html += `
+                    <li class="news-item">
+                        <a href="news-detail.html?id=${item.id}&region=${region}" class="news-item-link">
+                            <div class="news-item-content">
+                                <h3 class="news-item-title">${item.title}</h3>
+                                <p class="news-item-excerpt">${item.excerpt || '暂无摘要'}</p>
+                                <div class="news-item-meta">
+                                    <div class="news-item-date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span>${item.date}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="news-item-badge ${badgeClass}">${badgeText}</span>
+                        </a>
+                    </li>
+                `;
+            });
+            
+            html += '</ul>';
+            
+            contentContainer.innerHTML = html;
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', loadNewsList);
+    </script>
+</body>
+</html> 
