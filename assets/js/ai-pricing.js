@@ -5,8 +5,8 @@
 
 // 预定义路线数据
 const routeData = {
-    'usa-air': {
-        title: '美国商业件空运专线',
+    'us-fba': {
+        title: '美国FBA专线',
         isHot: true,
         welcomeMessage: '您好！我是您的专属物流顾问，很高兴为您提供美国空运专线的咨询服务。您可以询问我任何关于价格、时效、货物要求等方面的问题。',
         features: [
