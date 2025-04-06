@@ -28,7 +28,7 @@ function initSidebarTools(containerId, sectionTitle, maxItems, category) {
     // 侧边栏数据（实际应用中可能从API加载）
     const sidebarTools = [
         {
-            title: '运费计算 - 迅速获取体积物流报价',
+            title: '运费计算 - 体积重计算器',
             category: '计算工具',
             url: '../static-tools/global/volumetric-weight-calculator.html',
             region: '全球'

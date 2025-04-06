@@ -1,0 +1,18 @@
+{
+  "name": "maigeeku-tools",
+  "version": "1.0.0",
+  "description": "迈格库网站工具集",
+  "main": "index.js",
+  "scripts": {
+    "optimize-images": "node image-optimizer.js",
+    "update-pages": "node update-framework.js",
+    "check-seo": "node seo-checker.js"
+  },
+  "author": "迈格库开发团队",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cheerio": "^1.0.0-rc.12",
+    "sharp": "^0.32.1"
+  }
+} 

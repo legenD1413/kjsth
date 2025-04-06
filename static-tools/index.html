@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>工具与指南 | 麦极客物流</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <!-- 首先加载全局CSS文件 -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <!-- 然后加载图标和字体 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -334,59 +337,7 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="main-nav">
-            <div class="logo">
-                <img src="../assets/images/logo.png" alt="麦极客物流Logo">
-                <span>麦极客物流</span>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-globe-americas"></i>
-                        区域
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../regions/north-america/index.html">北美</a></li>
-                        <li><a href="../regions/south-america/index.html">南美</a></li>
-                        <li><a href="../regions/europe/index.html">欧洲</a></li>
-                        <li><a href="../regions/australia/index.html">澳洲</a></li>
-                        <li><a href="../regions/middle-east/index.html">中东</a></li>
-                        <li><a href="../regions/southeast-asia/index.html">东南亚</a></li>
-                        <li><a href="../regions/africa/index.html">非洲</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-box"></i>
-                        货品
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../products/regular/index.html">普货</a></li>
-                        <li><a href="../products/cosmetics/index.html">化妆品</a></li>
-                        <li><a href="../products/liquids/index.html">液体</a></li>
-                        <li><a href="../products/e-cigarettes/index.html">电子烟</a></li>
-                        <li><a href="../products/batteries/index.html">电池</a></li>
-                        <li><a href="../products/electronic-with-battery/index.html">内电</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="../tools-guides/index.html" class="nav-link active">
-                        <i class="fas fa-tools"></i>
-                        工具与指南
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="../contact.html" class="nav-link">
-                        <i class="fas fa-envelope"></i>
-                        联系我们
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <header id="header"></header>
 
     <main>
         <div class="tools-container">
@@ -653,9 +604,7 @@
         </div>
     </main>
     
-    <footer>
-        <p>&copy; 2024 麦极客物流 | 让全球物流触手可及</p>
-    </footer>
+    <footer id="footer"></footer>
     
     <div id="sidebar-tools-container"></div>
     <script src="/static-tools/sidebar-tools.js"></script>
@@ -723,5 +672,8 @@
             regionFilter.addEventListener('change', filterTools);
         });
     </script>
+    
+    <!-- 使用相对路径加载组件脚本 -->
+    <script src="../assets/js/components.js"></script>
 </body>
 </html> 

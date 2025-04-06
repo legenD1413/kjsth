@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物流资讯列表 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* 资讯列表特定样式 */
+        .news-list-container {
+            max-width: 1200px;
+            margin: calc(var(--header-height) + 20px) auto 40px;
+            padding: 0 var(--site-padding);
+        }
+        
+        .news-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .news-header h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .news-header p {
+            color: #7f8c8d;
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 800px;
+        }
+        
+        .news-filter {
+            margin-bottom: 30px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .filter-tabs {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .filter-tabs li {
+            margin-right: 15px;
+        }
+        
+        .filter-tabs li:last-child {
+            margin-right: 0;
+        }
+        
+        .filter-tabs a {
+            display: block;
+            padding: 8px 15px;
+            color: #7f8c8d;
+            text-decoration: none;
+            border-radius: 5px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        
+        .filter-tabs a:hover {
+            background: #f8f9fa;
+        }
+        
+        .filter-tabs a.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .news-card-header {
+            padding: 15px;
+            border-bottom: 1px solid #f1f1f1;
+            position: relative;
+        }
+        
+        .news-card-title {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 50px;
+        }
+        
+        .news-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+        
+        .news-card-meta div {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-card-meta i {
+            margin-right: 5px;
+            color: #3498db;
+        }
+        
+        .news-importance-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .importance-normal {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            border: 1px solid #e9ecef;
+        }
+        
+        .importance-important {
+            background-color: #ebf5fb;
+            color: #3498db;
+            border: 1px solid #d6eaf8;
+        }
+        
+        .importance-very_important {
+            background-color: #fdedec;
+            color: #e74c3c;
+            border: 1px solid #f7d6d5;
+        }
+        
+        .news-card-content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-card-excerpt {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-card-link {
+            align-self: flex-end;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .news-card-link i {
+            margin-left: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .news-card-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        .news-loading {
+            text-align: center;
+            padding: 50px 0;
+            color: #7f8c8d;
+        }
+        
+        .news-loading i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .news-empty {
+            text-align: center;
+            padding: 50px 0;
+            color: #7f8c8d;
+        }
+        
+        .load-more {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 10px;
+            text-align: center;
+            background: white;
+            color: #3498db;
+            border: 1px solid #3498db;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .load-more:hover {
+            background: #f0f7ff;
+        }
+        
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .news-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header"></header>
+
+    <main class="main-container">
+        <div class="news-list-container">
+            <div class="news-header">
+                <h1>物流资讯</h1>
+                <p>及时了解全球物流动态，掌握最新航运资讯、港口消息和物流政策变化，助您做出更明智的物流决策。</p>
+            </div>
+            
+            <div class="news-filter">
+                <ul class="filter-tabs" id="region-tabs">
+                    <li><a href="#" data-region="all" class="active">全部区域</a></li>
+                    <li><a href="#" data-region="global">全球</a></li>
+                    <li><a href="#" data-region="north-america">北美</a></li>
+                    <li><a href="#" data-region="europe">欧洲</a></li>
+                    <li><a href="#" data-region="asia">亚洲</a></li>
+                    <li><a href="#" data-region="middle-east">中东</a></li>
+                    <li><a href="#" data-region="australia">澳洲</a></li>
+                    <li><a href="#" data-region="africa">非洲</a></li>
+                    <li><a href="#" data-region="south-america">南美</a></li>
+                </ul>
+            </div>
+            
+            <div id="news-container">
+                <div class="news-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>正在加载资讯...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer"></footer>
+
+    <!-- 使用JavaScript加载组件 -->
+    <script src="/assets/js/components.js"></script>
+    <script>
+        // 获取URL参数
+        function getUrlParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        
+        // 格式化资讯重要性标签
+        function formatImportance(importance) {
+            const labels = {
+                'normal': '普通',
+                'important': '重要',
+                'very_important': '非常重要'
+            };
+            return labels[importance] || '普通';
+        }
+        
+        // 获取地区显示名称
+        function getRegionDisplayName(regionCode) {
+            const regionNames = {
+                'all': '全部区域',
+                'global': '全球',
+                'north-america': '北美',
+                'europe': '欧洲',
+                'asia': '亚洲',
+                'middle-east': '中东',
+                'australia': '澳洲',
+                'africa': '非洲',
+                'south-america': '南美'
+            };
+            return regionNames[regionCode] || '全球';
+        }
+        
+        // 截取字符串
+        function truncate(str, length) {
+            if (str.length <= length) return str;
+            return str.substring(0, length) + '...';
+        }
+        
+        // 加载资讯列表
+        function loadNewsList(region = 'all') {
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '<div class="news-loading"><i class="fas fa-spinner fa-spin"></i><p>正在加载资讯...</p></div>';
+            
+            // 更新标题
+            document.title = `${getRegionDisplayName(region)}物流资讯 - 迈格库物流`;
+            
+            // 更新活跃标签
+            const tabs = document.querySelectorAll('#region-tabs a');
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-region') === region) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // 模拟API请求延迟
+            setTimeout(() => {
+                // 模拟资讯数据
+                let newsData = [];
+                
+                if (region === 'north-america' || region === 'all') {
+                    newsData = newsData.concat([
+                        {
+                            id: 1,
+                            title: '北美航线运费上涨通知',
+                            excerpt: '由于近期北美地区港口拥堵情况加剧，以及燃油价格上涨等因素影响，我司北美航线运费将于2023年11月1日起进行调整。',
+                            date: '2023-10-25',
+                            importance: 'important',
+                            region: 'north-america'
+                        },
+                        {
+                            id: 2,
+                            title: '美国西海岸港口工人谈判最新进展',
+                            excerpt: '美国西海岸港口工人与航运公司的劳资谈判仍在进行中，本轮谈判结果将直接影响未来港口运营稳定性。',
+                            date: '2023-10-20',
+                            importance: 'normal',
+                            region: 'north-america'
+                        },
+                        {
+                            id: 3,
+                            title: '加拿大海关新政策将于下月实施',
+                            excerpt: '加拿大边境服务局发布通知，将对进口电子产品实施新的申报规定，出口商需提前准备相关文件。',
+                            date: '2023-10-15',
+                            importance: 'important',
+                            region: 'north-america'
+                        }
+                    ]);
+                }
+                
+                if (region === 'europe' || region === 'all') {
+                    newsData = newsData.concat([
+                        {
+                            id: 4,
+                            title: '欧盟碳边境调整机制正式生效',
+                            excerpt: '欧盟碳边境调整机制(CBAM)将于明年正式实施，这将影响出口至欧盟的高碳产品成本结构。',
+                            date: '2023-10-18',
+                            importance: 'very_important',
+                            region: 'europe'
+                        }
+                    ]);
+                }
+                
+                // 渲染资讯列表
+                renderNewsList(newsData, region);
+            }, 1000);
+        }
+        
+        // 渲染资讯列表
+        function renderNewsList(newsData, region) {
+            const newsContainer = document.getElementById('news-container');
+            
+            if (newsData.length === 0) {
+                newsContainer.innerHTML = `
+                    <div class="news-empty">
+                        <p>暂无${getRegionDisplayName(region)}相关资讯</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div class="news-grid">';
+            
+            newsData.forEach(item => {
+                html += `
+                    <div class="news-card">
+                        <div class="news-card-header">
+                            <h2 class="news-card-title">${item.title}</h2>
+                            <div class="news-card-meta">
+                                <div>
+                                    <i class="far fa-calendar-alt"></i>
+                                    ${item.date}
+                                </div>
+                                <div>
+                                    <i class="fas fa-globe-asia"></i>
+                                    ${getRegionDisplayName(item.region)}
+                                </div>
+                            </div>
+                            <div class="news-importance-tag importance-${item.importance}">
+                                ${formatImportance(item.importance)}
+                            </div>
+                        </div>
+                        <div class="news-card-content">
+                            <div class="news-card-excerpt">${item.excerpt}</div>
+                            <a href="/pages/news/news-detail.html?id=${item.id}&region=${item.region}" class="news-card-link">
+                                阅读全文 <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            
+            if (newsData.length >= 10) {
+                html += '<button class="load-more" id="load-more">加载更多</button>';
+            }
+            
+            newsContainer.innerHTML = html;
+            
+            // 加载更多按钮事件
+            const loadMoreBtn = document.getElementById('load-more');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    // 这里应该是异步加载更多数据的逻辑
+                    alert('加载更多功能将在后续版本中实现');
+                });
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取URL中的区域参数
+            const regionParam = getUrlParam('region');
+            
+            // 根据URL参数加载特定区域的资讯，如果没有参数则加载全部
+            loadNewsList(regionParam || 'all');
+            
+            // 为区域标签添加点击事件
+            const tabs = document.querySelectorAll('#region-tabs a');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const region = this.getAttribute('data-region');
+                    
+                    // 更新URL，但不刷新页面
+                    const url = region === 'all' 
+                        ? window.location.pathname 
+                        : window.location.pathname + '?region=' + region;
+                    window.history.pushState({region}, '', url);
+                    
+                    // 加载选中区域的资讯
+                    loadNewsList(region);
+                });
+            });
+            
+            // 处理浏览器前进/后退按钮事件
+            window.addEventListener('popstate', function(e) {
+                const region = e.state && e.state.region ? e.state.region : (getUrlParam('region') || 'all');
+                loadNewsList(region);
+            });
+        });
+    </script>
+</body>
+</html> 

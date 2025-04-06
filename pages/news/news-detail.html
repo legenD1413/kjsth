@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物流资讯详情 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 全局字体设置 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        
+        /* 资讯详情页面特定样式 */
+        .news-detail-container {
+            max-width: 900px;
+            margin: calc(var(--header-height) + 20px) auto 40px;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            min-height: calc(80vh - 110px);
+        }
+        
+        .news-detail-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .news-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.3;
+        }
+        
+        .news-meta {
+            display: flex;
+            align-items: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .news-date {
+            display: flex;
+            align-items: center;
+            margin-right: 1.5rem;
+        }
+        
+        .news-date i, .news-region i {
+            margin-right: 0.5rem;
+            color: #3498db;
+        }
+        
+        .news-region {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-importance {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .importance-normal {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            border: 1px solid #e9ecef;
+        }
+        
+        .importance-important {
+            background-color: #ebf5fb;
+            color: #3498db;
+            border: 1px solid #d6eaf8;
+        }
+        
+        .importance-very_important {
+            background-color: #fdedec;
+            color: #e74c3c;
+            border: 1px solid #f7d6d5;
+        }
+        
+        .news-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .news-content p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .back-to-list {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .back-to-list i {
+            margin-right: 0.5rem;
+        }
+        
+        .back-to-list:hover {
+            background-color: #e9ecef;
+        }
+        
+        .news-loading {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+        
+        .news-error {
+            text-align: center;
+            padding: 2rem;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <header id="header"></header>
+
+    <main class="main-container">
+        <div class="news-detail-container">
+            <div id="news-content">
+                <div class="news-loading">
+                    <i class="fas fa-spinner fa-spin"></i> 资讯加载中...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer"></footer>
+
+    <!-- 使用JavaScript加载组件 -->
+    <script src="/assets/js/components.js"></script>
+    <script>
+        // 获取URL参数
+        function getUrlParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        
+        // 格式化资讯重要性标签
+        function formatImportance(importance) {
+            const labels = {
+                'normal': '普通',
+                'important': '重要',
+                'very_important': '非常重要'
+            };
+            return labels[importance] || '普通';
+        }
+        
+        // 获取地区显示名称
+        function getRegionDisplayName(regionCode) {
+            const regionNames = {
+                'north-america': '北美',
+                'middle-east': '中东',
+                'europe': '欧洲',
+                'asia': '亚洲',
+                'australia': '澳洲',
+                'africa': '非洲',
+                'south-america': '南美',
+                'global': '全球'
+            };
+            return regionNames[regionCode] || '全球';
+        }
+        
+        // 加载资讯详情
+        function loadNewsDetail() {
+            const newsId = getUrlParam('id');
+            const region = getUrlParam('region');
+            const contentContainer = document.getElementById('news-content');
+            
+            if (!newsId || !region) {
+                contentContainer.innerHTML = '<div class="news-error">资讯ID或地区参数缺失</div>';
+                return;
+            }
+            
+            // 尝试从本地存储获取数据
+            try {
+                const newsDataStr = localStorage.getItem('maigeeku_news_data');
+                if (newsDataStr) {
+                    const newsData = JSON.parse(newsDataStr);
+                    if (newsData[region]) {
+                        const newsItem = newsData[region].find(item => item.id === parseInt(newsId));
+                        if (newsItem) {
+                            renderNewsDetail(newsItem, region);
+                            return;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('从本地存储获取新闻数据失败:', e);
+            }
+            
+            // 如果本地存储没有数据，从服务器获取
+            fetchNewsDetail(newsId, region);
+        }
+        
+        // 从服务器获取资讯详情
+        function fetchNewsDetail(newsId, region) {
+            const contentContainer = document.getElementById('news-content');
+            
+            // 模拟API请求
+            setTimeout(() => {
+                // 模拟数据
+                const newsItem = {
+                    id: parseInt(newsId),
+                    title: '北美航线运费上涨通知',
+                    content: `<p>尊敬的客户：</p>
+                        <p>由于近期北美地区港口拥堵情况加剧，以及燃油价格上涨等因素影响，我司北美航线运费将于2023年11月1日起进行调整。</p>
+                        <p>具体调整内容如下：</p>
+                        <ul>
+                            <li>美国西海岸航线：上调200美元/标准箱</li>
+                            <li>美国东海岸航线：上调300美元/标准箱</li>
+                            <li>加拿大航线：上调250美元/标准箱</li>
+                        </ul>
+                        <p>此次调整是基于当前航运市场实际情况所做的必要措施，我们将尽最大努力减少此次调整对您业务的影响。</p>
+                        <p>如您有任何疑问，请随时联系您的客户经理。</p>
+                        <p>感谢您对我司一直以来的支持与理解！</p>`,
+                    date: '2023-10-25',
+                    importance: 'important',
+                    region: region
+                };
+                
+                renderNewsDetail(newsItem, region);
+            }, 1000);
+        }
+        
+        // 渲染资讯详情
+        function renderNewsDetail(newsItem, region) {
+            const contentContainer = document.getElementById('news-content');
+            const regionName = getRegionDisplayName(region);
+            
+            const html = `
+                <div class="news-detail-header">
+                    <h1 class="news-title">${newsItem.title}</h1>
+                    <div class="news-meta">
+                        <div class="news-date">
+                            <i class="far fa-calendar-alt"></i>
+                            ${newsItem.date}
+                        </div>
+                        <div class="news-region">
+                            <i class="fas fa-globe-asia"></i>
+                            ${regionName}
+                        </div>
+                    </div>
+                    <div class="news-importance importance-${newsItem.importance}">
+                        ${formatImportance(newsItem.importance)}
+                    </div>
+                </div>
+                <div class="news-content">
+                    ${newsItem.content}
+                </div>
+                <a href="/pages/news/news-list.html?region=${region}" class="back-to-list">
+                    <i class="fas fa-arrow-left"></i>
+                    返回资讯列表
+                </a>
+            `;
+            
+            contentContainer.innerHTML = html;
+            
+            // 更新页面标题
+            document.title = `${newsItem.title} - 迈格库物流`;
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', loadNewsDetail);
+    </script>
+</body>
+</html> 

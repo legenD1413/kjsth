@@ -1,0 +1,85 @@
+/* global.css - 全局样式变量和基础样式 */
+
+:root {
+    /* 布局变量 */
+    --site-max-width: 1200px;
+    --site-padding: 20px;
+    --header-height: 48px;
+    --footer-padding: 2rem 0;
+    
+    /* 颜色变量 */
+    --primary-color: #0071e3;
+    --text-color: #1d1d1f;
+    --light-bg: #f5f5f7;
+    --border-color: rgba(0, 0, 0, 0.05);
+    
+    /* 字体和排版 */
+    --body-font: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+    --nav-item-spacing: 48px;
+}
+
+/* 全局字体设置 - 采用Apple风格字体 */
+body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+    font-family: var(--body-font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 重置基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* 辅助类 */
+.text-center {
+    text-align: center;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin: 0 auto;
+    padding: 0 var(--site-padding);
+}
+
+/* 响应式断点 */
+@media (max-width: 1200px) {
+    :root {
+        --site-max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --site-padding: 16px;
+        --nav-item-spacing: 32px;
+    }
+}

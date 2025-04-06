@@ -14,13 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 如果用户已登录但访问登录页，重定向到用户中心
   if ((isLoginPage || isRegisterPage) && isLoggedIn()) {
-    window.location.href = 'user-profile.html';
+    window.location.href = '/pages/account/user-profile.html';
     return;
   }
 
   // 如果用户未登录但访问用户中心，重定向到登录页
   if (isProfilePage && !isLoggedIn()) {
-    window.location.href = 'login.html';
+    window.location.href = '/pages/account/auth/login.html';
     return;
   }
 
@@ -131,7 +131,7 @@ function loginUser(usernameOrEmail, password, rememberMe) {
       }
       
       // 重定向到用户中心
-      window.location.href = 'user-profile.html';
+      window.location.href = '/pages/account/user-profile.html';
     } else {
       // 显示登录失败错误
       showError('login-error', '用户名或密码不正确', true);
@@ -327,7 +327,7 @@ function registerUser(firstName, lastName, email, phone, username, password, com
     
     // 显示成功消息并重定向
     alert('注册成功！即将跳转到用户中心');
-    window.location.href = 'user-profile.html';
+    window.location.href = '/pages/account/user-profile.html';
   }, 1500); // 模拟网络延迟
 }
 
@@ -564,7 +564,7 @@ function isValidPhone(phone) {
 function logout() {
   localStorage.removeItem('user');
   localStorage.removeItem('auth_expires');
-  window.location.href = 'login.html';
+  window.location.href = '/pages/account/auth/login.html';
 }
 
 // 处理登出按钮点击事件

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>体积重计算器 - 工具与指南 | 麦极客物流</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* 全局字体设置 - 采用Apple风格字体 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 重置一些基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
+        }
+        
+        /* 工具详情页特定样式 */
+        .tool-container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 12px;
+        }
+        
+        .tool-header {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .tool-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin: 0 0 1rem 0;
+        }
+        
+        .tool-meta {
+            display: flex;
+            align-items: center;
+            color: #6e6e73;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .tool-date, .tool-category, .tool-region {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tool-meta i {
+            margin-right: 0.5rem;
+            color: #0071e3;
+        }
+        
+        .tool-importance {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .importance-normal {
+            background-color: #f5f5f7;
+            color: #6e6e73;
+        }
+        
+        .tool-content {
+            color: #1d1d1f;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .tool-content p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .tool-content h2 {
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            font-weight: 500;
+        }
+        
+        .tool-content h3 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+            font-weight: 500;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .tool-content h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+            bottom: 0.2rem;
+            width: 4px;
+            background-color: #0071e3;
+            border-radius: 2px;
+        }
+        
+        /* 互动工具区域 */
+        .interactive-tool {
+            background-color: #f5f5f7;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .interactive-tool h3 {
+            margin-top: 0;
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .interactive-tool h3::before {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #d2d2d7;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 0 2px rgba(0,113,227,0.2);
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            background-color: #0071e3;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0077ed;
+        }
+        
+        .tool-result {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            display: none;
+            border: 1px solid #d2d2d7;
+        }
+        
+        /* 相关工具区域 */
+        .related-tools {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .related-tools h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .related-tools-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .related-tools-list li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .related-tools-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .related-tool-link {
+            display: flex;
+            align-items: center;
+            color: #1d1d1f;
+            text-decoration: none;
+        }
+        
+        .related-tool-link:hover {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        
+        .related-tool-link i {
+            color: #0071e3;
+            margin-right: 0.7rem;
+            font-size: 0.9rem;
+        }
+        
+        /* 导航和返回按钮 */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            margin-top: 2rem;
+        }
+        
+        .back-link:hover {
+            background-color: #e8e8ed;
+            color: #0071e3;
+        }
+        
+        .back-link i {
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1.5rem;
+                margin-top: 60px;
+            }
+            
+            .tool-title {
+                font-size: 1.5rem;
+            }
+            
+            .tool-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .tool-importance {
+                position: static;
+                margin-top: 1rem;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../assets/images/logo.png" alt="麦极客物流Logo">
+                <span>麦极客物流</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-globe-americas"></i>
+                        区域
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../../regions/north-america/index.html">北美</a></li>
+                        <li><a href="../../regions/south-america/index.html">南美</a></li>
+                        <li><a href="../../regions/europe/index.html">欧洲</a></li>
+                        <li><a href="../../regions/australia/index.html">澳洲</a></li>
+                        <li><a href="../../regions/middle-east/index.html">中东</a></li>
+                        <li><a href="../../regions/southeast-asia/index.html">东南亚</a></li>
+                        <li><a href="../../regions/africa/index.html">非洲</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        货品
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../../products/regular/index.html">普货</a></li>
+                        <li><a href="../../products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="../../products/liquids/index.html">液体</a></li>
+                        <li><a href="../../products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="../../products/batteries/index.html">电池</a></li>
+                        <li><a href="../../products/electronic-with-battery/index.html">内电</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="../../tools-guides/index.html" class="nav-link active">
+                        <i class="fas fa-tools"></i>
+                        工具与指南
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../contact.html" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        联系我们
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="tool-container">
+            <article>
+                <div class="tool-header">
+                    <h1 class="tool-title">体积重计算器</h1>
+                    <div class="tool-meta">
+                        <div class="tool-date">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>2025-04-06</span>
+                        </div>
+                        <div class="tool-category">
+                            <i class="fas fa-folder"></i>
+                            <span>计算工具</span>
+                        </div>
+                        <div class="tool-region">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>全球</span>
+                        </div>
+                    </div>
+                    <div class="tool-importance importance-normal">普通</div>
+                </div>
+                
+                <div class="tool-content">
+                    <p>体积重是国际物流行业计算运费的重要指标，特别是对于体积大但实际重量轻的货物。不同地区和物流公司的体积重计算公式可能有所不同，本工具提供了最常用的计算方法。</p>
+                    
+                    <h3>什么是体积重？</h3>
+                    <p>体积重（Volumetric Weight）是物流行业用来计费的一种计量单位，也称为空间重量。它基于货物的体积而非实际重量计算。当货物的体积重大于实际重量时，物流公司通常会按照体积重收费，因为大体积货物占用了更多的运输空间。</p>
+                    
+                    <h3>体积重计算方法</h3>
+                    <p>国际通用的体积重计算公式为：</p>
+                    <p><strong>体积重(kg) = 长(cm) × 宽(cm) × 高(cm) ÷ 体积重系数</strong></p>
+                    <p>不同的运输方式和地区，体积重系数也不同：</p>
+                    <ul>
+                        <li>国际空运一般使用 6000 为系数</li>
+                        <li>快递和小包通常使用 5000 为系数</li>
+                        <li>北美地区部分专线使用 4500 为系数</li>
+                    </ul>
+                    
+                    <h3>计算实例</h3>
+                    <p>例如：一个包裹的尺寸为 40cm × 30cm × 20cm，实际重量为 2kg。</p>
+                    <p>按国际空运标准计算：40 × 30 × 20 ÷ 6000 = 4kg</p>
+                    <p>因为体积重(4kg)大于实际重量(2kg)，所以物流公司会按照4kg收费。</p>
+                </div>
+                
+                <!-- 互动工具区域 -->
+                <div class="interactive-tool">
+                    <h3>体积重在线计算工具</h3>
+                    <div class="tool-form">
+                        <div class="form-group">
+                            <label class="form-label">长度 (cm)</label>
+                            <input type="number" id="length" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">宽度 (cm)</label>
+                            <input type="number" id="width" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">高度 (cm)</label>
+                            <input type="number" id="height" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">实际重量 (kg)</label>
+                            <input type="number" id="actual-weight" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">运输类型</label>
+                            <select id="shipping-type" class="form-control">
+                                <option value="6000">国际空运 (系数: 6000)</option>
+                                <option value="5000">国际快递和小包 (系数: 5000)</option>
+                                <option value="4500">北美专线 (系数: 4500)</option>
+                                <option value="custom">自定义系数</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="custom-divisor-group" style="display: none;">
+                            <label class="form-label">自定义系数</label>
+                            <input type="number" id="custom-divisor" class="form-control" value="6000" min="1">
+                        </div>
+                        <button id="calculate-btn" class="btn-primary">计算体积重</button>
+                    </div>
+                    <div id="result" class="tool-result"></div>
+                </div>
+                
+                <!-- 相关工具 -->
+                <div class="related-tools">
+                    <h4>相关工具</h4>
+                    <ul class="related-tools-list">
+                        <li>
+                            <a href="packaging-optimization.html" class="related-tool-link">
+                                <i class="fas fa-box"></i>
+                                包装指南 - 优化包装方法
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <a href="../../tools-guides/index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    返回工具列表
+                </a>
+            </article>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 麦极客物流 | 让全球物流触手可及</p>
+    </footer>
+    
+    <!-- 工具特定的JavaScript代码 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const lengthInput = document.getElementById('length');
+            const widthInput = document.getElementById('width');
+            const heightInput = document.getElementById('height');
+            const actualWeightInput = document.getElementById('actual-weight');
+            const shippingTypeSelect = document.getElementById('shipping-type');
+            const customDivisorGroup = document.getElementById('custom-divisor-group');
+            const customDivisorInput = document.getElementById('custom-divisor');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultDiv = document.getElementById('result');
+            
+            // 显示/隐藏自定义系数输入框
+            shippingTypeSelect.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customDivisorGroup.style.display = 'block';
+                } else {
+                    customDivisorGroup.style.display = 'none';
+                }
+            });
+            
+            // 点击计算按钮
+            calculateBtn.addEventListener('click', function() {
+                // 获取输入值
+                const length = parseFloat(lengthInput.value);
+                const width = parseFloat(widthInput.value);
+                const height = parseFloat(heightInput.value);
+                const actualWeight = parseFloat(actualWeightInput.value);
+                
+                // 验证输入
+                if (isNaN(length) || isNaN(width) || isNaN(height)) {
+                    resultDiv.innerHTML = '<p class="text-danger">请输入有效的包裹尺寸</p>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                if (length <= 0 || width <= 0 || height <= 0) {
+                    resultDiv.innerHTML = '<p class="text-danger">尺寸必须大于零</p>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                // 获取体积重系数
+                let divisor = parseFloat(shippingTypeSelect.value);
+                if (shippingTypeSelect.value === 'custom') {
+                    divisor = parseFloat(customDivisorInput.value);
+                    if (isNaN(divisor) || divisor <= 0) {
+                        resultDiv.innerHTML = '<p class="text-danger">请输入有效的体积重系数</p>';
+                        resultDiv.style.display = 'block';
+                        return;
+                    }
+                }
+                
+                // 计算体积重
+                const volumeWeight = (length * width * height) / divisor;
+                const volumeWeightRounded = Math.round(volumeWeight * 100) / 100; // 保留两位小数
+                
+                // 判断计费重量
+                let chargeableWeight = volumeWeightRounded;
+                let weightType = '体积重';
+                
+                if (!isNaN(actualWeight) && actualWeight > 0) {
+                    if (actualWeight > volumeWeightRounded) {
+                        chargeableWeight = actualWeight;
+                        weightType = '实际重量';
+                    }
+                }
+                
+                // 显示结果
+                let resultHTML = `
+                    <h4 style="margin-top: 0;">计算结果</h4>
+                    <p>包裹尺寸: ${length} × ${width} × ${height} cm</p>
+                    <p>体积: ${length * width * height} cm³</p>
+                    <p>体积重: ${volumeWeightRounded} kg</p>
+                `;
+                
+                if (!isNaN(actualWeight) && actualWeight > 0) {
+                    resultHTML += `
+                        <p>实际重量: ${actualWeight} kg</p>
+                        <p>计费重量: ${chargeableWeight} kg (${weightType})</p>
+                    `;
+                } else {
+                    resultHTML += `<p>计费重量: ${chargeableWeight} kg (体积重)</p>`;
+                }
+                
+                resultDiv.innerHTML = resultHTML;
+                resultDiv.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>全球物流新闻中心 - 迈格库</title>
+    <!-- 首先加载全局CSS文件 -->
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <!-- 然后加载外部库和自定义样式 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <style>
         body {
             font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
@@ -129,40 +132,7 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="main-nav">
-            <div class="logo">
-                <img src="../assets/images/logo.png" alt="迈格库Logo">
-                <span>迈格库</span>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="../index.html" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        首页
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-info-circle"></i>
-                        关于我们
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link active">
-                        <i class="fas fa-newspaper"></i>
-                        物流资讯
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-envelope"></i>
-                        联系我们
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <header id="header"></header>
 
     <div class="news-banner">
         <div class="container">
@@ -283,41 +253,7 @@
         </div>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>关于我们</h3>
-                <p>迈格库是一家专业的国际物流服务提供商，致力于为客户提供高效、可靠的全球物流解决方案。</p>
-            </div>
-            <div class="footer-section">
-                <h3>快速链接</h3>
-                <ul>
-                    <li><a href="../index.html">首页</a></li>
-                    <li><a href="#">服务</a></li>
-                    <li><a href="#">关于我们</a></li>
-                    <li><a href="#">联系我们</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>联系方式</h3>
-                <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区建国路88号</p>
-                <p><i class="fas fa-phone"></i> +86 10 1234 5678</p>
-                <p><i class="fas fa-envelope"></i> info@maigeeku.com</p>
-            </div>
-            <div class="footer-section">
-                <h3>关注我们</h3>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-weixin"></i></a>
-                    <a href="#"><i class="fab fa-weibo"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 迈格库. All rights reserved.</p>
-        </div>
-    </footer>
+    <footer id="footer"></footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -395,5 +331,7 @@
                 });
         }
     </script>
+    <!-- 使用相对路径加载组件脚本 -->
+    <script src="../assets/js/components.js"></script>
 </body>
 </html> 

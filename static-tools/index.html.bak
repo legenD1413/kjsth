@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具与指南 | 麦极客物流</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* 全局字体设置 - 采用Apple风格字体 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 重置一些基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
+        }
+        
+        /* 工具列表页特定样式 */
+        .tools-container {
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        
+        .tools-description {
+            color: #6e6e73;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+        
+        .tools-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .tools-header-left {
+            max-width: 800px;
+        }
+        
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            background-color: #0071e3;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        
+        .view-all-btn:hover {
+            background-color: #0077ed;
+        }
+        
+        .view-all-btn i {
+            margin-left: 0.5rem;
+        }
+        
+        .tools-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-group {
+            margin-right: 2rem;
+        }
+        
+        .filter-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #1d1d1f;
+        }
+        
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #d2d2d7;
+            background-color: white;
+            font-size: 0.9rem;
+            min-width: 200px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tool-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+        }
+        
+        .tool-card-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #f5f5f7;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #0071e3;
+            font-size: 1.5rem;
+        }
+        
+        .tool-card-title {
+            flex: 1;
+        }
+        
+        .tool-card-title h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0 0 0.5rem 0;
+            color: #1d1d1f;
+        }
+        
+        .tool-card-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .badge-guides {
+            background-color: #f5f5f7;
+            color: #6e6e73;
+        }
+        
+        .badge-calculators {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .badge-forms {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .badge-regulations {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        
+        .badge-interactive {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .tool-card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-card-desc {
+            color: #6e6e73;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+        
+        .tool-card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #86868b;
+            font-size: 0.8rem;
+        }
+        
+        .tool-card-meta > div {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tool-card-meta i {
+            margin-right: 0.3rem;
+        }
+        
+        .tool-card-link {
+            margin-top: 1rem;
+            text-align: right;
+        }
+        
+        .tool-card-link a {
+            color: #0071e3;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .tool-card-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .tool-card-link i {
+            margin-left: 0.3rem;
+        }
+        
+        .important-marker {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-top: 50px solid #bf4800;
+            border-left: 50px solid transparent;
+        }
+        
+        .critical-marker {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-top: 50px solid #bf0000;
+            border-left: 50px solid transparent;
+        }
+        
+        .no-tools-msg {
+            grid-column: 1 / -1;
+            background-color: #f5f5f7;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px;
+            color: #6e6e73;
+        }
+        
+        /* 底部查看全部按钮 */
+        .view-all-container {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .view-all-btn-bottom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            background-color: #0071e3;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-width: 200px;
+        }
+        
+        .view-all-btn-bottom:hover {
+            background-color: #0077ed;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .view-all-btn-bottom i {
+            margin-left: 0.8rem;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .tools-container {
+                padding: 1.5rem;
+                margin-top: 60px;
+            }
+            
+            .page-title {
+                font-size: 1.7rem;
+            }
+            
+            .tools-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .filter-group {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            .filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="麦极客物流Logo">
+                <span>麦极客物流</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-globe-americas"></i>
+                        区域
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../regions/north-america/index.html">北美</a></li>
+                        <li><a href="../regions/south-america/index.html">南美</a></li>
+                        <li><a href="../regions/europe/index.html">欧洲</a></li>
+                        <li><a href="../regions/australia/index.html">澳洲</a></li>
+                        <li><a href="../regions/middle-east/index.html">中东</a></li>
+                        <li><a href="../regions/southeast-asia/index.html">东南亚</a></li>
+                        <li><a href="../regions/africa/index.html">非洲</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        货品
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../products/regular/index.html">普货</a></li>
+                        <li><a href="../products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="../products/liquids/index.html">液体</a></li>
+                        <li><a href="../products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="../products/batteries/index.html">电池</a></li>
+                        <li><a href="../products/electronic-with-battery/index.html">内电</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="../tools-guides/index.html" class="nav-link active">
+                        <i class="fas fa-tools"></i>
+                        工具与指南
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../contact.html" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        联系我们
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="tools-container">
+            <div class="tools-header">
+                <div class="tools-header-left">
+                    <h1 class="page-title">工具与指南</h1>
+                    <p class="tools-description">欢迎使用麦极客物流提供的工具与指南。这里有各种计算工具、指南文档、表格文件和法规解读，帮助您更轻松地处理物流相关事务。</p>
+                </div>
+                <a href="all-tools.html" class="view-all-btn">
+                    查看全部 <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="tools-filters">
+                <div class="filter-group">
+                    <label class="filter-label" for="category-filter">分类</label>
+                    <select class="filter-select" id="category-filter">
+                        <option value="all">全部分类</option>
+                        <option value="calculators">计算工具</option>
+                        <option value="guides">指南文档</option>
+                        <option value="forms">表格文档</option>
+                        <option value="regulations">法规解读</option>
+                        <option value="interactive">互动工具</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label" for="region-filter">地区</label>
+                    <select class="filter-select" id="region-filter">
+                        <option value="all">全部地区</option>
+                        <option value="global">全球</option>
+                        <option value="north-america">北美</option>
+                        <option value="south-america">南美</option>
+                        <option value="europe">欧洲</option>
+                        <option value="australia">澳洲</option>
+                        <option value="middle-east">中东</option>
+                        <option value="southeast-asia">东南亚</option>
+                        <option value="africa">非洲</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="tools-grid" id="tools-grid">
+                <!-- 指南文档 - 北美地区 -->
+                <a href="north-america/canada-customs-duty-lookup.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>加拿大海关关税查询</h3>
+                            <span class="tool-card-badge badge-guides">指南文档</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">帮助出口商和进口商了解向加拿大进口商品时需要缴纳的关税和税费的详细指南。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>北美</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-04-06</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 计算工具 - 北美地区 -->
+                <a href="north-america/us-shipping-calculator.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>美国运费计算器</h3>
+                            <span class="tool-card-badge badge-calculators">计算工具</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">根据重量、尺寸和目的地快速估算发往美国各地的物流运费，支持多种服务类型。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>北美</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-04-05</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 法规解读 - 北美地区 -->
+                <a href="north-america/canada-import-regulations.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>加拿大进口法规解读</h3>
+                            <span class="tool-card-badge badge-regulations">法规解读</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">详细解读加拿大最新进口政策、清关流程和禁运物品清单，帮助您避免通关问题。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>北美</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-04-04</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 表格文档 - 北美地区 -->
+                <a href="north-america/us-customs-form-guide.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>美国海关表格指南</h3>
+                            <span class="tool-card-badge badge-forms">表格文档</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">美国海关常用表格模板下载与填写说明，包括商业发票、装箱单和报关单等必要文件。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>北美</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-04-03</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 互动工具 - 北美地区 -->
+                <a href="north-america/route-optimizer.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>北美物流路线优化工具</h3>
+                            <span class="tool-card-badge badge-interactive">互动工具</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">交互式路线规划工具，根据时效、成本和运输方式为您推荐最佳物流路线方案。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>北美</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-04-02</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 指南文档 - 全球 -->
+                <a href="global/packaging-optimization.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>包装指南 - 优化包装方法</h3>
+                            <span class="tool-card-badge badge-guides">指南文档</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">全面指南，教您如何优化包装设计，减少体积重量，降低运输成本，确保货物安全。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>全球</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-04-01</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 计算工具 - 全球 -->
+                <a href="global/volumetric-weight-calculator.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>运费计算 - 迅速获取体积物流报价</h3>
+                            <span class="tool-card-badge badge-calculators">计算工具</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">根据包裹尺寸计算体积重，并与实际重量进行比较，帮助您更准确地预估运费成本。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>全球</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-03-31</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 互动工具 - 全球 -->
+                <a href="global/optimal-route-finder.html" class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="tool-card-title">
+                            <h3>路线查询 - 直查最优物流路线</h3>
+                            <span class="tool-card-badge badge-interactive">互动工具</span>
+                        </div>
+                    </div>
+                    <div class="tool-card-body">
+                        <p class="tool-card-desc">输入起点和终点，查询最佳物流路线方案，比较不同承运商的价格、时效和服务质量。</p>
+                        <div class="tool-card-meta">
+                            <div class="tool-card-region">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>全球</span>
+                            </div>
+                            <div class="tool-card-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2025-03-30</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 未找到工具时显示的信息 -->
+                <div class="no-tools-msg" style="display: none;">
+                    <p>未找到符合条件的工具或指南。请尝试调整筛选条件，或稍后再查看。</p>
+                </div>
+                
+                <!-- 查看全部按钮 -->
+                <div class="view-all-container">
+                    <a href="all-tools.html" class="view-all-btn-bottom">
+                        查看全部 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 麦极客物流 | 让全球物流触手可及</p>
+    </footer>
+    
+    <div id="sidebar-tools-container"></div>
+    <script src="/static-tools/sidebar-tools.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSidebarTools('sidebar-tools-container', '工具与指南', 5);
+        });
+    </script>
+    
+    <script>
+        // 筛选功能实现
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryFilter = document.getElementById('category-filter');
+            const regionFilter = document.getElementById('region-filter');
+            const toolsGrid = document.getElementById('tools-grid');
+            const noToolsMsg = document.querySelector('.no-tools-msg');
+            const toolCards = document.querySelectorAll('.tool-card');
+            const maxVisibleCards = 8; // 最多显示8条记录
+            
+            function filterTools() {
+                const selectedCategory = categoryFilter.value;
+                const selectedRegion = regionFilter.value;
+                
+                let visibleCount = 0;
+                
+                toolCards.forEach(card => {
+                    const cardCategory = card.querySelector('.tool-card-badge').classList[1].replace('badge-', '');
+                    const cardRegion = card.querySelector('.tool-card-region span').textContent.toLowerCase().replace(/\s+/g, '-');
+                    
+                    const categoryMatch = selectedCategory === 'all' || cardCategory === selectedCategory;
+                    const regionMatch = selectedRegion === 'all' || cardRegion === selectedRegion;
+                    
+                    if (categoryMatch && regionMatch) {
+                        // 只显示前8条符合条件的记录
+                        if (visibleCount < maxVisibleCards) {
+                            card.style.display = 'flex';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                if (visibleCount === 0) {
+                    noToolsMsg.style.display = 'block';
+                } else {
+                    noToolsMsg.style.display = 'none';
+                }
+                
+                // 控制查看全部按钮的显示
+                const viewAllContainer = document.querySelector('.view-all-container');
+                if (visibleCount >= maxVisibleCards) {
+                    viewAllContainer.style.display = 'block';
+                } else {
+                    viewAllContainer.style.display = 'none';
+                }
+            }
+            
+            // 初始化时执行一次筛选，确保只显示8条记录
+            filterTools();
+            
+            categoryFilter.addEventListener('change', filterTools);
+            regionFilter.addEventListener('change', filterTools);
+        });
+    </script>
+</body>
+</html> 

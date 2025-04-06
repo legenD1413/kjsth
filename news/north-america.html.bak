@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北美地区物流资讯 - 迈格库</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .region-banner {
+            background-color: #0056b3;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .region-banner h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .region-banner p {
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .filter-section {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .news-container {
+            min-height: 400px;
+        }
+        
+        .news-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-title {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .news-date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-date i {
+            margin-right: 5px;
+        }
+        
+        .news-importance {
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .importance-1 {
+            background-color: #e8f4ff;
+            color: #0056b3;
+        }
+        
+        .importance-2 {
+            background-color: #fff8e6;
+            color: #ff9900;
+        }
+        
+        .importance-3 {
+            background-color: #ffe8e8;
+            color: #ff3333;
+        }
+        
+        .news-excerpt {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .news-read-more {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .news-read-more i {
+            margin-left: 5px;
+            transition: transform 0.2s ease;
+        }
+        
+        .news-read-more:hover i {
+            transform: translateX(3px);
+        }
+        
+        .news-tag {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .news-new-badge {
+            display: inline-block;
+            background-color: #ff3333;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .empty-news {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .empty-news i {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .empty-news h3 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .empty-news p {
+            color: #999;
+        }
+        
+        .last-update {
+            text-align: center;
+            margin: 30px 0;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* 搜索框样式 */
+        .search-container {
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            display: flex;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .search-button {
+            background: #0056b3;
+            border: none;
+            color: white;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-button:hover {
+            background: #003d82;
+        }
+        
+        .search-results {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="物流服务网站Logo">
+                <span>物流服务</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-globe-americas"></i>
+                        区域
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../regions/north-america/index.html">北美</a></li>
+                        <li><a href="../regions/south-america/index.html">南美</a></li>
+                        <li><a href="../regions/europe/index.html">欧洲</a></li>
+                        <li><a href="../regions/australia/index.html">澳洲</a></li>
+                        <li><a href="../regions/middle-east/index.html">中东</a></li>
+                        <li><a href="../regions/southeast-asia/index.html">东南亚</a></li>
+                        <li><a href="../regions/africa/index.html">非洲</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        货品
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../products/regular/index.html">普货</a></li>
+                        <li><a href="../products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="../products/liquids/index.html">液体</a></li>
+                        <li><a href="../products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="../products/batteries/index.html">纯电池</a></li>
+                        <li><a href="../products/electronic-with-battery/index.html">内电</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cube"></i>
+                        货型
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../cargo-types/standard/index.html">标准件</a></li>
+                        <li><a href="../cargo-types/large/index.html">大件</a></li>
+                        <li><a href="../cargo-types/extra-large/index.html">超大件</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-map-marker-alt"></i>
+                        地址
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../destinations/commercial/index.html">商业件</a></li>
+                        <li><a href="../destinations/residential/index.html">私人地址件</a></li>
+                        <li><a href="../destinations/fba/index.html">FBA</a></li>
+                        <li><a href="../destinations/walmart/index.html">沃尔玛</a></li>
+                        <li><a href="../destinations/overseas-warehouse/index.html">海外仓</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" id="user-nav-item">
+                    <a href="../login.html" class="nav-link">
+                        <i class="fas fa-user-circle"></i>
+                        登录/注册
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="region-banner">
+        <div class="container">
+            <h1>北美地区物流资讯</h1>
+            <p>覆盖美国、加拿大等北美地区的最新物流动态、关税政策和市场趋势，助力您的跨境物流大事</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- 搜索功能 -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="news-search" class="search-input" placeholder="搜索物流资讯..." autocomplete="off">
+                        <button class="search-button" onclick="searchNews()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                
+                <!-- 筛选区域 -->
+                <div class="filter-section">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <label class="form-label">资讯筛选：</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="filter-all" value="all" checked>
+                                <label class="form-check-label" for="filter-all">全部</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="filter-usa" value="usa">
+                                <label class="form-check-label" for="filter-usa">美国</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="filter-canada" value="canada">
+                                <label class="form-check-label" for="filter-canada">加拿大</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="filter-mexico" value="mexico">
+                                <label class="form-check-label" for="filter-mexico">墨西哥</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 显示新闻的容器 -->
+                <div id="news-list" class="news-container">
+                    <!-- 这里将动态加载新闻内容 -->
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">加载中...</span>
+                        </div>
+                        <p class="mt-2">正在加载资讯...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <!-- 侧边栏 -->
+                <div class="card mb-4">
+                    <div class="card-header">热门资讯</div>
+                    <div class="card-body">
+                        <div id="popular-news"></div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header">其他地区资讯</div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a href="europe.html">欧洲地区物流资讯</a></li>
+                            <li class="list-group-item"><a href="asia.html">亚洲地区物流资讯</a></li>
+                            <li class="list-group-item"><a href="middle-east.html">中东地区物流资讯</a></li>
+                            <li class="list-group-item"><a href="australia.html">澳洲地区物流资讯</a></li>
+                            <li class="list-group-item"><a href="africa.html">非洲地区物流资讯</a></li>
+                            <li class="list-group-item"><a href="south-america.html">南美地区物流资讯</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">订阅资讯</div>
+                    <div class="card-body">
+                        <p>第一时间获取最新物流资讯，助您把握市场行情</p>
+                        <form id="subscribe-form">
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="请输入您的邮箱" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">订阅资讯</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="last-update">
+            <i class="far fa-clock"></i> 最后更新时间: <span id="update-time">2024/4/6 00:57:15</span>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>我们是一家专业的国际物流服务提供商，致力于为客户提供高效、可靠的全球物流解决方案。</p>
+            </div>
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../regions/north-america/index.html">服务</a></li>
+                    <li><a href="#">关于我们</a></li>
+                    <li><a href="#">联系我们</a></li>
+                    <li><a href="#">博客</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>联系方式</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区建国路88号</p>
+                <p><i class="fas fa-phone"></i> +86 10 1234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@wuliufuwu.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/sidebar-news.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNewsList();
+            // 初始化侧边栏热门资讯
+            SidebarNews.init('north-america', 'popular-news', '北美热门资讯', 5);
+        });
+
+        /**
+         * 加载资讯列表
+         */
+        function loadNewsList() {
+            const region = 'north-america';
+            // 更新页面标题和区域标题
+            document.title = '北美地区物流资讯 - 迈格库';
+            
+            // 获取新闻列表容器
+            const newsListContainer = document.getElementById('news-list');
+            
+            // 添加加载状态
+            newsListContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">加载中...</span>
+                    </div>
+                    <p class="mt-2">正在加载资讯...</p>
+                </div>
+            `;
+            
+            // 构建静态资讯路径
+            const staticNewsPath = '../static-news/north-america/index.html';
+            
+            // 获取静态资讯数据
+            fetch(staticNewsPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('获取资讯失败');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    // 解析HTML
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // 使用更精确的选择器匹配新闻卡片
+                    const newsCards = doc.querySelectorAll('div.news-card');
+                    console.log('找到新闻卡片数量:', newsCards.length);
+                    
+                    if (!newsCards || newsCards.length === 0) {
+                        newsListContainer.innerHTML = `
+                            <div class="empty-news">
+                                <i class="far fa-newspaper"></i>
+                                <h3>暂无符合条件的物流资讯</h3>
+                                <p>请稍后再查看或调整筛选条件</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // 解析新闻数据
+                    const newsList = [];
+                    
+                    newsCards.forEach((card) => {
+                        // 提取标题，使用更精确的选择器
+                        const titleEl = card.querySelector('h2.news-title');
+                        let title = titleEl ? titleEl.textContent.trim() : '无标题';
+                        
+                        // 移除"新"标签文本
+                        title = title.replace(/新$/, '').trim();
+                        
+                        // 提取链接
+                        const linkEl = card.querySelector('.news-read-more');
+                        const link = linkEl ? linkEl.getAttribute('href') : '#';
+                        
+                        // 提取日期
+                        const dateEl = card.querySelector('.news-date');
+                        const date = dateEl ? dateEl.textContent.replace(/[\n\r]/g, '').trim() : '未知日期';
+                        
+                        // 提取摘要
+                        const excerptEl = card.querySelector('.news-excerpt');
+                        const excerpt = excerptEl ? excerptEl.textContent.trim() : '暂无摘要';
+                        
+                        // 提取重要性
+                        let importance = 1; // 默认普通
+                        const importanceEl = card.querySelector('.news-importance');
+                        if (importanceEl) {
+                            if (importanceEl.classList.contains('importance-important')) {
+                                importance = 2; // 重要
+                            } else if (importanceEl.classList.contains('importance-very_important')) {
+                                importance = 3; // 非常重要
+                            }
+                        }
+                        
+                        // 判断是否为新文章
+                        const isNew = titleEl ? titleEl.innerHTML.includes('新') : false;
+                        
+                        // 日志调试
+                        console.log('解析文章:', title, link);
+                        
+                        newsList.push({
+                            title,
+                            link: `../static-news/${region}/${link.replace('./', '')}`,
+                            importance,
+                            date: date.replace(/[^0-9\-]/g, ''),
+                            excerpt,
+                            isNew
+                        });
+                    });
+                    
+                    // 渲染新闻列表
+                    renderNewsList(newsList);
+                })
+                .catch(error => {
+                    console.error('加载资讯失败:', error);
+                    newsListContainer.innerHTML = `
+                        <div class="empty-news">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>加载资讯失败</h3>
+                            <p>请稍后再试或联系网站管理员</p>
+                        </div>
+                    `;
+                });
+        }
+
+        /**
+         * 渲染新闻列表
+         * @param {Array} newsList - 新闻列表数据
+         */
+        function renderNewsList(newsList) {
+            const newsListContainer = document.getElementById('news-list');
+            
+            if (newsList.length === 0) {
+                newsListContainer.innerHTML = `
+                    <div class="empty-news">
+                        <i class="far fa-newspaper"></i>
+                        <h3>暂无符合条件的物流资讯</h3>
+                        <p>请稍后再查看或调整筛选条件</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            newsList.forEach((news) => {
+                html += `
+                    <div class="news-card" data-region="${news.region || 'north-america'}">
+                        <h3 class="news-title">
+                            ${news.title}
+                            ${news.isNew ? '<span class="news-new-badge">新</span>' : ''}
+                        </h3>
+                        <div class="news-meta">
+                            <div class="news-date">
+                                <i class="far fa-calendar-alt"></i>
+                                ${news.date}
+                            </div>
+                            <div class="news-importance importance-${news.importance}">
+                                ${news.importance === 3 ? '非常重要' : news.importance === 2 ? '重要' : '普通'}
+                            </div>
+                        </div>
+                        <div class="news-excerpt">
+                            ${news.excerpt}
+                        </div>
+                        <a href="${news.link}" class="news-read-more">
+                            阅读全文 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                `;
+            });
+            
+            newsListContainer.innerHTML = html;
+        }
+
+        /**
+         * 搜索资讯功能
+         */
+        function searchNews() {
+            const searchInput = document.getElementById('news-search');
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            const searchResults = document.getElementById('search-results');
+            
+            if (searchTerm === '') {
+                searchResults.innerHTML = '';
+                return;
+            }
+            
+            const newsCards = document.querySelectorAll('.news-card');
+            let matchCount = 0;
+            
+            // 重置所有卡片显示
+            newsCards.forEach(card => {
+                card.style.display = 'block';
+                
+                // 去除之前的高亮
+                const title = card.querySelector('.news-title');
+                title.innerHTML = title.innerHTML.replace(/<mark class="highlight">(.*?)<\/mark>/g, '$1');
+                
+                const excerpt = card.querySelector('.news-excerpt');
+                excerpt.innerHTML = excerpt.innerHTML.replace(/<mark class="highlight">(.*?)<\/mark>/g, '$1');
+                
+                // 检查标题和摘要是否包含搜索词
+                const titleText = title.textContent.toLowerCase();
+                const excerptText = excerpt.textContent.toLowerCase();
+                
+                if (titleText.includes(searchTerm) || excerptText.includes(searchTerm)) {
+                    matchCount++;
+                    
+                    // 高亮匹配内容
+                    if (titleText.includes(searchTerm)) {
+                        const regex = new RegExp('(' + searchTerm + ')', 'gi');
+                        title.innerHTML = title.innerHTML.replace(regex, '<mark class="highlight">$1</mark>');
+                    }
+                    
+                    if (excerptText.includes(searchTerm)) {
+                        const regex = new RegExp('(' + searchTerm + ')', 'gi');
+                        excerpt.innerHTML = excerpt.innerHTML.replace(regex, '<mark class="highlight">$1</mark>');
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // 显示搜索结果信息
+            if (matchCount > 0) {
+                searchResults.innerHTML = `找到 ${matchCount} 条相关资讯`;
+            } else {
+                searchResults.innerHTML = '没有找到相关资讯';
+                
+                // 如果没有结果，显示空状态
+                const newsListContainer = document.getElementById('news-list');
+                newsListContainer.innerHTML = `
+                    <div class="empty-news">
+                        <i class="fas fa-search"></i>
+                        <h3>没有找到相关资讯</h3>
+                        <p>请尝试使用其他关键词搜索</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 搜索框回车事件
+        document.getElementById('news-search').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                searchNews();
+            }
+        });
+
+        // 筛选功能
+        document.querySelectorAll('.form-check-input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // 处理"全部"复选框
+                if (this.id === 'filter-all' && this.checked) {
+                    document.querySelectorAll('.form-check-input:not(#filter-all)').forEach(cb => {
+                        cb.checked = false;
+                    });
+                } else if (this.id !== 'filter-all' && this.checked) {
+                    document.getElementById('filter-all').checked = false;
+                }
+                
+                // 如果没有选中任何复选框，则默认选中"全部"
+                const anyChecked = Array.from(document.querySelectorAll('.form-check-input')).some(cb => cb.checked);
+                if (!anyChecked) {
+                    document.getElementById('filter-all').checked = true;
+                }
+                
+                // 应用筛选
+                applyFilters();
+            });
+        });
+
+        /**
+         * 应用筛选逻辑
+         */
+        function applyFilters() {
+            const allChecked = document.getElementById('filter-all').checked;
+            const usaChecked = document.getElementById('filter-usa').checked;
+            const canadaChecked = document.getElementById('filter-canada').checked;
+            const mexicoChecked = document.getElementById('filter-mexico').checked;
+            
+            // 重新加载资讯（这里仅为示例，实际应用中可能需要根据筛选条件请求不同数据）
+            loadNewsList();
+        }
+    </script>
+</body>
+</html> 

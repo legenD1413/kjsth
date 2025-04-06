@@ -272,3 +272,21 @@
 ---
 
 © MaigeEku 2024 - WordPress集成系统 
+
+
+https://cms.kjsth.com/wp-json/wp/v2/tools_guides   工具与指南搜索
+https://cms.kjsth.com/wp-json/maigeeku/v1/news-by-region/north-america/   物流资讯
+
+
+
+请先检测本站中是否有这样的执行代码：  如果没有就创建一个。 实现以下功能：
+1. 自动搜索cms.kjsth.com   是否有新的记录更新：搜索（
+物流资讯接口： https://cms.kjsth.com/wp-json/maigeeku/v1/news-by-region/{region}
+
+
+工具指南接口:   
+                          https://cms.kjsth.com/wp-json/maigeeku/v1/tools-by-category/guides  
+                           https://cms.kjsth.com/wp-json/maigeeku/v1/tools-by-category/forms
+                      https://cms.kjsth.com/wp-json/maigeeku/v1/tools-by-category/interactive
+                     https://cms.kjsth.com/wp-json/maigeeku/v1/tools-by-category/regulations
+                      https://cms.kjsth.com/wp-json/maigeeku/v1/tools-by-category/calculators

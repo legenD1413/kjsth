@@ -3,148 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区 - 物流服务网站</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <title>为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区 - 迈格库物流资讯</title>
+    <!-- 首先加载全局CSS文件 -->
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <!-- 然后加载外部库和特定样式 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
-        /* 全局字体设置 */
-        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+            line-height: 1.6;
         }
         
-        /* 资讯详情页面特定样式 */
         .news-detail-container {
             max-width: 900px;
-            margin: 100px auto 40px;
-            padding: 2rem;
-            background: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
-            min-height: calc(80vh - 110px);
-        }
-        
-        .news-detail-header {
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 1.5rem;
-            margin-bottom: 1.5rem;
-            position: relative;
+            margin: calc(var(--header-height) + 20px) auto 40px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         
         .news-title {
-            font-size: 1.8rem;
+            font-size: 28px;
+            font-weight: bold;
             color: #2c3e50;
-            margin: 0 0 0.5rem 0;
+            margin-bottom: 20px;
             line-height: 1.3;
         }
         
         .news-meta {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
             color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
         }
         
-        .news-date {
+        .news-date, .news-region {
             display: flex;
             align-items: center;
-            margin-right: 1.5rem;
         }
         
         .news-date i, .news-region i {
-            margin-right: 0.5rem;
-            color: #3498db;
-        }
-        
-        .news-region {
-            display: flex;
-            align-items: center;
+            margin-right: 5px;
         }
         
         .news-importance {
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
         }
         
         .importance-normal {
-            background-color: #f8f9fa;
-            color: #7f8c8d;
-            border: 1px solid #e9ecef;
+            background-color: #eee;
+            color: #555;
         }
         
         .importance-important {
-            background-color: #ebf5fb;
-            color: #3498db;
-            border: 1px solid #d6eaf8;
+            background-color: #f39c12;
+            color: white;
         }
         
         .importance-very_important {
-            background-color: #fdedec;
-            color: #e74c3c;
-            border: 1px solid #f7d6d5;
+            background-color: #e74c3c;
+            color: white;
         }
         
         .news-content {
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 16px;
+            line-height: 1.8;
             color: #333;
+            margin-bottom: 30px;
         }
         
         .news-content p {
-            margin-bottom: 1.2rem;
+            margin-bottom: 20px;
         }
-
+        
         .news-content h3 {
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
             color: #2c3e50;
             font-weight: 600;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .news-content h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 4px;
+            background-color: #3498db;
+            border-radius: 2px;
         }
         
         .action-buttons {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
         
-        .back-to-list {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #f8f9fa;
-            color: #2c3e50;
-            border: 1px solid #e9ecef;
+        .btn-action {
+            padding: 8px 15px;
             border-radius: 4px;
             text-decoration: none;
-            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
             transition: all 0.3s;
         }
         
-        .back-to-list i {
-            margin-right: 0.5rem;
+        .btn-action i {
+            margin-right: 5px;
         }
         
-        .back-to-list:hover {
+        .btn-back {
+            background-color: #f8f9fa;
+            color: #495057;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-back:hover {
             background-color: #e9ecef;
+            color: #212529;
+            text-decoration: none;
         }
         
         /* 相关资讯样式 */
         .related-articles {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+            margin-top: 40px;
+            padding-top: 20px;
             border-top: 1px solid #eee;
         }
         
         .related-articles h4 {
-            font-size: 1.2rem;
+            font-size: 18px;
             color: #2c3e50;
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
         
         .related-article-list {
@@ -154,7 +165,7 @@
         }
         
         .related-article-item {
-            padding: 0.7rem 0;
+            padding: 10px 0;
             border-bottom: 1px solid #f0f0f0;
         }
         
@@ -167,6 +178,7 @@
             text-decoration: none;
             display: flex;
             align-items: center;
+            transition: color 0.2s;
         }
         
         .related-article-link:hover {
@@ -174,221 +186,95 @@
         }
         
         .related-article-link i {
-            margin-right: 0.5rem;
-        }
-        
-        /* 文章内容强化样式 */
-        .news-content h3 {
-            position: relative;
-            padding-left: 1rem;
-        }
-        
-        .news-content h3::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.2rem;
-            bottom: 0.2rem;
-            width: 4px;
-            background-color: #3498db;
-            border-radius: 2px;
+            margin-right: 8px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="main-nav">
-            <div class="logo">
-                <img src="../../assets/images/logo.png" alt="物流服务网站Logo">
-                <span>物流服务</span>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-globe-americas"></i>
-                        区域
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../regions/north-america/index.html">北美</a></li>
-                        <li><a href="../../regions/south-america/index.html">南美</a></li>
-                        <li><a href="../../regions/europe/index.html">欧洲</a></li>
-                        <li><a href="../../regions/australia/index.html">澳洲</a></li>
-                        <li><a href="../../regions/middle-east/index.html">中东</a></li>
-                        <li><a href="../../regions/southeast-asia/index.html">东南亚</a></li>
-                        <li><a href="../../regions/africa/index.html">非洲</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-box"></i>
-                        货品
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../products/regular/index.html">普货</a></li>
-                        <li><a href="../../products/cosmetics/index.html">化妆品</a></li>
-                        <li><a href="../../products/liquids/index.html">液体</a></li>
-                        <li><a href="../../products/e-cigarettes/index.html">电子烟</a></li>
-                        <li><a href="../../products/batteries/index.html">纯电池</a></li>
-                        <li><a href="../../products/electronic-with-battery/index.html">内电</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-cube"></i>
-                        货型
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../cargo-types/standard/index.html">标准件</a></li>
-                        <li><a href="../../cargo-types/large/index.html">大件</a></li>
-                        <li><a href="../../cargo-types/extra-large/index.html">超大件</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-map-marker-alt"></i>
-                        地址
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../destinations/commercial/index.html">商业件</a></li>
-                        <li><a href="../../destinations/residential/index.html">私人地址件</a></li>
-                        <li><a href="../../destinations/fba/index.html">FBA</a></li>
-                        <li><a href="../../destinations/walmart/index.html">沃尔玛</a></li>
-                        <li><a href="../../destinations/overseas-warehouse/index.html">海外仓</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item" id="user-nav-item">
-                    <a href="../../login.html" class="nav-link">
-                        <i class="fas fa-user-circle"></i>
-                        登录/注册
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <header id="header"></header>
 
-    <div class="news-detail-container">
-        <div class="news-detail-header">
+    <main class="main-container">
+        <div class="news-detail-container">
             <h1 class="news-title">为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区</h1>
-            <div class="news-meta">
-                <div class="news-date">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>2025-04-05</span>
-                </div>
-                <div class="news-region">
-                    <i class="fas fa-globe-asia"></i>
-                    <span>北美区域</span>
-                </div>
-            </div>
-            <div class="news-importance importance-normal">
-                普通
-            </div>
-        </div>
-        <div class="news-content">
-            <p>在加拿大跨境物流领域，大件货物（如家具、健身器材、建材等）的运输一直是中小卖家的痛点之一。许多卖家发现，自己的货物明明符合国内运输标准，却在加拿大频频被物流商拒收。究其原因，尺寸限制的认知偏差是核心问题。本文将深度解析6个常见误区，并提供可落地的解决方案，助您避开隐形雷区。</p>
-
-            <h3>误区1：只关注单边长度，忽略"整体尺寸"概念</h3>
-            <p>许多卖家误以为只要单边不超过2.5米就能通关，却忽视了加拿大物流商对"长+宽+高"总和（Overall Dimension）的严格限制。实际上，加拿大各地区对于货物的整体尺寸有明确规定，例如安大略省对于商业运输货物的整体尺寸限制通常不超过6米，而部分物流公司甚至规定不得超过5米。这意味着即使您的货物单边都没有超长，但三边总和超限，仍然会被拒收。</p>
-
-            <h3>误区2：忽视"不可拆卸"规则的重量陷阱</h3>
-            <p>加拿大对不可拆卸大件（Non-Divisible Load）有特殊规定：若货物因结构原因无法拆分，单件重量超过2.3吨需申请特殊许可。这一规定尤其影响家具、健身器材和大型工业设备等产品的出口商。更严格的是，不同省份对于不可拆卸大件的定义和重量限制也不尽相同，魁北克省对于部分地区的运输甚至要求重量不超过1.8吨。</p>
-
-            <h3>误区3：错用"托盘尺寸"计算方式</h3>
-            <p>许多卖家直接将货物放在托盘上测量尺寸，却不知加拿大物流商会将托盘视为货物的一部分。在实际运输过程中，物流公司在测量货物尺寸时会包括托盘在内，特别是对于需要特殊搬运设备的大件货物。建议卖家在计算尺寸时加上托盘的高度（通常为15-20厘米），并预留5-10%的误差空间，避免因尺寸超限而被拒收。</p>
-
-            <h3>误区4：低估"省份差异"的尺寸限制</h3>
-            <p>加拿大各省对商业件尺寸有不同规定，例如：</p>
-            <p>- 安大略省：对于商业物流，允许最大尺寸为长4米、宽2.6米、高2.8米，三维总和不超过8米</p>
-            <p>- 魁北克省：对于非高速公路运输，单边最大不超过3.5米，三维总和不超过7米</p>
-            <p>- 阿尔伯塔省：对于商业运输，单边不超过4.5米，但三维总和不得超过9米</p>
-            <p>这意味着跨省运输的大件货物需要考虑路径中所有省份的最严格标准，以免在中途被拒运。</p>
-
-            <h3>误区5：混淆"海运尺寸"与"尾程尺寸"标准</h3>
-            <p>货物通过海运时的集装箱装载尺寸（以立方米计算）与加拿大本土运输的尺寸限制（以线性尺寸计算）存在本质差异。许多卖家在海运环节顺利通过后，却在加拿大本土尾程配送时遇到问题。建议采用"双重标准"核对：确保货物既符合海运集装箱装载要求，也满足加拿大本土运输的线性尺寸限制。</p>
-
-            <h3>误区6：盲目依赖"灵活承运商"承诺</h3>
-            <p>部分卖家轻信"可协商尺寸"的承诺，却不知加拿大物流行业存在隐性拒收条款。实际上，即使部分物流商在销售环节承诺可以接受超尺寸货物，但在实际操作中仍可能因安全考虑或运输能力限制而拒收。建议卖家在选择物流商时，明确要求出具书面确认，并了解可能产生的额外费用。</p>
-
-            <h3>解决方案：三步构建合规运输体系</h3>
-            <p>1. <strong>提前了解各省具体限制</strong>：在计划发货前充分了解目的地省份的具体尺寸和重量限制。对于跨省运输，需要考虑途经省份的最严格标准。</p>
-            <p>2. <strong>优化包装和拆分设计</strong>：考虑如何将大件商品设计为可拆卸式，并使用合规尺寸的包装。例如，将家具拆分为多个部件单独运输，或者采用模块化设计以适应不同的运输限制。</p>
-            <p>3. <strong>选择专业大件物流服务</strong>：与专注于大件货物的物流商合作，他们通常有更丰富的处理经验和更完善的解决方案。特别是对于频繁出口大件货物的卖家，建议建立长期合作关系，以获得更稳定的服务质量和更合理的价格。</p>
             
-            <p>总之，了解并遵守加拿大各省的尺寸限制规定，是确保大件货物顺利运输的关键。通过合理规划和专业物流支持，您的大件货物出口业务将更加顺畅高效。</p>
-        </div>
-        
-        <!-- 相关资讯 -->
-        <div class="related-articles">
-            <h4>相关资讯</h4>
-            <ul class="related-article-list">
-                <li class="related-article-item">
-                    <a href="12.html" class="related-article-link">
-                        <i class="fas fa-newspaper"></i>
-                        test物流咨询
-                    </a>
-                </li>
-                <li class="related-article-item">
-                    <a href="1.html" class="related-article-link">
-                        <i class="fas fa-newspaper"></i>
-                        美国西海岸港口新政策对进口商品的影响分析
-                    </a>
-                </li>
-                <li class="related-article-item">
-                    <a href="17.html" class="related-article-link">
-                        <i class="fas fa-newspaper"></i>
-                        加拿大跨境电商物流趋势分析：2025年市场预测
-                    </a>
-                </li>
-            </ul>
-        </div>
-        
-        <div class="action-buttons">
-            <a href="../index.html" class="back-to-list">
-                <i class="fas fa-list"></i>返回资讯列表
-            </a>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>关于我们</h3>
-                <p>我们是一家专业的国际物流服务提供商，致力于为客户提供高效、可靠的全球物流解决方案。</p>
+            <div class="news-meta">
+                <div>
+                    <span class="news-date"><i class="far fa-calendar-alt"></i> 2025-04-05</span>
+                    <span class="news-region"><i class="fas fa-map-marker-alt ml-3"></i> 北美</span>
+                    <span class="news-importance importance-normal">普通</span>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>快速链接</h3>
-                <ul>
-                    <li><a href="../../index.html">首页</a></li>
-                    <li><a href="../../regions/north-america/index.html">服务</a></li>
-                    <li><a href="#">关于我们</a></li>
-                    <li><a href="#">联系我们</a></li>
-                    <li><a href="#">博客</a></li>
+            
+            <div class="news-content">
+                <p>在加拿大跨境物流领域，大件货物（如家具、健身器材、建材等）的运输一直是中小卖家的痛点之一。许多卖家发现，自己的货物明明符合国内运输标准，却在加拿大频频被物流商拒收。究其原因，尺寸限制的认知偏差是核心问题。本文将深度解析6个常见误区，并提供可落地的解决方案，助您避开隐形雷区。</p>
+
+                <h3>误区1：只关注单边长度，忽略"整体尺寸"概念</h3>
+                <p>许多卖家误以为只要单边不超过2.5米就能通关，却忽视了加拿大物流商对"长+宽+高"总和（Overall Dimension）的严格限制。实际上，加拿大各地区对于货物的整体尺寸有明确规定，例如安大略省对于商业运输货物的整体尺寸限制通常不超过6米，而部分物流公司甚至规定不得超过5米。这意味着即使您的货物单边都没有超长，但三边总和超限，仍然会被拒收。</p>
+
+                <h3>误区2：忽视"不可拆卸"规则的重量陷阱</h3>
+                <p>加拿大对不可拆卸大件（Non-Divisible Load）有特殊规定：若货物因结构原因无法拆分，单件重量超过2.3吨需申请特殊许可。这一规定尤其影响家具、健身器材和大型工业设备等产品的出口商。更严格的是，不同省份对于不可拆卸大件的定义和重量限制也不尽相同，魁北克省对于部分地区的运输甚至要求重量不超过1.8吨。</p>
+
+                <h3>误区3：错用"托盘尺寸"计算方式</h3>
+                <p>许多卖家直接将货物放在托盘上测量尺寸，却不知加拿大物流商会将托盘视为货物的一部分。在实际运输过程中，物流公司在测量货物尺寸时会包括托盘在内，特别是对于需要特殊搬运设备的大件货物。建议卖家在计算尺寸时加上托盘的高度（通常为15-20厘米），并预留5-10%的误差空间，避免因尺寸超限而被拒收。</p>
+
+                <h3>误区4：低估"省份差异"的尺寸限制</h3>
+                <p>加拿大各省对商业件尺寸有不同规定，例如：</p>
+                <p>- 安大略省：对于商业物流，允许最大尺寸为长4米、宽2.6米、高2.8米，三维总和不超过8米</p>
+                <p>- 魁北克省：对于非高速公路运输，单边最大不超过3.5米，三维总和不超过7米</p>
+                <p>- 阿尔伯塔省：对于商业运输，单边不超过4.5米，但三维总和不得超过9米</p>
+                <p>这意味着跨省运输的大件货物需要考虑路径中所有省份的最严格标准，以免在中途被拒运。</p>
+
+                <h3>误区5：混淆"海运尺寸"与"尾程尺寸"标准</h3>
+                <p>货物通过海运时的集装箱装载尺寸（以立方米计算）与加拿大本土运输的尺寸限制（以线性尺寸计算）存在本质差异。许多卖家在海运环节顺利通过后，却在加拿大本土尾程配送时遇到问题。建议采用"双重标准"核对：确保货物既符合海运集装箱装载要求，也满足加拿大本土运输的线性尺寸限制。</p>
+
+                <h3>误区6：盲目依赖"灵活承运商"承诺</h3>
+                <p>部分卖家轻信"可协商尺寸"的承诺，却不知加拿大物流行业存在隐性拒收条款。实际上，即使部分物流商在销售环节承诺可以接受超尺寸货物，但在实际操作中仍可能因安全考虑或运输能力限制而拒收。建议卖家在选择物流商时，明确要求出具书面确认，并了解可能产生的额外费用。</p>
+
+                <h3>解决方案：三步构建合规运输体系</h3>
+                <p>1. <strong>提前了解各省具体限制</strong>：在计划发货前充分了解目的地省份的具体尺寸和重量限制。对于跨省运输，需要考虑途经省份的最严格标准。</p>
+                <p>2. <strong>优化包装和拆分设计</strong>：考虑如何将大件商品设计为可拆卸式，并使用合规尺寸的包装。例如，将家具拆分为多个部件单独运输，或者采用模块化设计以适应不同的运输限制。</p>
+                <p>3. <strong>选择专业大件物流服务</strong>：与专注于大件货物的物流商合作，他们通常有更丰富的处理经验和更完善的解决方案。特别是对于频繁出口大件货物的卖家，建议建立长期合作关系，以获得更稳定的服务质量和更合理的价格。</p>
+                
+                <p>总之，了解并遵守加拿大各省的尺寸限制规定，是确保大件货物顺利运输的关键。通过合理规划和专业物流支持，您的大件货物出口业务将更加顺畅高效。</p>
+            </div>
+            
+            <!-- 相关资讯 -->
+            <div class="related-articles">
+                <h4>相关资讯</h4>
+                <ul class="related-article-list">
+                    <li class="related-article-item">
+                        <a href="12.html" class="related-article-link">
+                            <i class="fas fa-newspaper"></i>
+                            test物流咨询
+                        </a>
+                    </li>
+                    <li class="related-article-item">
+                        <a href="1.html" class="related-article-link">
+                            <i class="fas fa-newspaper"></i>
+                            美国西海岸港口新政策对进口商品的影响分析
+                        </a>
+                    </li>
+                    <li class="related-article-item">
+                        <a href="17.html" class="related-article-link">
+                            <i class="fas fa-newspaper"></i>
+                            加拿大跨境电商物流趋势分析：2025年市场预测
+                        </a>
+                    </li>
                 </ul>
             </div>
-            <div class="footer-section">
-                <h3>联系方式</h3>
-                <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区建国路88号</p>
-                <p><i class="fas fa-phone"></i> +86 10 1234 5678</p>
-                <p><i class="fas fa-envelope"></i> info@wuliufuwu.com</p>
-            </div>
-            <div class="footer-section">
-                <h3>关注我们</h3>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-weixin"></i></a>
-                    <a href="#"><i class="fab fa-weibo"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
+            
+            <div class="action-buttons">
+                <a href="../index.html" class="btn-action btn-back">
+                    <i class="fas fa-arrow-left"></i> 返回资讯列表
+                </a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 物流服务网站. All rights reserved.</p>
-        </div>
-    </footer>
+    </main>
+
+    <footer id="footer"></footer>
     
+    <!-- 使用相对路径加载组件脚本 -->
+    <script src="../../assets/js/components.js"></script>
     <script src="../../assets/js/script.js"></script>
     <script src="../../assets/js/auth.js"></script>
     <script src="../../assets/js/static-news-content.js"></script>

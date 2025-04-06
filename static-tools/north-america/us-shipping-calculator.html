@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美国运费计算器 - 麦极客物流</title>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 全局字体设置 - 采用Apple风格字体 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .tool-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .tool-main {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .tool-header {
+            background-color: #f5f5f7;
+            padding: 30px;
+            border-bottom: 1px solid #e8e8ed;
+        }
+        
+        .tool-header h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 10px;
+        }
+        
+        .tool-header p {
+            color: #6e6e73;
+            margin: 0;
+            max-width: 700px;
+        }
+        
+        .tool-sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+        
+        .tool-content {
+            padding: 30px;
+            color: #1d1d1f;
+        }
+        
+        .tool-content h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin: 25px 0 15px;
+            color: #1d1d1f;
+        }
+        
+        .tool-content p, .tool-content ul {
+            margin-bottom: 15px;
+            color: #424245;
+            line-height: 1.6;
+        }
+        
+        .tool-content strong {
+            color: #1d1d1f;
+        }
+        
+        .tool-content ul {
+            padding-left: 20px;
+        }
+        
+        .tool-content li {
+            margin-bottom: 8px;
+        }
+        
+        .interactive-tool {
+            background-color: #f5f5f7;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .interactive-tool h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        
+        .tool-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #424245;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #1d1d1f;
+            transition: border-color 0.2s;
+        }
+        
+        .form-control:focus {
+            border-color: #0071e3;
+            outline: none;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #0062cc;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #d2d2d7;
+            display: none;
+        }
+        
+        .result h4 {
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #1d1d1f;
+        }
+        
+        .result-value {
+            font-size: 1.3rem;
+            color: #0071e3;
+            font-weight: 500;
+        }
+        
+        .text-danger {
+            color: #ff3b30;
+        }
+        
+        .sidebar-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e8e8ed;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+        
+        .sidebar-card-body {
+            padding: 15px 20px;
+        }
+        
+        .related-tools {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .related-tools li {
+            margin-bottom: 12px;
+        }
+        
+        .related-tools a {
+            display: flex;
+            align-items: center;
+            color: #424245;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        
+        .related-tools a:hover {
+            color: #0071e3;
+        }
+        
+        .related-tools i {
+            color: #0071e3;
+            margin-right: 10px;
+            font-size: 0.9rem;
+            width: 14px;
+            text-align: center;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .info-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e8e8ed;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #424245;
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .info-list i {
+            color: #86868b;
+            margin-right: 10px;
+            width: 14px;
+            text-align: center;
+        }
+        
+        @media (max-width: 900px) {
+            .tool-container {
+                flex-direction: column;
+            }
+            
+            .tool-sidebar {
+                width: 100%;
+            }
+            
+            .tool-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+</head>
+<body>
+    <header id="header"></header>
+
+    <main>
+        <div class="tool-container">
+            <div class="tool-main">
+                <div class="tool-header">
+                    <h1>美国运费计算器</h1>
+                    <p>根据重量、尺寸和目的地快速计算您从中国各地发往美国各地的物流运费，支持多种运输方式的价格比较。</p>
+                </div>
+                
+                <div class="tool-content">
+                    <p>美国是中国跨境电商和物流的主要目的地市场，了解各种运输方式的运费构成和计算方法对于选择最合适的物流方案至关重要。本计算器提供空运、海运、快递等多种运输方式的运费估算功能。</p>
+                    
+                    <h3>运费计算基础知识</h3>
+                    <p>从中国发往美国的物流运费通常基于以下因素计算：</p>
+                    <ul>
+                        <li><strong>计费重量</strong>：实际重量或体积重，取较大值</li>
+                        <li><strong>运输方式</strong>：空运、海运、快递等不同方式有不同的定价标准</li>
+                        <li><strong>目的地地区</strong>：美国不同区域（如东西海岸）的派送费用存在差异</li>
+                        <li><strong>货物类型</strong>：普通货物、特殊货物（如电池、液体）等收费标准不同</li>
+                        <li><strong>增值服务</strong>：如保险、包装、FBA入仓预处理等附加服务会产生额外费用</li>
+                    </ul>
+                    
+                    <h3>体积重量计算</h3>
+                    <p>对于空运和国际快递，当货物的体积重大于实际重量时，物流公司会按照体积重收费：</p>
+                    <p><strong>体积重(kg) = 长(cm) × 宽(cm) × 高(cm) ÷ 体积重系数</strong></p>
+                    <p>不同的运输方式体积重系数也不同：</p>
+                    <ul>
+                        <li>国际空运一般使用 6000 为系数</li>
+                        <li>国际快递通常使用 5000 为系数</li>
+                        <li>美国专线服务可能使用 4500 或 5000 为系数</li>
+                    </ul>
+                    
+                    <h3>美国区域划分</h3>
+                    <p>物流运输通常将美国划分为几个费率区：</p>
+                    <ul>
+                        <li><strong>Zone 1 (东海岸)</strong>：纽约、新泽西、费城等东部主要城市</li>
+                        <li><strong>Zone 2 (中部)</strong>：芝加哥、底特律等中部城市</li>
+                        <li><strong>Zone 3 (西海岸)</strong>：洛杉矶、旧金山、西雅图等西部城市</li>
+                        <li><strong>Zone 4 (偏远地区)</strong>：阿拉斯加、夏威夷等特殊地区</li>
+                    </ul>
+                </div>
+                
+                <!-- 互动工具区域 -->
+                <div class="interactive-tool">
+                    <h3>美国运费在线计算工具</h3>
+                    <div class="tool-form">
+                        <div class="form-group">
+                            <label class="form-label">长度 (cm)</label>
+                            <input type="number" id="length" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">宽度 (cm)</label>
+                            <input type="number" id="width" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">高度 (cm)</label>
+                            <input type="number" id="height" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">实际重量 (kg)</label>
+                            <input type="number" id="actual-weight" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">运输方式</label>
+                            <select id="shipping-method" class="form-control">
+                                <option value="air">国际空运</option>
+                                <option value="express">国际快递</option>
+                                <option value="sea">国际海运</option>
+                                <option value="us-special">美国专线</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">目的地区域</label>
+                            <select id="destination-zone" class="form-control">
+                                <option value="east">东海岸 (Zone 1)</option>
+                                <option value="central">中部 (Zone 2)</option>
+                                <option value="west">西海岸 (Zone 3)</option>
+                                <option value="remote">偏远地区 (Zone 4)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">货物类型</label>
+                            <select id="cargo-type" class="form-control">
+                                <option value="regular">普通货物</option>
+                                <option value="battery">含电池产品</option>
+                                <option value="liquid">液体产品</option>
+                                <option value="sensitive">敏感货物</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">是否需要保险</label>
+                            <select id="insurance" class="form-control">
+                                <option value="no">不需要</option>
+                                <option value="yes">需要 (货值的2%)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <button id="calculate-btn" class="btn">计算运费</button>
+                    </div>
+                    
+                    <div id="result" class="result">
+                        <h4>运费估算结果</h4>
+                        <div id="result-content"></div>
+                    </div>
+                </div>
+                
+                <div class="tool-content">
+                    <h3>运费计算说明</h3>
+                    <p>本计算器提供的运费仅供参考，实际运费可能会因以下因素而有所变化：</p>
+                    <ul>
+                        <li>季节性价格波动和市场行情变化</li>
+                        <li>燃油附加费和其他临时附加费用</li>
+                        <li>具体目的地的详细地址（如是否为商业区或住宅区）</li>
+                        <li>具体货物的特性（如超长、超重、危险品等）</li>
+                        <li>批量发货可能有特别折扣</li>
+                    </ul>
+                    
+                    <p>为获取最准确的运费报价，建议联系我们的客服团队，提供详细的发货信息。我们将为您提供最优惠的物流解决方案。</p>
+                </div>
+            </div>
+            
+            <div class="tool-sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-card-header">相关工具</div>
+                    <div class="sidebar-card-body">
+                        <ul class="related-tools">
+                            <li><a href="../global/volumetric-weight-calculator.html"><i class="fas fa-calculator"></i> 体积重计算器</a></li>
+                            <li><a href="../global/packaging-optimization.html"><i class="fas fa-box"></i> 包装优化指南</a></li>
+                            <li><a href="../global/delivery-time-estimator.html"><i class="fas fa-clock"></i> 配送时间估算</a></li>
+                            <li><a href="canada-customs-duty-lookup.html"><i class="fas fa-search-dollar"></i> 加拿大关税查询</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="sidebar-card">
+                    <div class="sidebar-card-header">美国物流信息</div>
+                    <div class="sidebar-card-body">
+                        <ul class="info-list">
+                            <li><i class="fas fa-plane"></i> 空运时效：5-7个工作日</li>
+                            <li><i class="fas fa-ship"></i> 海运时效：18-25个工作日</li>
+                            <li><i class="fas fa-truck"></i> 专线时效：10-15个工作日</li>
+                            <li><i class="fas fa-box-open"></i> 清关所需资料：发票、装箱单</li>
+                            <li><i class="fas fa-exclamation-triangle"></i> 禁运品：食品、药品、液体</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer id="footer"></footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const lengthInput = document.getElementById('length');
+            const widthInput = document.getElementById('width');
+            const heightInput = document.getElementById('height');
+            const actualWeightInput = document.getElementById('actual-weight');
+            const shippingMethodSelect = document.getElementById('shipping-method');
+            const destinationZoneSelect = document.getElementById('destination-zone');
+            const cargoTypeSelect = document.getElementById('cargo-type');
+            const insuranceSelect = document.getElementById('insurance');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('result-content');
+            
+            // 运费基础价格表 ($/kg)
+            const basePriceTable = {
+                'air': {
+                    'east': 7.5,
+                    'central': 7.8,
+                    'west': 7.2,
+                    'remote': 9.5
+                },
+                'express': {
+                    'east': 9.8,
+                    'central': 10.2,
+                    'west': 9.5,
+                    'remote': 12.5
+                },
+                'sea': {  // 海运按立方米计费 ($/CBM)
+                    'east': 150,
+                    'central': 160,
+                    'west': 145,
+                    'remote': 190
+                },
+                'us-special': {
+                    'east': 6.8,
+                    'central': 7.0,
+                    'west': 6.5,
+                    'remote': 8.5
+                }
+            };
+            
+            // 特殊货物附加费率
+            const cargoSurchargeRate = {
+                'regular': 0,
+                'battery': 0.15,  // 15% 附加费
+                'liquid': 0.2,    // 20% 附加费
+                'sensitive': 0.3  // 30% 附加费
+            };
+            
+            // 体积重系数
+            const volumeDivisor = {
+                'air': 6000,
+                'express': 5000,
+                'sea': 1,  // 海运不用体积重计算
+                'us-special': 4500
+            };
+            
+            // 点击计算按钮
+            calculateBtn.addEventListener('click', function() {
+                // 获取输入值
+                const length = parseFloat(lengthInput.value);
+                const width = parseFloat(widthInput.value);
+                const height = parseFloat(heightInput.value);
+                const actualWeight = parseFloat(actualWeightInput.value);
+                const shippingMethod = shippingMethodSelect.value;
+                const destinationZone = destinationZoneSelect.value;
+                const cargoType = cargoTypeSelect.value;
+                const insurance = insuranceSelect.value;
+                
+                // 验证输入
+                if (isNaN(length) || isNaN(width) || isNaN(height) || isNaN(actualWeight)) {
+                    resultContent.innerHTML = '<p class="text-danger">请输入有效的尺寸和重量</p>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                if (length <= 0 || width <= 0 || height <= 0 || actualWeight <= 0) {
+                    resultContent.innerHTML = '<p class="text-danger">尺寸和重量必须大于零</p>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                // 计算结果
+                let volumeWeight = 0;
+                let chargeableWeight = actualWeight;
+                let volumeInCBM = 0;
+                let basePrice = 0;
+                let totalPrice = 0;
+                let surcharge = 0;
+                let insuranceFee = 0;
+                
+                // 海运按立方米计算
+                if (shippingMethod === 'sea') {
+                    volumeInCBM = (length * width * height) / 1000000;  // 转换为立方米
+                    totalPrice = volumeInCBM * basePriceTable[shippingMethod][destinationZone];
+                    
+                    // 添加货物类型附加费
+                    surcharge = totalPrice * cargoSurchargeRate[cargoType];
+                    totalPrice += surcharge;
+                    
+                    // 添加保险费 (假设货物价值 = $50/kg)
+                    if (insurance === 'yes') {
+                        const cargoValue = actualWeight * 50;  // 估算货值
+                        insuranceFee = cargoValue * 0.02;  // 2% 保险费率
+                        totalPrice += insuranceFee;
+                    }
+                    
+                    // 格式化显示结果
+                    resultContent.innerHTML = `
+                        <p><strong>货物体积：</strong> ${volumeInCBM.toFixed(3)} 立方米</p>
+                        <p><strong>实际重量：</strong> ${actualWeight.toFixed(2)} kg</p>
+                        <p><strong>基础运费：</strong> $${(volumeInCBM * basePriceTable[shippingMethod][destinationZone]).toFixed(2)}</p>
+                        ${surcharge > 0 ? `<p><strong>特殊货物附加费：</strong> $${surcharge.toFixed(2)}</p>` : ''}
+                        ${insuranceFee > 0 ? `<p><strong>保险费：</strong> $${insuranceFee.toFixed(2)}</p>` : ''}
+                        <p class="result-value">总运费：$${totalPrice.toFixed(2)}</p>
+                        <p>* 以上价格仅供参考，实际价格以客服报价为准</p>
+                    `;
+                } else {
+                    // 计算体积重
+                    volumeWeight = (length * width * height) / volumeDivisor[shippingMethod];
+                    
+                    // 取实际重量和体积重中的较大值作为计费重量
+                    chargeableWeight = Math.max(actualWeight, volumeWeight);
+                    
+                    // 计算基础运费
+                    basePrice = chargeableWeight * basePriceTable[shippingMethod][destinationZone];
+                    totalPrice = basePrice;
+                    
+                    // 添加货物类型附加费
+                    surcharge = totalPrice * cargoSurchargeRate[cargoType];
+                    totalPrice += surcharge;
+                    
+                    // 添加保险费 (假设货物价值 = $50/kg)
+                    if (insurance === 'yes') {
+                        const cargoValue = actualWeight * 50;  // 估算货值
+                        insuranceFee = cargoValue * 0.02;  // 2% 保险费率
+                        totalPrice += insuranceFee;
+                    }
+                    
+                    // 格式化显示结果
+                    resultContent.innerHTML = `
+                        <p><strong>体积重：</strong> ${volumeWeight.toFixed(2)} kg</p>
+                        <p><strong>实际重量：</strong> ${actualWeight.toFixed(2)} kg</p>
+                        <p><strong>计费重量：</strong> ${chargeableWeight.toFixed(2)} kg</p>
+                        <p><strong>基础运费：</strong> $${basePrice.toFixed(2)}</p>
+                        ${surcharge > 0 ? `<p><strong>特殊货物附加费：</strong> $${surcharge.toFixed(2)}</p>` : ''}
+                        ${insuranceFee > 0 ? `<p><strong>保险费：</strong> $${insuranceFee.toFixed(2)}</p>` : ''}
+                        <p class="result-value">总运费：$${totalPrice.toFixed(2)}</p>
+                        <p>* 以上价格仅供参考，实际价格以客服报价为准</p>
+                    `;
+                }
+                
+                resultDiv.style.display = 'block';
+            });
+        });
+    </script>
+  <script src="/assets/js/components.js"></script>
+</body>
+</html> 
