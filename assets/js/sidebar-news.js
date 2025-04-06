@@ -23,17 +23,11 @@
             }
         }
         
-        console.log('当前页面路径:', path);
-        console.log('计算的相对路径:', relativePath + 'static-news');
-        
         return relativePath + 'static-news';
     }
     
     // 静态资讯目录 - 动态计算相对路径
     const staticNewsDir = getStaticNewsPath();
-    
-    // 增加调试日志
-    console.log('Sidebar News 组件初始化...');
     
     /**
      * 初始化侧边栏新闻
@@ -43,8 +37,6 @@
      * @param {number} limit - 最大显示数量
      */
     function initSidebarNews(region, containerId = 'sidebar-news', title = null, limit = 5) {
-        console.log(`初始化侧边栏新闻: 区域=${region}, 容器ID=${containerId}`);
-        
         const container = document.getElementById(containerId);
         if (!container) {
             console.error(`找不到容器元素: #${containerId}`);
@@ -79,8 +71,6 @@
             `../../static-news/${region}/index.html`,
         ];
         
-        console.log('侧边栏组件尝试以下路径:', possiblePaths);
-        
         // 尝试从不同路径加载
         tryFetchFromPaths(possiblePaths)
             .then(html => {
@@ -100,7 +90,9 @@
                         // 使用备用数据
                         const staticEntries = getStaticNewsEntries(region);
                         if (staticEntries.length > 0) {
-                            renderSidebarNews(listEl, staticEntries, region);
+                            renderSidebarNews(listEl, staticEntries);
+                            // 添加查看全部按钮
+                            addViewAllButton(container, region);
                             return;
                         }
                         
@@ -118,8 +110,8 @@
                         const titleEl = card.querySelector('.news-title');
                         let title = titleEl ? titleEl.textContent.trim() : '无标题';
                         
-                        // 移除"新"标签
-                        title = title.replace(/<span class="new-label">新<\/span>/, '').trim();
+                        // 移除"新"标签和"1. 查看全部"文本
+                        title = title.replace(/^\d+\.\s*查看全部/, '').replace(/<span class="new-label">新<\/span>/, '').trim();
                         
                         // 提取日期
                         const dateEl = card.querySelector('.news-date');
@@ -127,77 +119,61 @@
                             dateEl.textContent.replace(/[\n\r]/g, '').trim() : 
                             '未知日期';
                         
-                        // 提取链接
+                        // 提取文章链接 - 获取真实文章链接而不是统一指向index.html
                         const linkEl = card.querySelector('.news-read-more');
-                        const link = linkEl ? linkEl.getAttribute('href') : '#';
+                        let articleLink = '';
                         
-                        // 从链接中提取ID
-                        const id = link.replace(/^\.\//, '').replace(/\.html$/, '');
-                        
-                        const newsPath = getSuccessfulPath() || '../../static-news';
+                        if (linkEl && linkEl.getAttribute('href')) {
+                            const originalLink = linkEl.getAttribute('href');
+                            // 提取文件名部分
+                            const fileName = originalLink.split('/').pop();
+                            
+                            // 获取基础路径
+                            const basePath = getNewsBasePath(region);
+                            
+                            // 组合完整路径
+                            articleLink = `${basePath}/${fileName}`;
+                        } else {
+                            // 如果没有找到链接，使用默认的文章ID
+                            const articleId = getArticleIdFromTitle(title);
+                            const basePath = getNewsBasePath(region);
+                            articleLink = `${basePath}/${articleId}.html`;
+                        }
                         
                         newsList.push({
-                            id,
                             title,
                             date,
-                            link: `${newsPath}/${region}/${id}.html`
+                            link: articleLink
                         });
                     });
                     
                     // 渲染新闻列表
-                    renderSidebarNews(listEl, newsList, region);
+                    renderSidebarNews(listEl, newsList);
+                    
+                    // 添加查看全部按钮
+                    addViewAllButton(container, region);
                 } catch (parseError) {
                     console.error('解析HTML失败:', parseError);
                     // 使用备用数据
                     const staticEntries = getStaticNewsEntries(region);
                     if (staticEntries.length > 0) {
-                        renderSidebarNews(listEl, staticEntries, region);
+                        renderSidebarNews(listEl, staticEntries);
+                        // 添加查看全部按钮
+                        addViewAllButton(container, region);
                         return;
                     }
                     
                     listEl.innerHTML = '<li class="news-error">加载资讯失败</li>';
                 }
-                
-                // 添加查看全部按钮
-                const viewAllEl = document.createElement('div');
-                viewAllEl.className = 'view-all';
-                
-                // 创建两个按钮
-                const refreshBtn = document.createElement('button');
-                refreshBtn.className = 'refresh-btn';
-                refreshBtn.textContent = '刷新资讯';
-                refreshBtn.addEventListener('click', () => {
-                    initSidebarNews(region, containerId, title, limit);
-                });
-                
-                // 获取相对路径的news目录
-                const path = window.location.pathname;
-                const pathParts = path.split('/').filter(p => p);
-                let newsPath = '';
-                if (pathParts.length > 0) {
-                    const depth = pathParts.length - 1;
-                    for (let i = 0; i < depth; i++) {
-                        newsPath += '../';
-                    }
-                }
-                newsPath += 'news';
-                
-                const viewAllBtn = document.createElement('a');
-                viewAllBtn.className = 'view-all-btn';
-                viewAllBtn.href = `${newsPath}/${region}.html`;
-                viewAllBtn.innerHTML = '<i class="fas fa-list"></i> 查看全部';
-                
-                // 添加按钮到容器
-                viewAllEl.appendChild(refreshBtn);
-                viewAllEl.appendChild(viewAllBtn);
-                container.appendChild(viewAllEl);
             })
             .catch(error => {
                 console.error('加载静态资讯失败:', error);
                 // 使用备用数据
                 const staticEntries = getStaticNewsEntries(region);
                 if (staticEntries.length > 0) {
-                    renderSidebarNews(listEl, staticEntries, region);
+                    renderSidebarNews(listEl, staticEntries);
+                    // 添加查看全部按钮
+                    addViewAllButton(container, region);
                     return;
                 }
                 
@@ -206,12 +182,99 @@
     }
     
     /**
+     * 获取文章ID从标题
+     * @param {string} title - 文章标题
+     * @returns {string} 文章ID
+     */
+    function getArticleIdFromTitle(title) {
+        // 根据标题内容映射到特定ID
+        // 这里提供一些常见标题的映射
+        const titleMapping = {
+            '为什么你的大件货物总被加拿大物流商拒收？': '19',
+            '为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区': '19',
+            '美国FBA退货政策新变化及应对策略': '18',
+            '美国最新电池运输管控规定': '17',
+            '加拿大港口罢工导致物流延迟': '12',
+            '墨西哥跨境物流发展机遇': '9',
+            '加拿大物流配送网络优化方案': '8',
+            '美国海关最新清关政策解读': '7',
+            '2024年北美物流市场趋势分析': '6',
+            '洛杉矶港口拥堵情况缓解，集装箱吞吐量回升': '1'
+        };
+        
+        // 尝试从映射表中获取ID
+        for (const key in titleMapping) {
+            if (title.includes(key)) {
+                return titleMapping[key];
+            }
+        }
+        
+        // 如果没有匹配项，返回默认ID
+        return '19';
+    }
+    
+    /**
+     * 获取新闻路径
+     * @param {string} region - 地区代码
+     * @returns {string} 新闻路径
+     */
+    function getNewsPath(region) {
+        // 检查是否有成功路径
+        if (successfulPath) {
+            // 提取目录路径
+            const pathParts = successfulPath.split('/');
+            // 移除最后一个元素(index.html)
+            pathParts.pop();
+            return pathParts.join('/') + '/index.html';
+        }
+        
+        // 没有成功路径，使用备用路径
+        return `../../static-news/${region}/index.html`;
+    }
+    
+    /**
+     * 获取新闻基础路径
+     * @param {string} region - 地区代码
+     * @returns {string} 新闻基础路径
+     */
+    function getNewsBasePath(region) {
+        // 检查是否有成功路径
+        if (successfulPath) {
+            // 提取目录路径
+            const pathParts = successfulPath.split('/');
+            // 移除最后一个元素(index.html)
+            pathParts.pop();
+            return pathParts.join('/');
+        }
+        
+        // 没有成功路径，使用备用路径
+        return `../../static-news/${region}`;
+    }
+    
+    /**
+     * 添加查看全部按钮
+     * @param {HTMLElement} container - 容器元素
+     * @param {string} region - 地区代码
+     */
+    function addViewAllButton(container, region) {
+        const viewAllEl = document.createElement('div');
+        viewAllEl.className = 'view-all';
+        
+        const viewAllBtn = document.createElement('a');
+        viewAllBtn.className = 'view-all-btn';
+        viewAllBtn.href = getNewsPath(region);
+        viewAllBtn.innerHTML = '<i class="fas fa-list"></i> 查看全部';
+        
+        viewAllEl.appendChild(viewAllBtn);
+        container.appendChild(viewAllEl);
+    }
+    
+    /**
      * 渲染侧边栏新闻列表
      * @param {HTMLElement} listEl - 列表元素
      * @param {Array} newsList - 新闻列表
-     * @param {string} region - 地区代码
      */
-    function renderSidebarNews(listEl, newsList, region) {
+    function renderSidebarNews(listEl, newsList) {
         // 清空列表
         listEl.innerHTML = '';
         
@@ -301,11 +364,10 @@
             
             .view-all {
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
                 margin-top: 10px;
             }
             
-            .refresh-btn,
             .view-all-btn {
                 display: inline-block;
                 padding: 5px 10px;
@@ -313,19 +375,16 @@
                 background: #f8f8f8;
                 border: 1px solid #ddd;
                 border-radius: 3px;
-                color: #333;
+                color: #3498db;
                 cursor: pointer;
                 text-decoration: none;
                 transition: all 0.3s;
+                width: 100%;
+                text-align: center;
             }
             
-            .refresh-btn:hover,
             .view-all-btn:hover {
                 background: #eee;
-            }
-            
-            .view-all-btn {
-                color: #3498db;
             }
         `;
         document.head.appendChild(styleEl);
@@ -350,32 +409,21 @@
             }
             
             const currentPath = paths[index];
-            console.log(`尝试从路径加载 (${index+1}/${paths.length}): ${currentPath}`);
             
             return fetch(currentPath)
                 .then(response => {
-                    console.log(`路径 ${currentPath} 响应状态:`, response.status);
                     if (response.ok) {
-                        successfulPath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+                        successfulPath = currentPath;
                         return response.text();
                     }
                     return tryNextPath(index + 1);
                 })
-                .catch(error => {
-                    console.log(`路径 ${currentPath} 加载失败:`, error.message);
+                .catch(() => {
                     return tryNextPath(index + 1);
                 });
         }
         
         return tryNextPath(0);
-    }
-    
-    /**
-     * 获取成功的路径前缀
-     * @returns {string|null} 成功的路径前缀
-     */
-    function getSuccessfulPath() {
-        return successfulPath;
     }
     
     /**
@@ -388,19 +436,16 @@
         if (region === 'north-america') {
             return [
                 {
-                    id: '19',
                     title: '为什么你的大件货物总被加拿大物流商拒收？',
                     date: '2024-04-05',
                     link: '../../static-news/north-america/19.html'
                 },
                 {
-                    id: '18',
                     title: '美国FBA退货政策新变化及应对策略',
                     date: '2024-03-18',
                     link: '../../static-news/north-america/18.html'
                 },
                 {
-                    id: '17', 
                     title: '美国最新电池运输管控规定',
                     date: '2024-03-14',
                     link: '../../static-news/north-america/17.html'
@@ -411,7 +456,6 @@
         else if (region === 'middle-east') {
             return [
                 {
-                    id: '1',
                     title: '中东地区物流新政策概览',
                     date: '2024-03-10',
                     link: '../../static-news/middle-east/1.html'

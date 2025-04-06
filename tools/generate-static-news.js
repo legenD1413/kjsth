@@ -120,8 +120,7 @@ async function generateNewsPage(newsItem, region, regionName) {
             .replace(/\{\{REGION_NAME\}\}/g, regionName)
             .replace(/\{\{CONTENT\}\}/g, newsItem.excerpt || '暂无内容')
             .replace(/\{\{IMPORTANCE\}\}/g, newsItem.importance)
-            .replace(/\{\{IMPORTANCE_TEXT\}\}/g, formatImportance(newsItem.importance))
-            .replace(/\{\{ORIGINAL_LINK\}\}/g, newsItem.link);
+            .replace(/\{\{IMPORTANCE_TEXT\}\}/g, formatImportance(newsItem.importance));
         
         // 写入文件
         const fileName = `${newsItem.id}.html`;

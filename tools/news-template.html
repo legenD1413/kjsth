@@ -127,24 +127,68 @@
             background-color: #e9ecef;
         }
         
-        .view-original {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+        /* 相关资讯样式 */
+        .related-articles {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
         }
         
-        .view-original i {
+        .related-articles h4 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .related-article-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .related-article-item {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .related-article-item:last-child {
+            border-bottom: none;
+        }
+        
+        .related-article-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .related-article-link:hover {
+            color: #2980b9;
+        }
+        
+        .related-article-link i {
             margin-right: 0.5rem;
         }
         
-        .view-original:hover {
-            background-color: #2980b9;
+        /* 文章内容强化样式 */
+        .news-content h3 {
+            position: relative;
+            padding-left: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .news-content h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+            bottom: 0.2rem;
+            width: 4px;
+            background-color: #3498db;
+            border-radius: 2px;
         }
     </style>
 </head>
@@ -213,6 +257,12 @@
                         <li><a href="../../destinations/overseas-warehouse/index.html">海外仓</a></li>
                     </ul>
                 </li>
+                <li class="nav-item" id="user-nav-item">
+                    <a href="../../login.html" class="nav-link">
+                        <i class="fas fa-user-circle"></i>
+                        登录/注册
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -237,18 +287,59 @@
         <div class="news-content">
             <p>{{CONTENT}}</p>
         </div>
+        
+        <!-- 相关资讯占位符 -->
+        <div class="related-articles">
+            <h4>相关资讯</h4>
+            <p>加载中...</p>
+        </div>
+        
         <div class="action-buttons">
             <a href="../index.html" class="back-to-list">
                 <i class="fas fa-list"></i>返回资讯列表
-            </a>
-            <a href="{{ORIGINAL_LINK}}" target="_blank" class="view-original">
-                <i class="fas fa-external-link-alt"></i>查看原文
             </a>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>我们是一家专业的国际物流服务提供商，致力于为客户提供高效、可靠的全球物流解决方案。</p>
+            </div>
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../../index.html">首页</a></li>
+                    <li><a href="../../regions/north-america/index.html">服务</a></li>
+                    <li><a href="#">关于我们</a></li>
+                    <li><a href="#">联系我们</a></li>
+                    <li><a href="#">博客</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>联系方式</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区建国路88号</p>
+                <p><i class="fas fa-phone"></i> +86 10 1234 5678</p>
+                <p><i class="fas fa-envelope"></i> info@wuliufuwu.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+        </div>
     </footer>
+    
+    <script src="../../assets/js/script.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/static-news-content.js"></script>
 </body>
 </html> 

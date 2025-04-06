@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具与指南 | 麦极客物流</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 全局字体设置 - 采用Apple风格字体 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .tools-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 30px 0;
+            background-color: #f5f5f7;
+            border-radius: 12px;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            color: #6e6e73;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .tools-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-header {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin: 0;
+        }
+        
+        .section-header i {
+            color: #0071e3;
+            margin-right: 12px;
+            font-size: 1.5rem;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tool-card-icon {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f7;
+        }
+        
+        .tool-card-icon i {
+            font-size: 3rem;
+            color: #0071e3;
+        }
+        
+        .tool-card-content {
+            padding: 20px;
+        }
+        
+        .tool-card-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #1d1d1f;
+        }
+        
+        .tool-card-desc {
+            font-size: 0.95rem;
+            color: #6e6e73;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .tool-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #86868b;
+            font-size: 0.85rem;
+        }
+        
+        .tool-card-meta span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tool-card-meta i {
+            margin-right: 5px;
+        }
+        
+        .tool-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .tool-card-link:hover {
+            text-decoration: none;
+        }
+        
+        .no-tools-msg {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+            color: #6e6e73;
+            background-color: #f5f5f7;
+            border-radius: 12px;
+        }
+        
+        .search-tools {
+            margin-bottom: 30px;
+        }
+        
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px 12px 50px;
+            border: none;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-size: 1rem;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #86868b;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+            
+            .tool-card-icon {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="麦极客物流Logo">
+                <span>麦极客物流</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-globe-americas"></i>
+                        区域
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../regions/north-america/index.html">北美</a></li>
+                        <li><a href="../regions/south-america/index.html">南美</a></li>
+                        <li><a href="../regions/europe/index.html">欧洲</a></li>
+                        <li><a href="../regions/australia/index.html">澳洲</a></li>
+                        <li><a href="../regions/middle-east/index.html">中东</a></li>
+                        <li><a href="../regions/southeast-asia/index.html">东南亚</a></li>
+                        <li><a href="../regions/africa/index.html">非洲</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        货品
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="../products/regular/index.html">普货</a></li>
+                        <li><a href="../products/cosmetics/index.html">化妆品</a></li>
+                        <li><a href="../products/liquids/index.html">液体</a></li>
+                        <li><a href="../products/e-cigarettes/index.html">电子烟</a></li>
+                        <li><a href="../products/batteries/index.html">电池</a></li>
+                        <li><a href="../products/electronic-with-battery/index.html">内电</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-tools"></i>
+                        工具与指南
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="../contact.html" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        联系我们
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="tools-container">
+            <div class="page-header">
+                <h1>工具与指南</h1>
+                <p>为您提供国际物流所需的各类计算工具、清关指南、法规解读和交互式工具，助您轻松应对全球物流挑战。</p>
+            </div>
+            
+            <div class="search-tools">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="tools-search" placeholder="搜索工具和指南...">
+                </div>
+            </div>
+            
+            <!-- 计算工具 -->
+            <div class="tools-section" id="calculators">
+                <div class="section-header">
+                    <i class="fas fa-calculator"></i>
+                    <h2>计算工具</h2>
+                </div>
+                <div class="tools-grid">
+                    <a href="calculators/1.html" class="tool-card-link">
+                        <div class="tool-card">
+                            <div class="tool-card-icon">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <div class="tool-card-content">
+                                <h3 class="tool-card-title">体积重计算器</h3>
+                                <p class="tool-card-desc">计算国际物流所需的体积重量，帮助您准确估算货物运费。</p>
+                                <div class="tool-card-meta">
+                                    <span><i class="fas fa-map-marker-alt"></i>全球</span>
+                                    <span><i class="far fa-clock"></i>2分钟</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 示例: 更多计算工具卡片将在未来添加 -->
+                </div>
+            </div>
+            
+            <!-- 指南文档 -->
+            <div class="tools-section" id="guides">
+                <div class="section-header">
+                    <i class="fas fa-book"></i>
+                    <h2>指南文档</h2>
+                </div>
+                <div class="tools-grid">
+                    <div class="no-tools-msg">
+                        <p>指南文档正在编写中，敬请期待！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 表格文档 -->
+            <div class="tools-section" id="forms">
+                <div class="section-header">
+                    <i class="fas fa-file-alt"></i>
+                    <h2>表格文档</h2>
+                </div>
+                <div class="tools-grid">
+                    <div class="no-tools-msg">
+                        <p>表格文档正在编写中，敬请期待！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 法规解读 -->
+            <div class="tools-section" id="regulations">
+                <div class="section-header">
+                    <i class="fas fa-gavel"></i>
+                    <h2>法规解读</h2>
+                </div>
+                <div class="tools-grid">
+                    <div class="no-tools-msg">
+                        <p>法规解读正在编写中，敬请期待！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 互动工具 -->
+            <div class="tools-section" id="interactive">
+                <div class="section-header">
+                    <i class="fas fa-laptop-code"></i>
+                    <h2>互动工具</h2>
+                </div>
+                <div class="tools-grid">
+                    <div class="no-tools-msg">
+                        <p>互动工具正在开发中，敬请期待！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 麦极客物流 | 让全球物流触手可及</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 工具搜索功能
+            const searchInput = document.getElementById('tools-search');
+            const toolCards = document.querySelectorAll('.tool-card-link');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                toolCards.forEach(card => {
+                    const title = card.querySelector('.tool-card-title').textContent.toLowerCase();
+                    const desc = card.querySelector('.tool-card-desc').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // 检查每个区域是否有可见的工具卡片
+                document.querySelectorAll('.tools-section').forEach(section => {
+                    const visibleCards = section.querySelectorAll('.tool-card-link[style=""]').length;
+                    const noToolsMsg = section.querySelector('.no-tools-msg');
+                    
+                    if (visibleCards === 0 && !noToolsMsg) {
+                        const grid = section.querySelector('.tools-grid');
+                        const tempMsg = document.createElement('div');
+                        tempMsg.className = 'no-tools-msg temp-msg';
+                        tempMsg.innerHTML = '<p>未找到匹配的工具</p>';
+                        grid.appendChild(tempMsg);
+                    } else if (visibleCards > 0) {
+                        const tempMsg = section.querySelector('.temp-msg');
+                        if (tempMsg) {
+                            tempMsg.remove();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

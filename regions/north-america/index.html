@@ -3,189 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>北美物流服务 - 物流服务网站</title>
+    <title>北美物流服务 - 麦极客物流</title>
     <link rel="stylesheet" href="../../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* 全局字体设置 */
+        /* 全局字体设置 - 采用Apple风格字体 */
         body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 重置一些基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
         }
         
         /* 北美页面特定样式 */
         .content-container {
             display: flex;
+            flex-direction: row;
             gap: 2rem;
             margin-top: 80px;
             padding: 2rem;
-            max-width: 1400px;
+            max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
         }
 
+        /* 左侧内容 - 卡片网格布局 */
         .left-section {
-            flex: 1;
+            flex: 3;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* 右侧边栏 */
+        .right-column {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
         }
 
         .right-section {
-            background: #f8f9fa;
+            background: #ffffff;
             padding: 1.5rem;
             border-radius: 8px;
-            height: fit-content;
-            margin-bottom: 2rem;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
+        /* 服务卡片样式 - 新的卡片式设计 */
         .showcase-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             height: 100%;
             position: relative;
         }
 
         .showcase-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
 
+        /* 新的卡片内部布局 */
         .showcase-card-inner {
             display: flex;
+            flex-direction: column;
             height: 100%;
-            border-radius: 12px;
-            overflow: hidden;
         }
 
+        /* 卡片图片容器 */
         .showcase-image-container {
-            flex: 1.2;
+            height: 180px;
+            width: 100%;
             position: relative;
-            min-width: 0;
+            overflow: hidden;
         }
 
         .showcase-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-right: 1px solid #eee;
         }
 
+        /* 卡片内容区 */
         .showcase-right-section {
-            flex: 2;
             display: flex;
             flex-direction: column;
+            padding: 1.2rem;
+            flex: 1;
         }
 
+        /* 卡片标题样式 */
         .showcase-title {
-            font-size: 1.25rem;
-            color: #2c3e50;
-            margin-bottom: 0.7rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            color: #1d1d1f;
+            margin-bottom: 1rem;
+            font-weight: 500;
             position: relative;
             padding-bottom: 0.5rem;
             display: inline-block;
+            border-bottom: 2px solid #0071e3;
         }
         
         .showcase-title:after {
-            content: '';
-            position: absolute;
-            width: 80%;
-            height: 3px;
-            background: linear-gradient(90deg, #f39c12, transparent);
-            bottom: 0;
-            left: 0;
-            border-radius: 2px;
+            display: none;
         }
 
+        /* 描述文本样式 */
         .showcase-desc {
-            color: #666;
+            color: #6e6e73;
             font-size: 0.95rem;
             line-height: 1.5;
             margin-bottom: 1rem;
         }
 
-        .showcase-price {
-            color: #e74c3c;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        /* 新增 AI查价 按钮样式 */
-        .ai-price-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #1565C0, #0D47A1);
-            color: white;
-            padding: 0.5rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 3px 6px rgba(13, 71, 161, 0.3);
-            text-align: center;
-            margin-top: auto;
-            align-self: flex-start;
-            position: relative;
-            overflow: hidden;
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
-        }
-
-        .ai-price-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
-            transition: all 0.6s ease;
-        }
-
-        .ai-price-btn:hover {
-            background: linear-gradient(135deg, #1976D2, #1565C0);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 12px rgba(33, 150, 243, 0.4);
-        }
-
-        .ai-price-btn:hover::before {
-            left: 100%;
-        }
-
-        .ai-price-btn i {
-            margin-right: 0.3rem;
-            font-size: 1rem;
-        }
-
         /* 线路介绍样式 */
         .route-features {
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             flex: 1;
-            color: #555;
+            color: #6e6e73;
         }
 
         .route-features i {
-            color: #3498db;
-            margin-right: 0.3rem;
+            color: #0071e3;
+            margin-right: 0.4rem;
+            font-size: 0.8rem;
         }
 
+        /* 标签容器样式 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* 标签样式 - 扁平化标签 */
+        .showcase-tag {
+            background: #f2f2f7;
+            color: #1d1d1f;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-align: center;
+            box-shadow: none;
+            transition: all 0.2s ease;
+            font-weight: 400;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .showcase-tag i {
+            font-size: 0.7rem;
+            color: #0071e3;
+        }
+
+        /* 查询价格按钮 */
+        .ai-price-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #0071e3;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            box-shadow: none;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .ai-price-btn:hover {
+            background: #0077ed;
+            transform: none;
+            box-shadow: 0 1px 4px rgba(0, 113, 227, 0.3);
+        }
+
+        .ai-price-btn i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* 热门标签样式 */
+        .hot-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #e51e2e;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.25rem 0.8rem;
+            z-index: 2;
+        }
+        
+        /* 文章列表样式 - 更简洁的样式 */
         .article-list {
             list-style: none;
+            padding: 0;
         }
 
         .article-list li {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .article-list li:last-child {
@@ -195,201 +242,155 @@
         }
 
         .article-list a {
-            color: #2c3e50;
+            color: #1d1d1f;
             text-decoration: none;
             display: block;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .article-list a:hover {
-            color: #3498db;
+            color: #0071e3;
         }
 
-        .article-date {
+        /* 实用工具列表 */
+        .tools-list a {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem 0;
+            color: #1d1d1f;
+            text-decoration: none;
             font-size: 0.9rem;
-            color: #666;
-            margin-top: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .tools-list a:hover {
+            color: #0071e3;
+        }
+        
+        .tools-list a:last-child {
+            border-bottom: none;
+        }
+        
+        .tools-list i {
+            margin-right: 0.5rem;
+            color: #0071e3;
+            font-size: 0.8rem;
+            width: 1.2rem;
+            text-align: center;
+        }
+        
+        .tools-list strong {
+            font-weight: 500;
+        }
+        
+        /* 查看全部按钮样式 */
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 0.8rem;
+            background-color: #f2f2f7;
+            color: #0071e3;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .view-all-btn:hover {
+            background-color: #e8e8ed;
+        }
+        
+        .view-all-btn i {
+            margin-right: 0.4rem;
+            font-size: 0.8rem;
         }
 
-        @media (max-width: 1024px) {
+        /* 右侧栏目标题样式 */
+        .right-section h3 {
+            font-size: 1.1rem;
+            color: #1d1d1f;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            width: 100%;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
             .left-section {
-                grid-template-columns: 1fr;
+                width: 100%;
             }
             
-            .showcase-image-container {
-                flex: 1;
-            }
-            
-            .showcase-right-section {
-                flex: 1.5;
+            .right-column {
+                width: 100%;
+                max-width: none;
+                margin-top: 1.5rem;
             }
         }
 
         @media (max-width: 768px) {
             .content-container {
-                flex-direction: column;
-                padding: 1.5rem;
-            }
-
-            .left-section, .right-section {
-                flex: none;
-                width: 100%;
-            }
-
-            .showcase-card-inner {
-                flex-direction: column;
-            }
-            
-            .showcase-image-container {
-                flex: none;
-                height: 180px;
-            }
-            
-            .showcase-image {
-                border-right: none;
-                border-bottom: 1px solid #eee;
-            }
-            
-            .tags-container {
-                justify-content: flex-start;
-            }
-            
-            .showcase-content {
                 padding: 1rem;
+                margin-top: 60px;
+            }
+
+            .left-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
         }
 
-        /* 添加logo样式 */
+        /* 顶部导航Logo样式 */
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .logo img {
-            height: 40px;
+            height: 32px;
             width: auto;
         }
 
         .logo span {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            letter-spacing: -0.02em;
         }
         
-        /* 移除快捷访问横幅样式 */
-        
-        @media (max-width: 768px) {
-            .content-container {
-                margin-top: 60px; /* 保持原有上边距 */
-            }
-        }
-
-        /* 右侧栏目布局 */
-        .right-column {
-            flex: 0.32;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+        /* 导航菜单样式 */
+        .main-nav {
+            padding: 0.8rem 2rem;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         
-        /* 栏目标题美化 */
-        .right-section h3 {
-            font-size: 1.3rem;
-            color: #2c3e50;
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.7rem;
-            border-bottom: 2px solid #3498db;
-            position: relative;
-            display: inline-block;
+        .nav-menu {
+            gap: 1.5rem;
         }
         
-        .right-section h3:after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 2px;
-            background: linear-gradient(90deg, #3498db, transparent);
-            bottom: -2px;
-            left: 0;
-        }
-
-        /* 更新标签容器和标签样式，放在右侧内容区顶部 */
-        .tags-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            padding: 0.6rem 1rem 0.5rem;
-            background-color: white;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        /* 白底蓝色标签样式 */
-        .showcase-tag {
-            background: white;
-            color: #1a6fb8;
-            padding: 0.15rem 0.45rem;
-            border-radius: 3px;
-            font-size: 0.68rem;
-            text-align: center;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
+        .nav-link {
             font-weight: 400;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-            position: relative;
-            overflow: hidden;
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif !important;
+            color: #1d1d1f;
         }
-
-        .showcase-tag::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
-            z-index: -1;
-        }
-
-        .showcase-tag i {
-            font-size: 0.62rem;
-            color: #1a6fb8;
-        }
-
-        .showcase-tag:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(26, 111, 184, 0.15);
-            background-color: #f0f5fb;
-        }
-
-        .showcase-content {
-            padding: 1.2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        /* 热门标签样式 */
-        .hot-tag {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: linear-gradient(135deg, #ff5a5f, #ff2d55);
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0 0 8px 0;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-            z-index: 2;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        
+        /* 页脚样式 */
+        footer {
+            padding: 2rem 0;
+            background: #ffffff;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6e6e73;
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -397,8 +398,8 @@
     <header>
         <nav class="main-nav">
             <div class="logo">
-                <img src="../../assets/images/logo.png" alt="物流服务网站Logo">
-                <span>物流服务</span>
+                <img src="../../assets/images/logo.png" alt="麦极客物流Logo">
+                <span>麦极客物流</span>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -428,7 +429,7 @@
                         <li><a href="../../products/cosmetics/index.html">化妆品</a></li>
                         <li><a href="../../products/liquids/index.html">液体</a></li>
                         <li><a href="../../products/e-cigarettes/index.html">电子烟</a></li>
-                        <li><a href="../../products/batteries/index.html">纯电池</a></li>
+                        <li><a href="../../products/batteries/index.html">电池</a></li>
                         <li><a href="../../products/electronic-with-battery/index.html">内电</a></li>
                     </ul>
                 </li>
@@ -452,7 +453,7 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="../../destinations/commercial/index.html">商业件</a></li>
-                        <li><a href="../../destinations/residential/index.html">私人地址件</a></li>
+                        <li><a href="../../destinations/residential/index.html">私人地址</a></li>
                         <li><a href="../../destinations/fba/index.html">FBA</a></li>
                         <li><a href="../../destinations/walmart/index.html">沃尔玛</a></li>
                         <li><a href="../../destinations/overseas-warehouse/index.html">海外仓</a></li>
@@ -465,32 +466,27 @@
     <div class="content-container">
         <div class="left-section">
             <div class="showcase-card">
-                <div class="hot-tag">HOT</div>
+                <div class="hot-tag">热门</div>
                 <div class="showcase-card-inner">
                     <div class="showcase-image-container">
                         <img src="../../assets/images/air-freight.png" alt="加拿大FBA专线" class="showcase-image">
                     </div>
                     <div class="showcase-right-section">
                         <div class="tags-container">
-                            <span class="showcase-tag"><i class="fab fa-amazon"></i>FBA专线</span>
-                            <span class="showcase-tag"><i class="fas fa-box"></i>标准件</span>
-                            <span class="showcase-tag"><i class="fas fa-flag-checkered"></i>加拿大</span>
-
+                            <span class="showcase-tag"><i class="fas fa-building"></i>商业地址</span>
+                            <span class="showcase-tag"><i class="fas fa-truck"></i>大件派送</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>加拿大</span>
                         </div>
-                        <div class="showcase-content">
-                            <h3 class="showcase-title">加拿大FBA专线</h3>
-                            <div class="route-features">
-                                <p><i class="fas fa-bullseye"></i> 专注小批量快速空运，主要承接：电子产品、服装、普货。</p>
-                                <p><i class="fas fa-medal"></i> 覆盖范围：纽约、洛杉矶、芝加哥、迈阿密主要城市及周边。</p>
-                            </div>
-                            <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=ca-fba'"><i class="fas fa-robot"></i> AI在线查价</button>
+                        <h3 class="showcase-title">加拿大商业大件海运</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 全境海运服务，理想的大宗货物解决方案</p>
+                            <p><i class="fas fa-location-dot"></i> 主要港口：温哥华、多伦多、蒙特利尔</p>
                         </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=ca-fba'"><i class="fas fa-calculator"></i>查询价格</button>
                     </div>
                 </div>
             </div>    
             
-              
-
             <div class="showcase-card">
                 <div class="showcase-card-inner">
                     <div class="showcase-image-container">
@@ -498,19 +494,16 @@
                     </div>
                     <div class="showcase-right-section">
                         <div class="tags-container">
-
                             <span class="showcase-tag"><i class="fas fa-building"></i>商业地址</span>
                             <span class="showcase-tag"><i class="fas fa-truck"></i>大件派送</span>
-                            <span class="showcase-tag"><i class="fas fa-flag-checkered"></i>加拿大</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>加拿大</span>
                         </div>
-                        <div class="showcase-content">
-                            <h3 class="showcase-title">加拿大商业大件海运专线</h3>
-                            <div class="route-features">
-                                <p><i class="fas fa-bullseye"></i> 专业提供加拿大全境海运服务，适合大宗货物。</p>
-                                <p><i class="fas fa-medal"></i> 重点覆盖：温哥华、多伦多、蒙特利尔主要港口。</p>
-                            </div>
-                            <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=canada-BIG'"><i class="fas fa-robot"></i> AI在线查价</button>
+                        <h3 class="showcase-title">加拿大商业大件海运</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 全境海运服务，理想的大宗货物解决方案</p>
+                            <p><i class="fas fa-location-dot"></i> 主要港口：温哥华、多伦多、蒙特利尔</p>
                         </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=canada-BIG'"><i class="fas fa-calculator"></i>查询价格</button>
                     </div>
                 </div>
             </div>
@@ -522,25 +515,19 @@
                     </div>
                     <div class="showcase-right-section">
                         <div class="tags-container">
-
                             <span class="showcase-tag"><i class="fas fa-building"></i>商业地址</span>
-                            <span class="showcase-tag"><i class="fas fa-truck"></i>标准件</span>
-                            <span class="showcase-tag"><i class="fas fa-flag-checkered"></i>加拿大</span>
+                            <span class="showcase-tag"><i class="fas fa-box"></i>标准件</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>加拿大</span>
                         </div>
-                        <div class="showcase-content">
-                            <h3 class="showcase-title">加拿大商业标准件专线</h3>
-                            <div class="route-features">
-                                <p><i class="fas fa-bullseye"></i> 专业提供加拿大全境海运服务，适合大宗货物。</p>
-                                <p><i class="fas fa-medal"></i> 重点覆盖：温哥华、多伦多、蒙特利尔主要港口。</p>
-                            </div>
-                            <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=canada-standard'"><i class="fas fa-robot"></i> AI在线查价</button>
+                        <h3 class="showcase-title">加拿大商业标准件</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 高效海运服务，适合各类标准规格货物</p>
+                            <p><i class="fas fa-location-dot"></i> 服务温哥华、多伦多、蒙特利尔等城市</p>
                         </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=canada-standard'"><i class="fas fa-calculator"></i>查询价格</button>
                     </div>
                 </div>
             </div>
-
-
-
 
             <div class="showcase-card">
                 <div class="showcase-card-inner">
@@ -550,16 +537,14 @@
                     <div class="showcase-right-section">
                         <div class="tags-container">
                             <span class="showcase-tag"><i class="fab fa-amazon"></i>FBA专线</span>
-                            <span class="showcase-tag"><i class="fas fa-box"></i> 普货</span>
+                            <span class="showcase-tag"><i class="fas fa-box"></i>普货</span>
                         </div>
-                        <div class="showcase-content">
-                            <h3 class="showcase-title">美国FBA专线</h3>
-                            <div class="route-features">
-                                <p><i class="fas fa-bullseye"></i> 专注FBA仓库派送，主要承接：亚马逊卖家货品、电商产品。</p>
-                                <p><i class="fas fa-medal"></i> 覆盖范围：所有北美亚马逊FBA仓库，支持空运、海运两种模式。</p>
-                            </div>
-                            <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=us-fba'"><i class="fas fa-robot"></i> AI在线查价</button>
+                        <h3 class="showcase-title">美国FBA专线</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 专业FBA仓库派送，电商卖家首选</p>
+                            <p><i class="fas fa-location-dot"></i> 覆盖全美亚马逊仓库，支持空运和海运</p>
                         </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=us-fba'"><i class="fas fa-calculator"></i>查询价格</button>
                     </div>
                 </div>
             </div>
@@ -567,21 +552,19 @@
             <div class="showcase-card">
                 <div class="showcase-card-inner">
                     <div class="showcase-image-container">
-                        <img src="../../assets/images/express.jpg" alt="特惠专线" class="showcase-image">
+                        <img src="../../assets/images/express.jpg" alt="墨西哥商业件" class="showcase-image">
                     </div>
                     <div class="showcase-right-section">
                         <div class="tags-container">
-                            <span class="showcase-tag"><i class="fas fa-percentage"></i> 特惠专线</span>
-                            <span class="showcase-tag"><i class="fas fa-building"></i> 商业件</span>
+                            <span class="showcase-tag"><i class="fas fa-percentage"></i>特惠专线</span>
+                            <span class="showcase-tag"><i class="fas fa-building"></i>商业件</span>
                         </div>
-                        <div class="showcase-content">
-                            <h3 class="showcase-title">墨西哥商业件test</h3>
-                            <div class="route-features">
-                                <p><i class="fas fa-bullseye"></i> 专注墨西哥市场，主要承接：工业品、普货、汽车配件。</p>
-                                <p><i class="fas fa-medal"></i> 覆盖范围：墨西哥城、蒙特雷、瓜达拉哈拉等主要工业城市。</p>
-                            </div>
-                            <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=mexico'"><i class="fas fa-robot"></i> AI在线查价</button>
+                        <h3 class="showcase-title">墨西哥商业件</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 工业品和汽车配件专业运输方案</p>
+                            <p><i class="fas fa-location-dot"></i> 服务墨西哥城、蒙特雷、瓜达拉哈拉</p>
                         </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=mexico'"><i class="fas fa-calculator"></i>查询价格</button>
                     </div>
                 </div>
             </div>
@@ -591,69 +574,87 @@
             <div class="right-section">
                 <h3>北美物流资讯</h3>
                 <ul class="article-list">
-                    <!-- 静态展示北美物流资讯，不依赖动态加载 -->
-                    <li class="article-item">
-                        <a href="../../static-news/north-america/19.html" class="article-link">
-                            <span class="article-title">为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区</span>
-                            <span class="article-date">2024-04-05</span>
+                    <li>
+                        <a href="../../static-news/north-america/19.html">
+                            大件货物被加拿大物流商拒收？六大认知误区
                         </a>
                     </li>
-                    <li class="article-item">
-                        <a href="../../static-news/north-america/18.html" class="article-link">
-                            <span class="article-title">美国FBA退货政策新变化及应对策略</span>
-                            <span class="article-date">2024-03-18</span>
+                    <li>
+                        <a href="../../static-news/north-america/18.html">
+                            美国FBA退货政策新变化及应对策略
                         </a>
                     </li>
-                    <li class="article-item">
-                        <a href="../../static-news/north-america/17.html" class="article-link">
-                            <span class="article-title">美国最新电池运输管控规定</span>
-                            <span class="article-date">2024-03-14</span>
+                    <li>
+                        <a href="../../static-news/north-america/17.html">
+                            美国最新电池运输管控规定
                         </a>
                     </li>
-                    <li class="article-item">
-                        <a href="../../static-news/north-america/12.html" class="article-link">
-                            <span class="article-title">加拿大港口罢工导致物流延迟</span>
-                            <span class="article-date">2024-02-22</span>
+                    <li>
+                        <a href="../../static-news/north-america/12.html">
+                            加拿大港口罢工导致物流延迟
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../static-news/north-america/11.html">
+                            美国海关新规：电子产品申报要求变更
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../static-news/north-america/10.html">
+                            北美跨境物流成本优化策略分析
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../static-news/north-america/9.html">
+                            加拿大电商物流新趋势：送达时间缩短
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../static-news/north-america/8.html">
+                            美国物流中心分布及选择指南
                         </a>
                     </li>
                 </ul>
                 <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
-                    <a href="../../news/north-america.html" class="view-all-btn" style="display: inline-block; padding: 0.4rem 0.8rem; background-color: #f8f9fa; color: #3498db; text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: all 0.3s; border: 1px solid #e9ecef;">
-                        <i class="fas fa-list-ul" style="margin-right: 0.3rem;"></i>查看全部
+                    <a href="../../static-news/north-america/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
                     </a>
                 </div>
             </div>
 
             <div class="right-section">
-                <h3>实用工具</h3>
-                <ul class="article-list">
-                    <li>
-                        <a href="#"><i class="fas fa-calculator"></i> <strong>运费计算器</strong> - 快速估算您的物流成本</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-truck-loading"></i> <strong>包装指南</strong> - 高效打包物品的方法</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-clipboard-check"></i> <strong>清关文件模板</strong> - 准备北美清关所需文件</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-map-marked-alt"></i> <strong>物流路线查询</strong> - 查看可用物流路线</a>
-                    </li>
-                </ul>
+                <h3>工具与指南</h3>
+                <div class="tools-list">
+                    <a href="../../static-tools/global/volumetric-weight-calculator.html">
+                        <i class="fas fa-calculator"></i> <strong>运费计算</strong> - 迅速获取准确物流报价
+                    </a>
+                    <a href="../../static-tools/global/packaging-optimization.html">
+                        <i class="fas fa-box"></i> <strong>包装指南</strong> - 优化包装方法
+                    </a>
+                    <a href="../../static-tools/north-america/canada-customs-duty-lookup.html">
+                        <i class="fas fa-file-alt"></i> <strong>清关文档</strong> - 北美清关所需资料
+                    </a>
+                    <a href="../../static-tools/global/optimal-route-finder.html">
+                        <i class="fas fa-route"></i> <strong>路线查询</strong> - 查看最优物流路线
+                    </a>
+                </div>
+                <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
+                    <a href="../../tools-guides/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 物流服务网站. All rights reserved.</p>
+        <p>&copy; 2024 麦极客物流 | 让全球物流触手可及</p>
     </footer>
 
     <script src="../../assets/js/script.js"></script>
     <script src="../../assets/js/ai-pricing.js"></script>
-    <script src="card-loader.js"></script>
-    <script src="../../assets/js/static-news-loader.js"></script>
     <script>
-        // 根据ai-pricing.js中的配置显示HOT标签
+        // 根据ai-pricing.js中的配置显示热门标签
         document.addEventListener('DOMContentLoaded', function() {
             // 获取所有卡片
             const cards = document.querySelectorAll('.showcase-card');
@@ -681,7 +682,7 @@
                     if (!hotTag) {
                         hotTag = document.createElement('div');
                         hotTag.className = 'hot-tag';
-                        hotTag.textContent = 'HOT';
+                        hotTag.textContent = '热门';
                         card.appendChild(hotTag);
                     }
                     
@@ -695,14 +696,6 @@
                     }
                 }
             });
-            
-            // 直接初始化北美地区的静态新闻加载
-            if (window.StaticNewsLoader) {
-                console.log('直接调用StaticNewsLoader.loadNews()');
-                window.StaticNewsLoader.loadNews('north-america');
-            } else {
-                console.error('StaticNewsLoader没有正确加载');
-            }
         });
     </script>
 </body>
