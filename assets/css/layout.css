@@ -94,6 +94,13 @@ header {
     opacity: 1;
 }
 
+/* 活动状态的导航链接 */
+.nav-link.active {
+    color: var(--primary-color);
+    opacity: 1;
+    font-weight: 500;
+}
+
 /* 下拉菜单样式 */
 .dropdown-menu {
     position: absolute;

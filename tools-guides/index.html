@@ -1,587 +1,214 @@
 <!DOCTYPE html><html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>工具与指南 | 麦极客物流</title>
-    <!-- 首先加载全局CSS文件 -->
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/layout.css">
-    <link rel="stylesheet" href="../assets/css/tools-guides.css">
-    <!-- 然后加载图标和字体 -->
+    <title>物流工具与指南 | 迈格库物流</title>
+    <!-- 全局CSS文件 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/tools-guides.css">
+    <!-- 图标和字体 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- 添加WordPress集成脚本 -->
-    <script src="../wordpress-integration/maigeeku-tools-loader.js" defer=""></script>
-    <style>
-        /* 全局字体设置 - 采用Apple风格字体 */
-        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
-            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        .tools-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        .page-header {
-            margin-bottom: 30px;
-            text-align: center;
-            padding: 30px 0;
-            background-color: #f5f5f7;
-            border-radius: 12px;
-        }
-        
-        .page-header h1 {
-            font-size: 2.5rem;
-            font-weight: 500;
-            color: #1d1d1f;
-            margin-bottom: 15px;
-        }
-        
-        .page-header p {
-            font-size: 1.1rem;
-            color: #6e6e73;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* 搜索框样式 */
-        .search-tools {
-            margin-bottom: 30px;
-        }
-        
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 12px 20px 12px 45px;
-            border: none;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            font-size: 1rem;
-            outline: none;
-            transition: box-shadow 0.3s ease;
-        }
-        
-        .search-input:focus {
-            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #86868b;
-        }
-        
-        /* 两栏布局 */
-        .tools-main {
-            display: flex;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        /* 左侧内容区域 */
-        .tools-content {
-            flex: 1;
-        }
-        
-        .tools-section {
-            margin-bottom: 30px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            overflow: hidden;
-            display: none; /* 默认隐藏所有分类 */
-        }
-        
-        .tools-section.active {
-            display: block; /* 显示当前活跃分类 */
-        }
-        
-        .section-header {
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding: 15px 20px;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            background-color: #f9f9fc;
-        }
-        
-        .section-header h2 {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: #1d1d1f;
-            margin: 0;
-        }
-        
-        .section-header i {
-            color: #0071e3;
-            margin-right: 12px;
-            font-size: 1.5rem;
-            width: 30px;
-            text-align: center;
-        }
-        
-        .tools-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .tool-item {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid #f2f2f2;
-            transition: background-color 0.2s;
-        }
-        
-        .tool-item:hover {
-            background-color: #f9f9fc;
-        }
-        
-        .tool-item:last-child {
-            border-bottom: none;
-        }
-        
-        .tool-icon {
-            width: 40px;
-            height: 40px;
-            background-color: #f5f5f7;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-        
-        .tool-icon i {
-            font-size: 1.3rem;
-            color: #0071e3;
-        }
-        
-        .tool-info {
-            flex: 1;
-        }
-        
-        .tool-info h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #1d1d1f;
-            margin: 0 0 5px 0;
-        }
-        
-        .tool-info p {
-            font-size: 0.9rem;
-            color: #6e6e73;
-            margin: 0 0 8px 0;
-        }
-        
-        .tool-tags {
-            display: flex;
-            gap: 6px;
-        }
-        
-        .tag {
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background-color: #f5f5f7;
-            color: #6e6e73;
-        }
-        
-        .tag-global {
-            background-color: rgba(0, 113, 227, 0.1);
-            color: #0071e3;
-        }
-        
-        .tag-north-america {
-            background-color: rgba(88, 86, 214, 0.1);
-            color: #5856d6;
-        }
-        
-        .tag-guide {
-            background-color: rgba(52, 199, 89, 0.1);
-            color: #34c759;
-        }
-        
-        .tag-utility {
-            background-color: rgba(255, 149, 0, 0.1);
-            color: #ff9500;
-        }
-        
-        .no-tools-msg {
-            padding: 30px;
-            text-align: center;
-            color: #6e6e73;
-        }
-        
-        /* 右侧导航 */
-        .tools-nav {
-            width: 250px;
-            flex-shrink: 0;
-        }
-        
-        .nav-card {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            overflow: hidden;
-            position: sticky;
-            top: 80px;
-        }
-        
-        .nav-header {
-            padding: 15px 20px;
-            background-color: #f9f9fc;
-            border-bottom: 1px solid #e8e8ed;
-        }
-        
-        .nav-header h3 {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #1d1d1f;
-            margin: 0;
-        }
-        
-        .nav-list {
-            list-style: none;
-            padding: 10px 0;
-            margin: 0;
-        }
-        
-        .nav-item {
-            padding: 0;
-            margin: 0;
-        }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            font-size: 0.95rem;
-            color: #424245;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        
-        .nav-link:hover {
-            background-color: #f5f5f7;
-            color: #0071e3;
-        }
-        
-        .nav-link.active {
-            background-color: rgba(0, 113, 227, 0.08);
-            color: #0071e3;
-            font-weight: 500;
-        }
-        
-        .nav-link i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-        
-        .nav-link .count {
-            margin-left: auto;
-            font-size: 0.8rem;
-            background-color: #f5f5f7;
-            color: #86868b;
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-        
-        /* 区域筛选链接样式 */
-        .region-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            font-size: 0.95rem;
-            color: #424245;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        
-        .region-link:hover {
-            background-color: #f5f5f7;
-            color: #0071e3;
-        }
-        
-        .region-link.active {
-            background-color: rgba(0, 113, 227, 0.08);
-            color: #0071e3;
-            font-weight: 500;
-        }
-        
-        .region-link i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-        
-        .region-link .count {
-            margin-left: auto;
-            font-size: 0.8rem;
-            background-color: #f5f5f7;
-            color: #86868b;
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-        
-        /* 响应式样式 */
-        @media (max-width: 900px) {
-            .tools-main {
-                flex-direction: column;
-            }
-            
-            .tools-nav {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-            
-            .nav-card {
-                position: static;
-            }
-            
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            
-            .page-header p {
-                font-size: 1rem;
-            }
-            
-            .tool-item {
-                padding: 15px;
-            }
-            
-            .tool-info h3 {
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&amp;family=SF+Pro+Text:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <!-- WordPress集成脚本 -->
+    <script src="/wordpress-integration/maigeeku-tools-loader.js" defer=""></script>
 </head>
 <body>
+    <!-- 统一的头部容器 -->
     <header id="header"></header>
 
-    <main class="main-container">
+    <main class="main-container" style="padding-top: 8px;">
         <div class="tools-container">
-            <div class="page-header">
-                <h1>物流工具与指南</h1>
-                <p>我们提供专业的物流工具和资源，帮助您优化物流流程、了解最新法规，简化您的国际物流体验。</p>
-            </div>
-            
-            <div class="search-tools">
-                <div class="search-container">
-                    <input type="text" id="search-input" class="search-input" placeholder="搜索工具、计算器或指南...">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-            </div>
-            
             <div class="tools-main">
                 <!-- 左侧工具内容 -->
                 <div class="tools-content">
                     <!-- 主内容区域 -->
-                    <div class="container main-container">
-                        <div class="tools-guides-container">
-                            <h1 class="section-title">工具与指南</h1>
-                            <p class="section-description">为您提供物流运输所需的各类实用工具与权威指南，助力您的跨境物流更加便捷、高效。</p>
-                            
-                            <h2 id="tools-section-title">全部工具与指南</h2>
-                            
-                            <div id="tools-grid" class="tools-grid">
-                                <!-- 工具与指南将由WordPress API自动加载 -->
-                                <div class="loading-indicator">加载中...</div>
-                            </div>
-                            
-                            <!-- 分类过滤器 -->
-                            <div class="filter-section">
-                                <h3>按分类浏览</h3>
-                                <div class="filter-buttons">
-                                    <button class="filter-btn active" data-category="all">全部</button>
-                                    <button class="filter-btn" data-category="calculators">计算工具</button>
-                                    <button class="filter-btn" data-category="guides">指南文档</button>
-                                    <button class="filter-btn" data-category="forms">表格文档</button>
-                                    <button class="filter-btn" data-category="regulations">法规解读</button>
-                                    <button class="filter-btn" data-category="interactive">互动工具</button>
-                                </div>
-                            </div>
-                            
-                            <!-- 地区过滤器 -->
-                            <div class="filter-section">
-                                <h3>按地区浏览</h3>
-                                <div class="filter-buttons">
-                                    <button class="filter-btn active" data-region="all">全部地区</button>
-                                    <button class="filter-btn" data-region="global">全球</button>
-                                    <button class="filter-btn" data-region="north-america">北美</button>
-                                    <button class="filter-btn" data-region="europe">欧洲</button>
-                                    <button class="filter-btn" data-region="australia">澳洲</button>
-                                    <button class="filter-btn" data-region="southeast-asia">东南亚</button>
-                                    <button class="filter-btn" data-region="middle-east">中东</button>
-                                    <button class="filter-btn" data-region="africa">非洲</button>
-                                    <button class="filter-btn" data-region="south-america">南美</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="container">
+                        <!-- 将原来的grid改为list布局 -->
+                        <ul id="tools-grid" class="tools-list">
+                            <!-- 工具与指南将由工具加载器转换为列表形式展示 -->
+                            <li class="loading-indicator">加载中...</li>
+                        </ul>
                     </div>
                 </div>
                 
                 <!-- 右侧导航 -->
                 <div class="tools-nav">
+                    <!-- 搜索框移到这里 -->
+                    <div class="search-tools">
+                        <div class="search-container">
+                            <input type="text" id="search-input" class="search-input" placeholder="搜索工具、计算器或指南...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
                     <div class="nav-card">
                         <div class="nav-header">
                             <h3>工具分类</h3>
                         </div>
                         <ul class="nav-list">
-                            <li class="nav-item">
-                                <a href="#utilities" class="nav-link active" data-target="utilities-section">
-                                    <i class="fas fa-tools"></i>
-                                    实用工具
+                            <li class="nav-item sidebar-item">
+                                <a href="#calculators" class="nav-link sidebar-link active" data-target="calculators-section" data-category="all">
+                                    <span class="text"><i class="fas fa-tools"></i>
+                                    全部工具</span>
+                                </a>
+                            </li>
+                            <li class="nav-item sidebar-item">
+                                <a href="#calculators" class="nav-link sidebar-link" data-target="calculators-section" data-category="calculators">
+                                    <span class="text"><i class="fas fa-calculator"></i>
+                                    实用工具</span>
                                     <span class="count">2</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#guides" class="nav-link" data-target="guides-section">
-                                    <i class="fas fa-book"></i>
-                                    指南文档
-                                    <span class="count">2</span>
+                            <li class="nav-item sidebar-item">
+                                <a href="#guides" class="nav-link sidebar-link" data-target="guides-section" data-category="guides">
+                                    <span class="text"><i class="fas fa-book"></i>
+                                    指南文档</span>
+                                    <span class="count">1</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#forms" class="nav-link" data-target="forms-section">
-                                    <i class="fas fa-file-alt"></i>
-                                    表格文档
-                                    <span class="count">0</span>
+                            <li class="nav-item sidebar-item">
+                                <a href="#forms" class="nav-link sidebar-link" data-target="forms-section" data-category="forms">
+                                    <span class="text"><i class="fas fa-file-alt"></i>
+                                    表格文档</span>
+                                    <span class="count">4</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#regulations" class="nav-link" data-target="regulations-section">
-                                    <i class="fas fa-gavel"></i>
-                                    法规解读
-                                    <span class="count">0</span>
+                            <li class="nav-item sidebar-item">
+                                <a href="#regulations" class="nav-link sidebar-link" data-target="regulations-section" data-category="regulations">
+                                    <span class="text"><i class="fas fa-gavel"></i>
+                                    法规解读</span>
+                                    <span class="count">1</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#interactive" class="nav-link" data-target="interactive-section">
-                                    <i class="fas fa-laptop-code"></i>
-                                    互动工具
-                                    <span class="count">0</span>
+                            <li class="nav-item sidebar-item">
+                                <a href="#interactive" class="nav-link sidebar-link" data-target="interactive-section" data-category="interactive">
+                                    <span class="text"><i class="fas fa-laptop-code"></i>
+                                    互动工具</span>
+                                    <span class="count">1</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                     
+                    <!-- 新增物流资讯板块 -->
                     <div class="nav-card" style="margin-top: 20px;">
                         <div class="nav-header">
-                            <h3>按区域筛选</h3>
+                            <h3>最新物流资讯</h3>
                         </div>
-                        <ul class="nav-list" id="region-filter">
-                            <li class="nav-item">
-                                <a href="#" class="region-link active" data-region="all">
-                                    <i class="fas fa-globe"></i>
-                                    全部区域
+                        <ul class="article-list">
+                            <li>
+                                <a href="/static-news/north-america/30.html">
+                                    美国关税对国际贸易将造成什么影响
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="region-link" data-region="global">
-                                    <i class="fas fa-globe-asia"></i>
-                                    全球通用
-                                    <span class="count">1</span>
+                            <li>
+                                <a href="/static-news/north-america/29.html">
+                                    中国强力反击美国关税
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="region-link" data-region="north-america">
-                                    <i class="fas fa-globe-americas"></i>
-                                    北美
-                                    <span class="count">2</span>
+                            <li>
+                                <a href="/static-news/north-america/25.html">
+                                    美国关税大幅上涨，如何应对
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="region-link" data-region="europe">
-                                    <i class="fas fa-globe-europe"></i>
-                                    欧洲
-                                    <span class="count">0</span>
+                            <li>
+                                <a href="/static-news/north-america/19.html">
+                                    为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="region-link" data-region="asia">
-                                    <i class="fas fa-globe-asia"></i>
-                                    亚洲
-                                    <span class="count">0</span>
+                            <li>
+                                <a href="/static-news/north-america/18.html">
+                                    加拿大空派专线
                                 </a>
                             </li>
                         </ul>
+                        <div class="view-all-container">
+                            <a href="/static-news/north-america/index.html" class="view-all-btn">
+                                <i class="fas fa-arrow-right"></i>查看全部
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
     
+    <!-- 统一的底部容器 -->
     <footer id="footer"></footer>
     
-    <script src="../assets/js/components.js"></script>
+    <!-- JavaScript -->
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/script.js"></script>
+    
     <script>
-        // 添加筛选功能
+        // 工具搜索和分类功能
         document.addEventListener('DOMContentLoaded', function() {
-            const categoryBtns = document.querySelectorAll('.filter-btn[data-category]');
-            const regionBtns = document.querySelectorAll('.filter-btn[data-region]');
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const toolItems = document.querySelectorAll('.tool-item');
+                    
+                    toolItems.forEach(item => {
+                        const title = item.querySelector('h3')?.textContent.toLowerCase() || '';
+                        const desc = item.querySelector('p')?.textContent.toLowerCase() || '';
+                        
+                        if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
             
-            // 当前筛选状态
-            let currentCategory = 'all';
-            let currentRegion = 'all';
-            
-            // 分类按钮点击事件
-            categoryBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // 更新按钮状态
-                    categoryBtns.forEach(b => b.classList.remove('active'));
+            // 分类导航点击事件
+            const navLinks = document.querySelectorAll('.nav-link.sidebar-link[data-category]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 更新导航链接状态
+                    navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
                     // 设置当前分类
-                    currentCategory = this.dataset.category;
+                    const category = this.dataset.category;
                     
                     // 重新加载工具与指南
-                    loadToolsGuides({
-                        category: currentCategory,
-                        region: currentRegion
-                    });
-                });
-            });
-            
-            // 地区按钮点击事件
-            regionBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // 更新按钮状态
-                    regionBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 设置当前地区
-                    currentRegion = this.dataset.region;
-                    
-                    // 重新加载工具与指南
-                    loadToolsGuides({
-                        category: currentCategory,
-                        region: currentRegion
-                    });
+                    if (window.loadToolsGuides) {
+                        window.loadToolsGuides({
+                            category: category,
+                            region: 'all'
+                        });
+                    } else {
+                        console.error('loadToolsGuides 函数未定义');
+                        document.getElementById('tools-grid').innerHTML = '<li class="no-tools-msg"><p>加载工具与指南失败，请刷新页面重试</p></li>';
+                    }
                 });
             });
             
             // 初始加载
-            loadToolsGuides({
-                category: currentCategory,
-                region: currentRegion
-            });
+            if (window.loadToolsGuides) {
+                window.loadToolsGuides({
+                    category: 'all',
+                    region: 'all'
+                });
+            } else {
+                // 添加备用加载方案，防止loadToolsGuides未定义
+                const script = document.createElement('script');
+                script.src = '/wordpress-integration/maigeeku-tools-loader.js';
+                script.onload = function() {
+                    if (window.loadToolsGuides) {
+                        window.loadToolsGuides({
+                            category: 'all',
+                            region: 'all'
+                        });
+                    }
+                };
+                document.head.appendChild(script);
+            }
         });
     </script>
-
 </body></html>

@@ -1,6 +1,8 @@
 @echo off
-cd /d %~dp0
-echo 开始执行CMS内容更新 - %date% %time%
+chcp 65001 > nul
+cd /d D:/HaigeProject/WebMaigeeku
+cd articel_BAT
+echo [Start] Running CMS content update - %date% %time%
 node auto-update-cms-content.js
-echo 更新完成 - %date% %time%
+echo [Done] Update completed - %date% %time%
 pause 

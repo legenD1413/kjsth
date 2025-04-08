@@ -12,18 +12,22 @@ const { JSDOM } = require('jsdom');
 // 配置参数
 const CONFIG = {
   // CMS API 地址
-  cmsApiUrl: 'https://cms.kjsth.com/wp-json/wp/v2',
-  // 输出目录
-  outputDir: path.join(__dirname, '../tools-guides'),
+  cmsApiUrl: 'https://cms.kjsth.com/wp-json',
+  // WordPress API路径
+  wpApiPath: '/wp/v2',
+  // 自定义API路径
+  customApiPath: '/maigeeku/v1',
+  // 输出目录 - 优先使用环境变量中的输出目录
+  outputDir: process.env.OUTPUT_DIR || path.join(__dirname, '../tools-guides'),
   // 工具模板路径
-  templatePath: path.join(__dirname, './tool-template.html'),
+  templatePath: path.join(__dirname, '../tools-guides/tool-template.html'),
   // 工具与指南分类映射
   categories: {
-    calculators: { id: 10, name: '计算工具', icon: 'fas fa-calculator' },
-    guides: { id: 11, name: '指南文档', icon: 'fas fa-book' },
-    forms: { id: 12, name: '表格文档', icon: 'fas fa-file-alt' },
-    regulations: { id: 13, name: '法规解读', icon: 'fas fa-gavel' },
-    interactive: { id: 14, name: '互动工具', icon: 'fas fa-laptop-code' }
+    calculators: { id: 10, name: '计算工具', icon: 'fas fa-calculator', endpoint: 'tools' },
+    guides: { id: 11, name: '指南文档', icon: 'fas fa-book', endpoint: 'guides' },
+    forms: { id: 12, name: '表格文档', icon: 'fas fa-file-alt', endpoint: 'forms' },
+    regulations: { id: 13, name: '法规解读', icon: 'fas fa-gavel', endpoint: 'regulations' },
+    interactive: { id: 14, name: '互动工具', icon: 'fas fa-laptop-code', endpoint: 'interactive' }
   },
   // 地区映射
   regions: {
@@ -51,18 +55,83 @@ const CONFIG = {
  */
 async function fetchToolsFromCMS(category) {
   try {
-    const categoryId = CONFIG.categories[category].id;
-    const response = await axios.get(`${CONFIG.cmsApiUrl}/posts`, {
+    console.log(`开始从CMS获取${category}分类工具...`);
+    const categoryInfo = CONFIG.categories[category];
+    
+    if (!categoryInfo) {
+      throw new Error(`未知的分类: ${category}`);
+    }
+    
+    // 添加时间戳避免缓存问题
+    const timestamp = Date.now();
+    console.log(`请求时间戳: ${timestamp}`);
+    
+    // 构建API请求URL
+    const apiEndpoint = categoryInfo.endpoint || category;
+    const apiUrl = `${CONFIG.cmsApiUrl}${CONFIG.customApiPath}/tools-by-category/${apiEndpoint}`;
+    
+    console.log(`请求API: ${apiUrl}`);
+    
+    // 发送请求
+    const response = await axios.get(apiUrl, {
       params: {
-        categories: categoryId,
-        per_page: 100,
-        _embed: true
-      }
+        timestamp: timestamp,
+        per_page: 100
+      },
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      },
+      timeout: 30000 // 30秒超时
     });
     
-    return response.data;
+    // 验证响应数据
+    if (!response.data) {
+      console.error(`API响应为空`);
+      return [];
+    }
+    
+    if (!Array.isArray(response.data)) {
+      console.error(`API响应格式错误，期望数组，实际收到:`, typeof response.data);
+      console.error(`响应内容片段:`, JSON.stringify(response.data).slice(0, 200));
+      return [];
+    }
+    
+    // 处理响应数据
+    const tools = response.data.map(tool => {
+      // 直接使用API返回的数据，不做格式转换
+      return {
+        ...tool,
+        category: category,
+        category_info: categoryInfo
+      };
+    });
+    
+    // 记录获取到的工具ID
+    if (tools.length > 0) {
+      const toolIds = tools.map(tool => tool.id).sort((a, b) => a - b);
+      console.log(`获取到${tools.length}个工具，ID列表: ${toolIds.join(', ')}`);
+      
+      // 打印每个工具的基本信息
+      tools.forEach(tool => {
+        console.log(`工具 ${tool.id}:`, {
+          title: tool.title,
+          category: tool.category,
+          region: tool.region,
+          date: tool.date
+        });
+      });
+    } else {
+      console.log(`未获取到任何工具`);
+    }
+    
+    return tools;
   } catch (error) {
-    console.error(`获取${category}内容失败:`, error.message);
+    console.error(`获取${category}工具失败:`, error.message);
+    if (error.response) {
+      console.error(`请求状态码: ${error.response.status}`);
+      console.error(`响应数据:`, JSON.stringify(error.response.data).slice(0, 200));
+    }
     return [];
   }
 }
@@ -132,106 +201,162 @@ function ensureDirectoryExists(dir) {
 
 /**
  * 生成工具详情页面
- * @param {Object} tool 工具详情对象
- * @param {string} category 工具分类
+ * @param {Object} tool - 工具数据
+ * @param {string} category - 分类代码
  */
 async function generateToolPage(tool, category) {
   try {
-    // 确保分类目录存在
-    const categoryDir = path.join(CONFIG.outputDir, category);
-    ensureDirectoryExists(categoryDir);
+    console.log(`开始生成工具页面: ${category}/${tool.id}`);
+    console.log('工具数据:', JSON.stringify(tool, null, 2));
     
-    // 读取模板文件
-    const template = fs.readFileSync(CONFIG.templatePath, 'utf8');
-    
-    // 解析文章内容
-    const { mainContent, interactiveCode, relatedTools } = parseToolContent(tool.content.rendered);
-    
-    // 获取日期
-    const date = new Date(tool.date);
-    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    
-    // 获取地区信息
-    let regionName = '全球';
-    if (tool._embedded && tool._embedded['wp:term']) {
-      // 查找区域分类
-      for (const terms of tool._embedded['wp:term']) {
-        for (const term of terms) {
-          // 检查是否是地区分类
-          for (const regionKey in CONFIG.regions) {
-            if (CONFIG.regions[regionKey].id === term.id) {
-              regionName = CONFIG.regions[regionKey].name;
-              break;
-            }
-          }
-        }
-      }
+    // 检查工具数据
+    if (!tool || !tool.id) {
+      throw new Error('无效的工具数据');
     }
     
-    // 获取重要性
-    let importance = CONFIG.importance.normal;
-    // 这里可以添加逻辑来从文章标签或自定义字段中获取重要性
+    // 检查模板文件是否存在
+    if (!fs.existsSync(CONFIG.templatePath)) {
+      throw new Error(`模板文件不存在: ${CONFIG.templatePath}`);
+    }
+    
+    // 读取模板
+    const template = fs.readFileSync(CONFIG.templatePath, 'utf8');
+    console.log(`成功读取模板文件`);
+    
+    // 确保目录存在
+    const outputDir = path.join(CONFIG.outputDir, category);
+    if (!fs.existsSync(outputDir)) {
+      console.log(`创建输出目录: ${outputDir}`);
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+    
+    // 格式化日期
+    const date = new Date(tool.date).toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    
+    // 获取重要性信息
+    const importance = tool.importance || 'normal';
+    const importanceInfo = CONFIG.importance[importance] || CONFIG.importance.normal;
+    
+    // 获取分类信息
+    const categoryInfo = CONFIG.categories[category];
+    if (!categoryInfo) {
+      throw new Error(`未知的分类: ${category}`);
+    }
+    
+    // 获取地区信息
+    const region = tool.region_slug || tool.region || 'global';
+    const regionInfo = CONFIG.regions[region] || CONFIG.regions.global;
+    
+    // 处理标题
+    const title = typeof tool.title === 'string' ? tool.title : 
+                 (tool.title?.rendered || '无标题');
+    console.log(`处理工具标题: ${title}`);
+    
+    // 处理内容
+    let content = '';
+    if (typeof tool.content === 'string') {
+      content = tool.content;
+    } else if (tool.content?.rendered) {
+      content = tool.content.rendered;
+    } else {
+      // 如果没有content字段，使用excerpt作为内容
+      const excerpt = typeof tool.excerpt === 'string' ? tool.excerpt :
+                     (tool.excerpt?.rendered || '');
+      content = `
+        <div class="tool-content">
+          <p>${excerpt}</p>
+          <div class="tool-metadata">
+            <p>发布日期: ${date}</p>
+            <p>地区: ${regionInfo.name}</p>
+            <p>重要程度: ${importanceInfo.name}</p>
+          </div>
+          <div class="tool-status">
+            <p>该工具正在完善中，更多内容即将发布...</p>
+          </div>
+        </div>
+      `;
+    }
     
     // 替换模板变量
-    let htmlContent = template
-      .replace(/{{TITLE}}/g, tool.title.rendered)
-      .replace(/{{DATE}}/g, formattedDate)
-      .replace(/{{CATEGORY}}/g, CONFIG.categories[category].name)
-      .replace(/{{REGION_NAME}}/g, regionName)
-      .replace(/{{IMPORTANCE}}/g, importance.name)
-      .replace(/{{IMPORTANCE_CLASS}}/g, importance.class)
-      .replace(/{{CONTENT}}/g, mainContent);
+    let pageContent = template
+      .replace(/\{\{TITLE\}\}/g, title)
+      .replace(/\{\{DATE\}\}/g, date)
+      .replace(/\{\{CATEGORY\}\}/g, categoryInfo.name)
+      .replace(/\{\{REGION\}\}/g, regionInfo.name)
+      .replace(/\{\{CONTENT\}\}/g, content)
+      .replace(/\{\{IMPORTANCE_CLASS\}\}/g, importanceInfo.class)
+      .replace(/\{\{IMPORTANCE_TEXT\}\}/g, importanceInfo.name);
     
-    // 插入交互工具代码
-    if (interactiveCode) {
-      htmlContent = htmlContent.replace(/<!-- {{INTERACTIVE_TOOL}} -->/g, interactiveCode);
+    // 处理互动工具区域
+    if (tool.interactive) {
+      pageContent = pageContent.replace(/\{\{INTERACTIVE_TOOL\}\}/g, tool.interactive);
     } else {
-      // 移除交互工具区域占位符
-      htmlContent = htmlContent.replace(/<!-- {{INTERACTIVE_TOOL}} -->/g, '');
+      pageContent = pageContent.replace(/\{\{INTERACTIVE_TOOL\}\}/g, '');
     }
     
     // 处理相关工具
-    if (relatedTools.length > 0) {
-      let relatedToolsHTML = '<div class="related-tools">\n';
-      relatedToolsHTML += '  <h4>相关工具</h4>\n';
-      relatedToolsHTML += '  <ul class="related-tools-list">\n';
-      
-      relatedTools.forEach(tool => {
-        relatedToolsHTML += `    <li>\n`;
-        relatedToolsHTML += `      <a href="${tool.url}" class="related-tool-link">\n`;
-        relatedToolsHTML += `        <i class="${tool.icon}"></i>\n`;
-        relatedToolsHTML += `        ${tool.title}\n`;
-        relatedToolsHTML += `      </a>\n`;
-        relatedToolsHTML += `    </li>\n`;
-      });
-      
-      relatedToolsHTML += '  </ul>\n';
-      relatedToolsHTML += '</div>';
-      
-      htmlContent = htmlContent.replace(/<!-- {{RELATED_TOOLS}} -->/g, relatedToolsHTML);
+    if (tool.related && tool.related.length > 0) {
+      const relatedToolsHtml = generateRelatedToolsHtml(tool.related);
+      pageContent = pageContent.replace(/\{\{RELATED_TOOLS\}\}/g, relatedToolsHtml);
     } else {
-      // 移除相关工具区域占位符
-      htmlContent = htmlContent.replace(/<!-- {{RELATED_TOOLS}} -->/g, '');
+      pageContent = pageContent.replace(/\{\{RELATED_TOOLS\}\}/g, '');
     }
     
-    // 写入HTML文件
-    const outputFile = path.join(categoryDir, `${tool.id}.html`);
-    fs.writeFileSync(outputFile, htmlContent);
-    console.log(`生成工具页面: ${outputFile}`);
+    // 写入文件
+    const outputPath = path.join(outputDir, `${tool.id}.html`);
+    console.log(`写入文件: ${outputPath}`);
+    fs.writeFileSync(outputPath, pageContent);
+    console.log(`✅ 成功生成工具页面: ${category}/${tool.id}.html`);
     
     return {
       id: tool.id,
-      title: tool.title.rendered,
-      slug: tool.slug,
-      date: formattedDate,
-      excerpt: tool.excerpt.rendered,
-      region: regionName,
-      importance: importance.name
+      title: title,
+      date: date,
+      category: category,
+      region: region,
+      importance: importance,
+      excerpt: typeof tool.excerpt === 'string' ? tool.excerpt :
+              (tool.excerpt?.rendered || '')
     };
   } catch (error) {
-    console.error(`生成工具页面失败:`, error);
+    console.error(`❌ 生成工具页面失败 [${tool?.id || 'unknown'}]:`, error.message);
+    if (error.stack) {
+      console.error(error.stack);
+    }
     return null;
   }
+}
+
+/**
+ * 生成相关工具HTML
+ * @param {Array} relatedTools - 相关工具列表
+ * @returns {string} HTML字符串
+ */
+function generateRelatedToolsHtml(relatedTools) {
+  let html = `
+    <div class="related-tools">
+      <h4>相关工具</h4>
+      <ul class="related-tools-list">`;
+  
+  relatedTools.forEach(tool => {
+    html += `
+        <li>
+          <a href="${tool.url}" class="related-tool-link">
+            <i class="${tool.icon || 'far fa-file-alt'}"></i>
+            ${tool.title}
+          </a>
+        </li>`;
+  });
+  
+  html += `
+      </ul>
+    </div>`;
+  
+  return html;
 }
 
 /**

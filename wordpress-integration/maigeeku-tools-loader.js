@@ -18,7 +18,7 @@ function loadToolsGuides(options) {
         region: 'all',
         containerId: 'tools-grid',
         limit: 8,
-        titleId: 'tools-section-title'
+        useStatic: true  // 添加使用静态文件选项，默认为true
     };
     
     // 合并选项
@@ -52,26 +52,259 @@ function loadToolsGuides(options) {
     
     // 获取工具容器元素
     const toolsContainer = document.getElementById(settings.containerId);
-    const titleElement = document.getElementById(settings.titleId);
     
     if (!toolsContainer) return;
-    
-    // 更新标题（如果存在）
-    if (titleElement) {
-        const categoryName = categoryNames[settings.category] || '工具与指南';
-        const regionName = regionNames[settings.region] || '';
-        let titleText = categoryName;
-        
-        if (settings.region !== 'all') {
-            titleText += ` - ${regionName}`;
-        }
-        
-        titleElement.innerHTML = titleText + ' <button id="refresh-tools-btn" title="刷新"><i class="fas fa-sync-alt"></i></button>';
-    }
     
     // 显示加载状态
     toolsContainer.innerHTML = '<div class="loading-indicator">加载中...</div>';
     
+    // 如果启用了静态文件优先
+    if (settings.useStatic) {
+        // 尝试从静态文件加载
+        loadFromStaticFiles(settings, toolsContainer)
+            .then(success => {
+                if (!success) {
+                    // 静态文件加载失败，回退到API加载
+                    loadFromApi(settings, toolsContainer);
+                }
+            })
+            .catch(error => {
+                console.error('加载静态文件失败:', error);
+                // 回退到API加载
+                loadFromApi(settings, toolsContainer);
+            });
+    } else {
+        // 直接从API加载
+        loadFromApi(settings, toolsContainer);
+    }
+}
+
+/**
+ * 从静态文件加载工具数据
+ * @param {Object} settings - 加载设置
+ * @param {HTMLElement} container - 容器元素
+ * @returns {Promise<boolean>} 加载成功返回true，否则返回false
+ */
+function loadFromStaticFiles(settings, container) {
+    return new Promise((resolve) => {
+        // 构建静态数据路径
+        let staticPath = '';
+        let data = [];
+        
+        // 根据分类加载对应的静态文件
+        if (settings.category === 'forms') {
+            // 手动定义表格文档的静态数据
+            data = [
+                {
+                    id: 28,
+                    title: '下单发票2',
+                    excerpt: '标准化的下单发票模板，适用于国际物流',
+                    link: '../tools-guides/forms/28.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                {
+                    id: 31,
+                    title: '发票模板04062343',
+                    excerpt: '发票模板，可按需定制',
+                    link: '../tools-guides/forms/31.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                {
+                    id: 33,
+                    title: '发票模板04070029',
+                    excerpt: '跨境电商专用发票模板',
+                    link: '../tools-guides/forms/33.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                {
+                    id: 36,
+                    title: '发票模板04070048',
+                    excerpt: '高级物流发票模板',
+                    link: '../tools-guides/forms/36.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                }
+            ];
+        } else if (settings.category === 'calculators') {
+            // 手动定义计算工具的静态数据
+            data = [
+                {
+                    id: 1,
+                    title: '体积重计算器',
+                    excerpt: '计算国际物流中常用的体积重，帮助您估算运费',
+                    link: '../tools-guides/calculators/1.html',
+                    category_slug: 'calculators',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'important'
+                }
+            ];
+        } else if (settings.category === 'guides') {
+            // 手动定义指南文档的静态数据
+            data = [
+                {
+                    id: 5,
+                    title: '物流指南',
+                    excerpt: '详尽的国际物流指南，包含各国进出口规定',
+                    link: '../tools-guides/guides/index.html',
+                    category_slug: 'guides',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                }
+            ];
+        } else if (settings.category === 'regulations') {
+            // 手动定义法规解读的静态数据
+            data = [
+                {
+                    id: 10,
+                    title: '国际物流法规解读',
+                    excerpt: '主要贸易国家和地区的进出口法规解析',
+                    link: '../tools-guides/regulations/index.html',
+                    category_slug: 'regulations',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                }
+            ];
+        } else if (settings.category === 'interactive') {
+            // 手动定义互动工具的静态数据
+            data = [
+                {
+                    id: 15,
+                    title: '运输路径规划工具',
+                    excerpt: '智能规划最优物流路径，节省时间和成本',
+                    link: '../tools-guides/interactive/index.html',
+                    category_slug: 'interactive',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                }
+            ];
+        } else if (settings.category === 'all') {
+            // 所有工具数据合并
+            data = [
+                // 计算工具
+                {
+                    id: 1,
+                    title: '体积重计算器',
+                    excerpt: '计算国际物流中常用的体积重，帮助您估算运费',
+                    link: '../tools-guides/calculators/1.html',
+                    category_slug: 'calculators',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'important'
+                },
+                // 指南文档
+                {
+                    id: 5,
+                    title: '物流指南',
+                    excerpt: '详尽的国际物流指南，包含各国进出口规定',
+                    link: '../tools-guides/guides/index.html',
+                    category_slug: 'guides',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                // 表格文档
+                {
+                    id: 28,
+                    title: '下单发票2',
+                    excerpt: '标准化的下单发票模板，适用于国际物流',
+                    link: '../tools-guides/forms/28.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                {
+                    id: 31,
+                    title: '发票模板04062343',
+                    excerpt: '发票模板，可按需定制',
+                    link: '../tools-guides/forms/31.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                {
+                    id: 33,
+                    title: '发票模板04070029',
+                    excerpt: '跨境电商专用发票模板',
+                    link: '../tools-guides/forms/33.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                {
+                    id: 36,
+                    title: '发票模板04070048',
+                    excerpt: '高级物流发票模板',
+                    link: '../tools-guides/forms/36.html',
+                    category_slug: 'forms',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                // 法规解读
+                {
+                    id: 10,
+                    title: '国际物流法规解读',
+                    excerpt: '主要贸易国家和地区的进出口法规解析',
+                    link: '../tools-guides/regulations/index.html',
+                    category_slug: 'regulations',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                },
+                // 互动工具
+                {
+                    id: 15,
+                    title: '运输路径规划工具',
+                    excerpt: '智能规划最优物流路径，节省时间和成本',
+                    link: '../tools-guides/interactive/index.html',
+                    category_slug: 'interactive',
+                    region: '全球',
+                    date: '2025-04-06',
+                    importance: 'normal'
+                }
+            ];
+        }
+        
+        if (data.length === 0) {
+            resolve(false);
+            return;
+        }
+        
+        // 根据区域过滤工具
+        if (settings.region !== 'all') {
+            data = data.filter(item => 
+                item.region.toLowerCase().includes(regionNames[settings.region].toLowerCase()));
+        }
+        
+        displayTools(data, container, settings);
+        resolve(true);
+    });
+}
+
+/**
+ * 从API加载工具数据
+ * @param {Object} settings - 加载设置
+ * @param {HTMLElement} container - 容器元素
+ */
+function loadFromApi(settings, container) {
     // 构建API请求URL
     let apiUrl = '';
     
@@ -110,21 +343,137 @@ function loadToolsGuides(options) {
             }
             return response.json();
         })
-        .then(tools => {
-            if (!tools || tools.length === 0) {
-                toolsContainer.innerHTML = '<div class="no-tools-msg"><p>暂无相关工具与指南</p></div>';
+        .then(data => {
+            if (!data || (Array.isArray(data) && data.length === 0)) {
+                container.innerHTML = '<div class="no-tools-msg"><p>暂无相关工具与指南</p></div>';
+                return;
+            }
+            
+            // 格式化工具数据
+            const formattedTools = formatToolsData(data);
+            
+            if (formattedTools.length === 0) {
+                container.innerHTML = '<div class="no-tools-msg"><p>暂无相关工具与指南</p></div>';
+                return;
+            }
+            
+            displayTools(formattedTools, container, settings);
+        })
+        .catch(error => {
+            console.error('加载工具与指南失败:', error);
+            
+            // 使用本地测试数据 - 当API请求失败时
+            const testData = [
+                {
+                    id: 1,
+                    title: '体积重计算器',
+                    excerpt: '计算国际物流中常用的体积重，帮助您估算运费',
+                    link: '../tools/calculators/volumetric-weight.html',
+                    category_slug: 'calculators',
+                    region: '全球通用',
+                    date: '2025-04-06',
+                    importance: 'important'
+                },
+                {
+                    id: 2,
+                    title: '下单发票模板',
+                    excerpt: '标准化的下单发票模板，适用于北美地区国际物流',
+                    link: '../tools/forms/invoice-template.html',
+                    category_slug: 'forms',
+                    region: '北美',
+                    date: '2025-04-06'
+                },
+                {
+                    id: 3,
+                    title: '发票模板04062343',
+                    excerpt: '发票模板，可按需定制',
+                    link: '../tools/forms/invoice-custom.html',
+                    category_slug: 'forms',
+                    region: '北美',
+                    date: '2025-04-06'
+                },
+                {
+                    id: 4,
+                    title: '发票模板04070029',
+                    excerpt: '跨境电商专用发票模板',
+                    link: '../tools/forms/invoice-ecommerce.html',
+                    category_slug: 'forms',
+                    region: '北美',
+                    date: '2025-04-07'
+                },
+                {
+                    id: 5,
+                    title: '美国入境文件指南',
+                    excerpt: '详细介绍美国海关所需文件和申报流程',
+                    link: '../tools/guides/us-customs-guide.html',
+                    category_slug: 'guides',
+                    region: '北美',
+                    date: '2025-04-05'
+                }
+            ];
+            
+            // 根据当前分类和地区过滤测试数据
+            let filteredData = testData;
+            
+            if (settings.category !== 'all') {
+                filteredData = filteredData.filter(tool => tool.category_slug === settings.category);
+            }
+            
+            if (settings.region !== 'all') {
+                filteredData = filteredData.filter(tool => tool.region.includes(regionNames[settings.region] || ''));
+            }
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="no-tools-msg"><p>暂无相关工具与指南</p></div>';
                 return;
             }
             
             // 清空容器
-            toolsContainer.innerHTML = '';
+            container.innerHTML = '';
             
-            // 添加工具卡片
+            // 添加失败警告
+            const warningEl = document.createElement('div');
+            warningEl.className = 'api-warning';
+            warningEl.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i> API连接失败，显示本地测试数据</p>';
+            container.appendChild(warningEl);
+            
+            // 格式化并显示工具
+            const formattedTools = formatToolsData(filteredData);
+            displayTools(formattedTools, container, settings);
+        });
+}
+
+/**
+ * 显示工具列表
+ * @param {Array} tools - 工具数据数组
+ * @param {HTMLElement} container - 容器元素
+ * @param {Object} settings - 配置选项
+ */
+function displayTools(tools, container, settings) {
+    // 清空容器
+    if (container.querySelector('.api-warning')) {
+        // 如果存在警告，保留警告
+        const warning = container.querySelector('.api-warning');
+        container.innerHTML = '';
+        container.appendChild(warning);
+    } else {
+        container.innerHTML = '';
+    }
+    
+    // 检查容器类型，确定显示样式
+    const isList = container.tagName === 'UL' || container.classList.contains('tools-list');
+    
+    if (tools.length === 0) {
+        if (isList) {
+            container.innerHTML = '<li class="no-tools-msg"><p>暂无相关工具与指南</p></li>';
+        } else {
+            container.innerHTML = '<div class="no-tools-msg"><p>暂无相关工具与指南</p></div>';
+        }
+        return;
+    }
+    
+    // 添加工具项
             tools.forEach(tool => {
-                const toolCard = document.createElement('a');
-                toolCard.href = tool.link;
-                toolCard.className = 'tool-card-link';
-                
                 // 确定图标
                 let icon = 'fas fa-tools';
                 if (tool.category_slug === 'calculators') {
@@ -146,6 +495,42 @@ function loadToolsGuides(options) {
                 } else if (tool.importance === 'critical') {
                     importanceClass = 'tool-critical';
                 }
+        
+        if (isList) {
+            // 列表形式显示
+            const toolItem = document.createElement('li');
+            toolItem.className = `tool-item ${importanceClass}`;
+            
+            // 处理工具链接
+            const toolLink = document.createElement('a');
+            toolLink.href = tool.link || '#';
+            toolLink.className = 'tool-item';
+            
+            toolLink.innerHTML = `
+                <div class="tool-icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="tool-info">
+                    <h3>${tool.title}</h3>
+                    <p>${tool.excerpt}</p>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> ${tool.region}</span>
+                        <span><i class="far fa-clock"></i> ${tool.date}</span>
+                    </div>
+                </div>
+                <div class="tool-action">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            `;
+            
+            container.appendChild(toolLink);
+        } else {
+            // 卡片形式显示（原有方式）
+            const toolCard = document.createElement('a');
+            
+            // 处理工具链接
+            toolCard.href = tool.link || '#';
+            toolCard.className = 'tool-card-link';
                 
                 toolCard.innerHTML = `
                     <div class="tool-card ${importanceClass}">
@@ -156,32 +541,15 @@ function loadToolsGuides(options) {
                             <h3 class="tool-card-title">${tool.title}</h3>
                             <p class="tool-card-desc">${tool.excerpt}</p>
                             <div class="tool-card-meta">
-                                <span><i class="fas fa-map-marker-alt"></i>${tool.region}</span>
-                                <span><i class="far fa-clock"></i>${tool.date}</span>
+                            <span><i class="fas fa-map-marker-alt"></i> ${tool.region}</span>
+                            <span><i class="far fa-clock"></i> ${tool.date}</span>
                             </div>
                         </div>
                     </div>
                 `;
                 
-                toolsContainer.appendChild(toolCard);
-            });
-            
-            // 添加刷新按钮事件
-            const refreshBtn = document.getElementById('refresh-tools-btn');
-            if (refreshBtn) {
-                refreshBtn.addEventListener('click', function() {
-                    this.classList.add('rotating');
-                    loadToolsGuides(settings);
-                    
-                    setTimeout(() => {
-                        this.classList.remove('rotating');
-                    }, 1000);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('加载工具与指南失败:', error);
-            toolsContainer.innerHTML = '<div class="no-tools-msg"><p>加载工具与指南失败，请稍后再试</p></div>';
+            container.appendChild(toolCard);
+        }
         });
 }
 
@@ -325,6 +693,27 @@ function addToolsStyles() {
             color: #6e6e73;
         }
         
+        .api-warning {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            color: #856404;
+            width: 100%;
+        }
+        
+        .api-warning p {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .api-warning i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
         .rotating {
             animation: rotate 1s linear;
         }
@@ -396,3 +785,82 @@ if (document.readyState === 'loading') {
 
 // 暴露函数供外部调用
 window.loadToolsGuides = loadToolsGuides; 
+
+/**
+ * 处理API返回的工具数据，确保格式一致
+ * @param {Object} tools - 从API获取的原始工具数据
+ * @returns {Array} 格式化后的工具数据数组
+ */
+function formatToolsData(tools) {
+    if (!Array.isArray(tools)) {
+        console.error('工具数据格式错误:', tools);
+        return [];
+    }
+    
+    return tools.map(tool => {
+        // 创建标准化工具对象
+        const formattedTool = {
+            id: tool.id || 0,
+            title: '',
+            excerpt: '',
+            link: tool.link || '#',
+            category_slug: tool.category_slug || 'other',
+            region: '全球',
+            date: '最近更新',
+            importance: tool.importance || 'normal'
+        };
+        
+        // 处理标题
+        if (typeof tool.title === 'string') {
+            formattedTool.title = tool.title;
+        } else if (tool.title && typeof tool.title.rendered === 'string') {
+            formattedTool.title = tool.title.rendered;
+        } else if (tool.post_title) {
+            formattedTool.title = tool.post_title;
+        } else {
+            formattedTool.title = `工具 #${tool.id || '未知'}`;
+        }
+        
+        // 处理摘要
+        if (typeof tool.excerpt === 'string') {
+            formattedTool.excerpt = tool.excerpt;
+        } else if (tool.excerpt && typeof tool.excerpt.rendered === 'string') {
+            // 移除WordPress自动添加的段落标签
+            formattedTool.excerpt = tool.excerpt.rendered
+                .replace(/<p>/g, '')
+                .replace(/<\/p>/g, '')
+                .replace(/\[\&hellip;\]/g, '...');
+        } else if (tool.post_excerpt) {
+            formattedTool.excerpt = tool.post_excerpt;
+        } else {
+            formattedTool.excerpt = '暂无描述';
+        }
+        
+        // 处理区域
+        if (typeof tool.region === 'string') {
+            formattedTool.region = tool.region;
+        } else if (Array.isArray(tool.region_names) && tool.region_names.length > 0) {
+            formattedTool.region = tool.region_names.join(', ');
+        }
+        
+        // 处理日期
+        if (typeof tool.date === 'string') {
+            // 尝试格式化日期
+            try {
+                const date = new Date(tool.date);
+                formattedTool.date = date.toLocaleDateString('zh-CN');
+            } catch (e) {
+                formattedTool.date = tool.date;
+            }
+        } else if (tool.modified) {
+            try {
+                const date = new Date(tool.modified);
+                formattedTool.date = date.toLocaleDateString('zh-CN');
+            } catch (e) {
+                formattedTool.date = '最近更新';
+            }
+        }
+        
+        return formattedTool;
+    });
+} 

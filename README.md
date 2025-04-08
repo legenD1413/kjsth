@@ -208,3 +208,176 @@ node tools/update-framework.js
 
 如有任何问题或建议，请联系开发团队:
 - 电子邮件: dev@maigeeku.com 
+
+# 迈格库物流网站Markdown转HTML工具
+
+这个工具用于将Markdown格式的文章和指南自动转换为HTML格式，使其能够在网站上正确显示。本工具支持将指南和新闻两种不同类型的内容转换为各自对应的格式。
+
+## 主要功能
+
+1. 自动解析Markdown文件中的前置元数据
+2. 根据不同内容类型选择不同的HTML模板
+3. 自动处理文件路径和目录结构
+4. 保持原始文件的组织结构
+5. 对于新闻文件，支持根据文件名格式自动设置输出文件名
+6. **自动检测并转换新的或更新的Markdown文件**
+
+## 目录结构
+
+```
+├── md-to-html/            # 转换工具目录
+│   ├── md-convert.js      # 核心转换脚本
+│   ├── file-check.ps1     # 文件检测和转换脚本
+│   ├── auto-check.bat     # 自动检测批处理文件
+│   └── convert-all.ps1    # 全量转换脚本
+├── guides-md/             # 指南类Markdown源文件目录
+│   └── ...                # 各类指南的子目录和文件
+├── news-md/               # 新闻类Markdown源文件目录
+│   └── ...                # 各类新闻的子目录和文件
+├── tools-guides/          # 转换后的指南HTML文件目录
+│   └── ...                # 转换后的指南文件
+├── static-news/           # 转换后的新闻HTML文件目录
+│   └── ...                # 转换后的新闻文件
+└── tools/                 # HTML模板文件目录
+    ├── tool-template.html # 指南类内容的HTML模板
+    └── news-template.html # 新闻类内容的HTML模板
+```
+
+## 使用方法
+
+### 准备环境
+
+1. 确保已安装Node.js环境
+2. 安装所需依赖包:
+
+```bash
+npm install marked
+```
+
+### 自动检测和转换新文件
+
+使用`auto-check.bat`批处理文件可以自动检测并转换新的或已更新的Markdown文件:
+
+```bash
+md-to-html\auto-check.bat
+```
+
+该工具会：
+1. 检查guides-md目录中的所有Markdown文件，与对应的HTML文件比较修改时间
+2. 仅转换新的或已更新的文件
+3. 检查news-md目录中的所有Markdown文件，同样只转换需要更新的文件
+
+### 单个文件转换
+
+使用`md-convert.js`脚本可以转换单个Markdown文件:
+
+```bash
+cd md-to-html
+node md-convert.js 源Markdown文件路径 输出HTML文件路径 模板文件路径
+```
+
+例如:
+
+```bash
+node md-convert.js ../guides-md/regulations/import-regulations.md ../tools-guides/regulations/import-regulations.html ../tools/tool-template.html
+```
+
+### 批量转换所有文件
+
+使用PowerShell脚本`convert-all.ps1`可以一次性转换所有Markdown文件:
+
+```bash
+cd md-to-html
+powershell -File convert-all.ps1
+```
+
+## Markdown文件格式
+
+Markdown文件应包含前置元数据，格式如下:
+
+```markdown
+---
+title: 文章标题
+date: 2024-04-08
+category: 分类名称
+importance: normal/important/critical
+region: 地区名称(可选)
+---
+
+# 文章正文标题
+
+文章内容...
+```
+
+前置元数据支持的字段:
+
+| 字段 | 说明 | 可选值 |
+|------|------|--------|
+| title | 文章标题 | 任意文本 |
+| date | 发布日期 | YYYY-MM-DD格式 |
+| category | 文章分类 | 任意分类名 |
+| importance | 重要程度 | normal(普通), important(重要), critical(关键) |
+| region | 地区名称 | 任意地区名,若不填则默认为"全球" |
+
+## HTML模板格式
+
+HTML模板中使用以下占位符:
+
+- `{{TITLE}}` - 文章标题
+- `{{DATE}}` - 发布日期
+- `{{CATEGORY}}` - 文章分类
+- `{{REGION}}` - 地区名称
+- `{{IMPORTANCE_CLASS}}` - 重要程度的CSS类名
+- `{{IMPORTANCE_TEXT}}` - 重要程度的显示文本
+- `{{CONTENT}}` - Markdown转换后的HTML内容
+
+## 文件命名规则
+
+### 指南类文件
+
+指南类文件的输出路径与源文件路径对应，只将`guides-md`替换为`tools-guides`，扩展名由`.md`改为`.html`。
+
+### 新闻类文件
+
+新闻类文件如果文件名以数字开头(如`01 文章标题.md`)，则输出文件名只保留数字部分(如`01.html`)；否则保持原文件名。
+
+## 自动化与集成
+
+### 定时任务设置
+
+您可以设置Windows计划任务来自动运行检测和转换:
+
+1. 打开任务计划程序
+2. 创建基本任务
+3. 设置触发器(如每天特定时间或文件夹变更时)
+4. 设置操作为启动程序
+5. 指定程序为`D:\HaigeProject\WebMaigeeku\md-to-html\auto-check.bat`的完整路径
+6. 完成设置
+
+### 编辑器集成
+
+您也可以将转换过程集成到您的编辑工作流程中:
+
+1. 在保存Markdown文件后自动运行转换
+2. 使用编辑器插件在保存时触发转换脚本
+3. 设置Git钩子，在提交前自动运行转换
+
+## 注意事项
+
+1. 确保所有Markdown文件使用UTF-8编码，避免中文显示乱码
+2. 每次转换前请备份重要文件
+3. 转换脚本会自动创建必要的目录结构
+4. 如果文件没有前置元数据，脚本会尝试从文件内容中提取标题
+
+## 常见问题解决
+
+1. **转换后的文件内容乱码**
+   - 检查源Markdown文件的编码是否为UTF-8
+   - 检查模板文件的编码是否为UTF-8
+
+2. **目录路径错误**
+   - 确保在正确的目录中运行脚本
+   - 检查相对路径是否正确
+
+3. **Node.js模块未找到**
+   - 运行`npm install marked`安装必要的依赖 

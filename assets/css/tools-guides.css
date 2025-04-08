@@ -3,199 +3,403 @@
  * 为WordPress集成的工具指南页面提供样式支持
  */
 
-/* 工具与指南容器 */
-.tools-guides-container {
+/* 工具页面特定样式 */
+.tools-container {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 15px;
+    margin: 30px auto 40px;
+    padding: 0 20px;
 }
 
-.section-title {
-    font-size: 32px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.section-description {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 30px;
-    max-width: 800px;
-}
-
-/* 工具网格布局 */
-.tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-/* 加载状态 */
-.loading-indicator {
+.page-header {
+    margin-bottom: 50px;
     text-align: center;
-    padding: 40px;
-    grid-column: 1 / -1;
-    color: #666;
+    padding: 50px 0;
+    background-color: #f5f5f7;
+    border-radius: 16px;
 }
 
-/* 工具卡片样式 */
-.tool-card-link {
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.3s ease;
-}
-
-.tool-card-link:hover {
-    transform: translateY(-5px);
-}
-
-.tool-card {
-    display: flex;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    height: 100%;
-    transition: all 0.3s ease;
-}
-
-.tool-card:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.tool-card-icon {
-    width: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #3498db;
-    color: white;
-    font-size: 24px;
-}
-
-.tool-card-content {
-    flex: 1;
-    padding: 15px;
-}
-
-.tool-card-title {
-    font-size: 18px;
+.page-header h1 {
+    font-size: 2.1rem;
     font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
+    color: #1d1d1f;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
 }
 
-.tool-card-desc {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 12px;
+.page-header p {
+    font-size: 1.1rem;
+    color: #6e6e73;
+    max-width: 650px;
+    margin: 0 auto;
     line-height: 1.5;
 }
 
-.tool-card-meta {
-    display: flex;
-    justify-content: space-between;
-    color: #999;
-    font-size: 13px;
+/* 搜索框样式 */
+.search-tools {
+    margin-bottom: 20px;
 }
 
-.tool-card-meta span {
+.search-container {
+    width: 100%;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 16px 20px 16px 50px;
+    border: none;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #86868b;
+    font-size: 1.1rem;
+}
+
+/* 两栏布局 */
+.tools-main {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* 左侧内容区域 */
+.tools-content {
+    flex: 1;
+}
+
+#tools-section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin: 0 0 24px;
+    letter-spacing: -0.01em;
+}
+
+/* 工具列表样式 - 列表形式 */
+.tools-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    background-color: #fff;
+    margin-top: 0;
+}
+
+.tool-item {
+    display: flex;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #f2f2f2;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.tool-item:hover {
+    background-color: #f9f9fc;
+    transform: translateX(4px);
+}
+
+.tool-item:last-child {
+    border-bottom: none;
+}
+
+.tool-icon {
+    width: 52px;
+    height: 52px;
+    background-color: #f5f5f7;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.tool-icon i {
+    font-size: 1.5rem;
+    color: #0071e3;
+}
+
+.tool-info {
+    flex: 1;
+}
+
+.tool-info h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #1d1d1f;
+    margin: 0 0 8px 0;
+}
+
+.tool-info p {
+    font-size: 1rem;
+    color: #6e6e73;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+}
+
+.tool-meta {
+    display: flex;
+    gap: 16px;
+}
+
+.tool-meta span {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #86868b;
+}
+
+.tool-meta i {
+    margin-right: 6px;
+}
+
+.tool-action {
+    flex-shrink: 0;
+    margin-left: 24px;
+}
+
+.tool-action i {
+    color: #0071e3;
+    font-size: 1.2rem;
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 30px;
+    color: #6e6e73;
+    font-size: 1.1rem;
+}
+
+.no-tools-msg {
+    padding: 40px;
+    text-align: center;
+    color: #6e6e73;
+    background-color: #f5f5f7;
+    border-radius: 16px;
+    font-size: 1.1rem;
+}
+
+/* 右侧导航 */
+.tools-nav {
+    width: 320px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.nav-card {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.nav-header {
+    padding: 20px 24px;
+    background-color: #f9f9fc;
+    border-bottom: 1px solid #e8e8ed;
+}
+
+.nav-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin: 0;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 12px 0;
+    margin: 0;
+}
+
+.nav-item.sidebar-item {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-link.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    font-size: 1rem;
+    color: #424245;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-link.sidebar-link:hover {
+    background-color: #f5f5f7;
+    color: #0071e3;
+    width: 100%;
+}
+
+.nav-link.sidebar-link.active {
+    background-color: rgba(0, 113, 227, 0.08);
+    color: #0071e3;
+    font-weight: 500;
+    width: 100%;
+}
+
+.nav-link.sidebar-link span.text {
     display: flex;
     align-items: center;
 }
 
-.tool-card-meta i {
-    margin-right: 5px;
-}
-
-/* 重要工具标识 */
-.tool-important {
-    border-left: 4px solid #f39c12;
-}
-
-.tool-critical {
-    border-left: 4px solid #e74c3c;
-}
-
-/* 筛选区域 */
-.filter-section {
-    margin-top: 40px;
-}
-
-.filter-section h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.filter-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.filter-btn {
-    padding: 8px 16px;
-    background-color: #f5f5f5;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
-    color: #555;
-}
-
-.filter-btn:hover {
-    background-color: #e9e9e9;
-}
-
-.filter-btn.active {
-    background-color: #3498db;
-    color: white;
-    border-color: #3498db;
-}
-
-/* 无工具提示 */
-.no-tools-msg {
+.nav-link.sidebar-link i {
+    margin-right: 12px;
+    width: 24px;
     text-align: center;
-    padding: 40px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    grid-column: 1 / -1;
+    font-size: 1.1rem;
 }
 
-.no-tools-msg p {
-    color: #666;
-    font-size: 16px;
+.nav-link.sidebar-link .count {
+    margin-left: auto;
+    font-size: 0.85rem;
+    background-color: #f5f5f7;
+    color: #86868b;
+    padding: 4px 0;
+    border-radius: 12px;
+    min-width: 28px;
+    height: 28px;
+    line-height: 20px;
+    text-align: center;
+    margin-right: 0;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* 旋转动画 */
-.rotating {
-    animation: rotate 1s linear;
+.nav-link.sidebar-link:hover .count {
+    background-color: #e8e8ed;
 }
 
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.nav-link.sidebar-link.active .count {
+    background-color: rgba(0, 113, 227, 0.15);
+    color: #0071e3;
 }
 
-/* 响应式布局调整 */
-@media (max-width: 768px) {
-    .tools-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .filter-buttons {
+/* 响应式样式 */
+@media (max-width: 900px) {
+    .tools-main {
         flex-direction: column;
-        align-items: flex-start;
     }
     
-    .filter-btn {
+    .tools-nav {
         width: 100%;
-        text-align: left;
+        margin-bottom: 30px;
     }
+    
+    .nav-card {
+        position: static;
+    }
+    
+    .page-header {
+        padding: 30px 20px;
+    }
+    
+    .page-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .page-header p {
+        font-size: 1.1rem;
+    }
+    
+    .tool-item {
+        padding: 16px;
+    }
+    
+    .tool-icon {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .tool-info h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* 物流资讯板块固定样式 */
+.article-list {
+    list-style: none;
+    padding: 12px 20px;
+    background-color: #fff;
+}
+
+.article-list li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.article-list li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.article-list a {
+    color: #424245;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.article-list a:hover {
+    color: var(--primary-color);
+}
+
+.view-all-container {
+    text-align: right;
+    padding: 0 20px 15px;
+}
+
+.view-all-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background-color: #f5f5f7;
+    color: var(--primary-color);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+}
+
+.view-all-btn:hover {
+    background-color: #e9e9f0;
+}
+
+.view-all-btn i {
+    margin-right: 6px;
+    font-size: 0.8rem;
 } 

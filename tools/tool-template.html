@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{TITLE}} - {{CATEGORY}} | 麦极客物流</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         /* 全局字体设置 - 采用Apple风格字体 */
         body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
@@ -15,7 +21,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* 重置一些基础样式 */
+        /* 重置基础样式 */
         * {
             margin: 0;
             padding: 0;
@@ -31,7 +37,7 @@
         /* 工具详情页特定样式 */
         .tool-container {
             max-width: 900px;
-            margin: 80px auto 40px;
+            margin: 20px auto 40px; /* 修改顶部间距 */
             padding: 2rem;
             background: white;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -366,10 +372,9 @@
             }
         }
     </style>
-  <link rel="stylesheet" href="/assets/css/global.css">
-  <link rel="stylesheet" href="/assets/css/layout.css">
 </head>
 <body>
+    <!-- 统一的头部容器 -->
     <header id="header"></header>
 
     <main>
@@ -388,10 +393,10 @@
                         </div>
                         <div class="tool-region">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>{{REGION_NAME}}</span>
+                            <span>{{REGION}}</span>
                         </div>
                     </div>
-                    <div class="tool-importance {{IMPORTANCE_CLASS}}">{{IMPORTANCE}}</div>
+                    <div class="tool-importance {{IMPORTANCE_CLASS}}">{{IMPORTANCE_TEXT}}</div>
                 </div>
                 
                 <div class="tool-content">
@@ -399,10 +404,10 @@
                 </div>
                 
                 <!-- 互动工具区域 (如果有) -->
-                <!-- {{INTERACTIVE_TOOL}} -->
+                {{INTERACTIVE_TOOL}}
                 
                 <!-- 相关工具 (如果有) -->
-                <!-- {{RELATED_TOOLS}} -->
+                {{RELATED_TOOLS}}
                 
                 <a href="index.html" class="back-link">
                     <i class="fas fa-arrow-left"></i>
@@ -412,7 +417,10 @@
         </div>
     </main>
     
+    <!-- 统一的底部容器 -->
     <footer id="footer"></footer>
-  <script src="/assets/js/components.js"></script>
+    
+    <!-- JavaScript -->
+    <script src="/assets/js/components.js"></script>
 </body>
 </html> 

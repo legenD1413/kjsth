@@ -1,11 +1,9 @@
 {
   "news": {
-    "north-america": 29,
-    "south-america": 29
+    "north-america": 60
   },
   "tools": {
-    "latest": 23,
-    "guides": 26,
-    "forms": 28
+    "guides": 57,
+    "interactive": 40
   }
 }

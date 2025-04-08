@@ -9,6 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const cheerio = require('cheerio');
 
 // 配置
 const config = {
@@ -17,7 +18,7 @@ const config = {
     // 静态文件输出目录
     outputDir: path.resolve(__dirname, '../static-news'),
     // 文章模板路径
-    templatePath: './news-template.html',
+    templatePath: path.resolve(__dirname, './news-template.html'),
     // 区域列表
     regions: [
         { code: 'north-america', name: '北美' },
@@ -28,7 +29,9 @@ const config = {
         { code: 'africa', name: '非洲' },
         { code: 'south-america', name: '南美' },
         { code: 'global', name: '全球' }
-    ]
+    ],
+    // 网站主区域页面路径
+    regionsDir: path.resolve(__dirname, '../regions')
 };
 
 /**
@@ -60,8 +63,36 @@ function extractMetaFromHtml(filePath) {
         const contentMatch = content.match(/<div class="news-content">([\s\S]*?)<\/div>/);
         let excerpt = '暂无内容摘要';
         if (contentMatch) {
-            excerpt = contentMatch[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-            excerpt = excerpt.substring(0, 150) + (excerpt.length > 150 ? '...' : '');
+            // 去除HTML标签，保留文本内容
+            const textContent = contentMatch[1]
+                .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // 移除所有script标签及内容
+                .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')   // 移除所有style标签及内容
+                .replace(/<[^>]+>/g, ' ')  // 替换所有HTML标签为空格
+                .replace(/&nbsp;/g, ' ')   // 替换HTML空格
+                .replace(/\s+/g, ' ')      // 合并连续空格为单个空格
+                .trim();                   // 去除首尾空格
+            
+            // 限制摘要长度，确保显示内容完整
+            excerpt = textContent.substring(0, 150);
+            if (textContent.length > 150) {
+                // 如果截断了，尝试在最后一个完整单词或标点后截断
+                const lastSpace = excerpt.lastIndexOf(' ');
+                const lastPunctuation = Math.max(
+                    excerpt.lastIndexOf('.'), 
+                    excerpt.lastIndexOf('。'),
+                    excerpt.lastIndexOf('!'),
+                    excerpt.lastIndexOf('！'),
+                    excerpt.lastIndexOf('?'),
+                    excerpt.lastIndexOf('？')
+                );
+                const betterBreakPoint = Math.max(lastSpace, lastPunctuation);
+                
+                if (betterBreakPoint > 100) { // 确保不会截取太短
+                    excerpt = excerpt.substring(0, betterBreakPoint + 1);
+                }
+                
+                excerpt += '...';
+            }
         }
         
         return {
@@ -80,6 +111,9 @@ function extractMetaFromHtml(filePath) {
  * 扫描区域并更新索引
  */
 async function updateRegionIndices() {
+    // 收集所有区域的最新文章数据
+    let allRegionsNewsItems = {};
+    
     for (const region of config.regions) {
         const regionDir = path.join(config.outputDir, region.code);
         
@@ -122,6 +156,9 @@ async function updateRegionIndices() {
             }
         }
         
+        // 保存该区域的新闻项目
+        allRegionsNewsItems[region.code] = newsItems;
+        
         // 更新区域首页
         updateRegionIndex(region, newsItems);
         console.log(`✅ 已更新 ${region.code} 区域索引，共 ${newsItems.length} 篇文章`);
@@ -129,6 +166,79 @@ async function updateRegionIndices() {
     
     // 更新主索引页面
     updateMainIndex();
+    
+    // 更新网站区域页面的资讯侧边栏
+    updateWebsiteRegionPages(allRegionsNewsItems);
+}
+
+/**
+ * 更新网站区域页面的资讯侧边栏
+ * @param {Object} allRegionsNewsItems - 所有区域的资讯数据
+ */
+async function updateWebsiteRegionPages(allRegionsNewsItems) {
+    console.log('开始更新网站区域页面的资讯侧边栏...');
+    
+    for (const region of config.regions) {
+        const regionPagePath = path.join(config.regionsDir, region.code, 'index.html');
+        
+        // 检查文件是否存在
+        if (!fs.existsSync(regionPagePath)) {
+            console.log(`区域页面不存在，跳过: ${regionPagePath}`);
+            continue;
+        }
+        
+        try {
+            // 获取该区域的最新资讯
+            const newsItems = allRegionsNewsItems[region.code] || [];
+            
+            // 读取区域页面
+            const content = fs.readFileSync(regionPagePath, 'utf8');
+            
+            // 使用cheerio解析HTML
+            const $ = cheerio.load(content);
+            
+            // 查找资讯列表容器
+            const articleList = $('.article-list');
+            
+            if (articleList.length === 0) {
+                console.log(`找不到资讯列表容器，跳过: ${regionPagePath}`);
+                continue;
+            }
+            
+            // 清空现有内容
+            articleList.empty();
+            
+            // 添加最新资讯（最多8篇）
+            const maxNewsToShow = 8;
+            const newsToShow = newsItems.slice(0, maxNewsToShow);
+            
+            if (newsToShow.length > 0) {
+                newsToShow.forEach(item => {
+                    articleList.append(`
+                        <li>
+                            <a href="/static-news/${region.code}/${item.id}.html">
+                                ${item.title}
+                            </a>
+                        </li>
+                    `);
+                });
+            } else {
+                articleList.append(`
+                    <li>
+                        <span style="color: #7f8c8d;">暂无${region.name}地区最新资讯</span>
+                    </li>
+                `);
+            }
+            
+            // 保存修改后的内容
+            fs.writeFileSync(regionPagePath, $.html());
+            console.log(`✅ 已更新区域页面资讯侧边栏: ${regionPagePath}`);
+        } catch (error) {
+            console.error(`更新区域页面失败 [${regionPagePath}]:`, error);
+        }
+    }
+    
+    console.log('网站区域页面资讯侧边栏更新完成');
 }
 
 /**
@@ -588,8 +698,7 @@ function updateMainIndex() {
     console.log(`✅ 已更新主索引页面`);
 }
 
-// 启动更新
-updateRegionIndices().catch(err => {
-    console.error('更新失败:', err);
-    process.exit(1);
+// 执行更新
+updateRegionIndices().catch(error => {
+    console.error('更新索引页面时发生错误:', error);
 }); 

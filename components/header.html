@@ -1,5 +1,160 @@
 <!-- 网站导航菜单 -->
 <header>
+    <style>
+        /* 导航菜单样式 */
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            height: 64px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo span {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 0;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link i {
+            font-size: 14px;
+        }
+
+        .nav-link i.fa-chevron-down {
+            font-size: 12px;
+            margin-left: 2px;
+        }
+
+        .nav-link:hover {
+            color: #0066cc;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 8px 16px;
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f7;
+            color: #0066cc;
+        }
+
+        .login-button {
+            padding: 8px 0;
+            color: #1d1d1f;
+            background: transparent;
+        }
+
+        .login-button:hover {
+            color: #0066cc;
+            background: transparent;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #1d1d1f;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                padding: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                padding-left: 16px;
+            }
+        }
+    </style>
+
     <div class="main-nav">
         <!-- Logo -->
         <div class="logo">
@@ -58,14 +213,14 @@
                     <a href="/shipping-methods/fba/index.html" class="dropdown-item">FBA</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a href="/tools-guides/index.html" class="nav-link">
+            <li class="nav-item" id="tools-nav-item">
+                <a href="/tools-guides/index.html" class="nav-link" id="tools-nav-link">
                     <i class="fas fa-tools"></i>
                     工具
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/login.html" class="nav-link login-button">
+                <a href="/login.html" class="nav-link">
                     <i class="fas fa-user"></i>
                     登录
                 </a>
@@ -73,3 +228,13 @@
         </ul>
     </div>
 </header>
+
+<script>
+// 检测当前页面路径，为工具菜单添加激活状态
+(function() {
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/tools-guides/') || currentPath === '/tools-guides' || currentPath === '/tools-guides/index.html') {
+        document.getElementById('tools-nav-link').classList.add('active');
+    }
+})();
+</script>

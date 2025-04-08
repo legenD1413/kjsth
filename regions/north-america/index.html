@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<!DOCTYPE html><html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>北美物流服务 - 迈格库物流</title>
@@ -11,7 +9,7 @@
     
     <!-- 公共图标和字体 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&amp;family=SF+Pro+Text:wght@400;500;600&amp;display=swap" rel="stylesheet">
     
     <style>
         /* 北美页面特定样式 */
@@ -24,6 +22,39 @@
             gap: 2rem;
         }
 
+        .region-banner {
+            background-color: #fff;
+            color: #1d1d1f;
+            padding: 60px 0;
+            margin-bottom: 0;
+            margin-top: 30px;
+            position: relative;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        /* 添加 banner-overlay 容器样式 */
+        .banner-overlay {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 0 var(--site-padding);
+            text-align: left;
+        }
+        
+        /* 标题和描述的样式 */
+        .banner-title {
+            font-size: 28px; /* 3号字体 */
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+        
+        .banner-description {
+            font-size: 0.83em; /* 5号字体 */
+            color: #6e6e73;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        
         /* 左侧内容 - 卡片网格布局 */
         .left-section {
             flex: 3;
@@ -458,6 +489,56 @@
 <body>
     <!-- 统一的头部容器 -->
     <header id="header"></header>
+    
+    <div class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">全球物流资讯中心</h1>
+            <p class="banner-description">关注全球各区域最新物流动态、市场趋势和行业政策，助力您的国际物流决策。</p>
+        </div>
+    </div>
+
+    <script>
+        // 动态获取当前区域名称并更新标题
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从URL路径中提取区域名称
+            const pathSegments = window.location.pathname.split('/');
+            const regionIndex = pathSegments.indexOf('regions');
+            
+            if (regionIndex !== -1 && regionIndex + 1 < pathSegments.length) {
+                let regionName = '';
+                
+                // 根据路径名映射区域名称
+                switch(pathSegments[regionIndex + 1]) {
+                    case 'north-america':
+                        regionName = '北美';
+                        break;
+                    case 'europe':
+                        regionName = '欧洲';
+                        break;
+                    case 'asia':
+                        regionName = '亚洲';
+                        break;
+                    case 'oceania':
+                        regionName = '大洋洲';
+                        break;
+                    // 可以根据需要添加更多区域
+                    default:
+                        regionName = pathSegments[regionIndex + 1];
+                }
+                
+                // 更新标题和描述
+                const bannerTitle = document.querySelector('.banner-title');
+                if (bannerTitle) {
+                    bannerTitle.textContent = regionName + '地区物流资讯';
+                }
+                
+                const bannerDescription = document.querySelector('.banner-description');
+                if (bannerDescription) {
+                    bannerDescription.textContent = `关注${regionName}地区最新物流动态，包括港口状况、运费变化和政策更新。`;
+                }
+            }
+        });
+    </script>
 
     <div class="content-container">
         <div class="left-section">
@@ -570,47 +651,36 @@
             <div class="right-section">
                 <h3>北美物流资讯</h3>
                 <ul class="article-list">
-                    <li>
-                        <a href="/static-news/north-america/19.html">
-                            大件货物被加拿大物流商拒收？六大认知误区
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/static-news/north-america/18.html">
-                            美国FBA退货政策新变化及应对策略
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/static-news/north-america/17.html">
-                            美国最新电池运输管控规定
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/static-news/north-america/12.html">
-                            加拿大港口罢工导致物流延迟
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/static-news/north-america/11.html">
-                            美国海关新规：电子产品申报要求变更
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/static-news/north-america/10.html">
-                            北美跨境物流成本优化策略分析
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/static-news/north-america/9.html">
-                            加拿大电商物流新趋势：送达时间缩短
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/static-news/north-america/8.html">
-                            美国物流中心分布及选择指南
-                        </a>
-                    </li>
-                </ul>
+                        <li>
+                            <a href="/static-news/north-america/60.html">
+                                未知标题
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="/static-news/north-america/59.html">
+                                未知标题
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="/static-news/north-america/49.html">
+                                未知标题
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="/static-news/north-america/43.html">
+                                未知标题
+                            </a>
+                        </li>
+                    
+                        <li>
+                            <a href="/static-news/north-america/41.html">
+                                未知标题
+                            </a>
+                        </li>
+                    </ul>
                 <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
                     <a href="/static-news/north-america/index.html" class="view-all-btn">
                         <i class="fas fa-arrow-right"></i>查看全部
@@ -621,19 +691,18 @@
             <div class="right-section">
                 <h3>工具与指南</h3>
                 <div class="tools-list">
-                    <a href="/static-tools/global/volumetric-weight-calculator.html">
-                        <i class="fas fa-calculator"></i> <strong>运费计算</strong> - 体积重计算器
+                    <a href="/tools-guides/guides/50.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 海运货物如何满足亚马逊FBA最新入库标准？（含包装、标签、托盘化要求）
                     </a>
-                    <a href="/static-tools/global/packaging-optimization.html">
-                        <i class="fas fa-box"></i> <strong>包装指南</strong> - 优化包装方法
+                    <a href="/tools-guides/guides/51.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 如何应对加拿大FBA海运途中的常见风险？（如海关查验、港口拥堵、FBA拒收）
                     </a>
-                    <a href="/static-tools/north-america/canada-customs-duty-lookup.html">
-                        <i class="fas fa-file-alt"></i> <strong>清关文档</strong> - 北美清关所需资料
+                    <a href="/tools-guides/guides/52.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 加拿大FBA补货，选择海运还是空运？成本、时效与库存周转综合分析
                     </a>
-                    <a href="/static-tools/global/optimal-route-finder.html">
-                        <i class="fas fa-route"></i> <strong>路线查询</strong> - 查看最优物流路线
-                    </a>
-                </div>
+                    <a href="/tools-guides/guides/53.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 快船 vs 普船：哪种加拿大FBA海运服务更适合您的业务需求？
+                    </a></div>
                 <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
                     <a href="/tools-guides/index.html" class="view-all-btn">
                         <i class="fas fa-arrow-right"></i>查看全部
@@ -695,6 +764,4 @@
             });
         });
     </script>
-</body>
-</html> 
-
+</body></html>

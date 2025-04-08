@@ -1,0 +1,18 @@
+{
+  "name": "md-to-html",
+  "version": "1.0.0",
+  "main": "auto-converter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "chokidar": "^4.0.3",
+    "fs-extra": "^11.3.0",
+    "marked": "^15.0.8"
+  }
+}
