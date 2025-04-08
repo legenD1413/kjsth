@@ -6,6 +6,37 @@ importance: normal
 region: 全球
 ---
 
+<!-- 
+新闻分类列表（请从下方选择一个适合的分类，并替换上方的"行业动态"）：
+- industry_news（行业动态）
+- policy_updates（政策更新）
+- market_trends（市场趋势）
+- technology_innovation（技术创新）
+- company_news（公司新闻）
+- service_updates（服务更新）
+- price_adjustments（价格调整）
+- trade_alerts（贸易预警）
+- seasonal_updates（季节性更新）
+- disruption_alerts（中断预警）
+- success_stories（成功案例）
+- expert_insights（专家见解）
+
+重要性级别（请从下方选择一个适合的级别，并替换上方的"normal"）：
+- normal（普通）
+- important（重要）
+- critical（关键）
+
+地区选项（请从下方选择一个适合的地区，并替换上方的"全球"）：
+- 全球
+- 北美
+- 南美
+- 欧洲
+- 亚洲
+- 大洋洲
+- 非洲
+- 中东
+-->
+
 # 新闻标题
 
 ## 摘要

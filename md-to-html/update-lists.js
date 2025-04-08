@@ -14,6 +14,11 @@ const config = {
   news: {
     sourceDir: path.resolve(__dirname, '../static-news'),
     regions: ['global', 'north-america', 'south-america', 'europe', 'asia', 'australia', 'africa', 'middle-east'],
+    categories: [
+      'industry_news', 'policy_updates', 'market_trends', 'technology_innovation', 
+      'company_news', 'service_updates', 'price_adjustments', 'trade_alerts', 
+      'seasonal_updates', 'disruption_alerts', 'success_stories', 'expert_insights'
+    ],
     templateFile: path.resolve(__dirname, '../static-news/news-template.html'),
     indexTemplateName: 'index-template.html',
     getOutputPath: (region) => path.resolve(__dirname, `../static-news/${region}/index.html`)
@@ -21,7 +26,12 @@ const config = {
   // 指南系统配置
   guides: {
     sourceDir: path.resolve(__dirname, '../tools-guides'),
-    categories: ['regulations', 'interactive', 'guides', 'calculators', 'forms'],
+    categories: [
+      'regulations', 'customs', 'shipping', 'packaging', 'fba', 'logistics', 
+      'calculator', 'declaration', 'tax', 'insurance', 'tracking', 'returns', 
+      'international', 'express', 'commercial', 'biggoods', 'warehouse',
+      'interactive', 'guides', 'calculators', 'forms'
+    ],
     templateFile: path.resolve(__dirname, '../tools-guides/tool-template.html'),
     indexTemplateName: 'index-template.html',
     getOutputPath: (category) => path.resolve(__dirname, `../tools-guides/${category}/index.html`)
