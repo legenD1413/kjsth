@@ -1,17 +1,17 @@
-# Check and convert Markdown files to HTML
-# This script checks for new or updated MD files
+# 重命名Markdown转HTML脚本
+# 将中文HTML文件名改为简洁的编号形式，并根据category/region放入正确的目录
 
-# Get script directory
+# 获取脚本目录
 $scriptDir = $PSScriptRoot
 $rootDir = Split-Path -Parent $scriptDir
 
-# Define source and target directories
+# 定义源和目标目录
 $guidesMdDir = Join-Path -Path $rootDir -ChildPath "guides-md"
 $newsMdDir = Join-Path -Path $rootDir -ChildPath "news-md"
 $toolsGuidesDir = Join-Path -Path $rootDir -ChildPath "tools-guides"
 $staticNewsDir = Join-Path -Path $rootDir -ChildPath "static-news"
 
-# Template files
+# 模板文件
 $guideTemplateFile = Join-Path -Path $rootDir -ChildPath "tools/tool-template.html"
 $newsTemplateFile = Join-Path -Path $rootDir -ChildPath "tools/news-template.html"
 
@@ -19,12 +19,7 @@ $newsTemplateFile = Join-Path -Path $rootDir -ChildPath "tools/news-template.htm
 $newsUpdated = @{}
 $guidesUpdated = @{}
 
-# Process guides-md files
-Write-Host "Checking guides-md directory..."
-$guideFiles = Get-ChildItem -Path $guidesMdDir -Filter "*.md" -Recurse -ErrorAction SilentlyContinue
-$convertedGuideCount = 0
-
-# 分类映射表：中文分类名到英文目录名的映射
+# 分类映射表
 $categoryMap = @{
     "监管法规" = "regulations";
     "海关指南" = "customs";
@@ -45,6 +40,23 @@ $categoryMap = @{
     "海外仓" = "warehouse";
     "测试" = "test"
 }
+
+# 地区映射表
+$regionMap = @{
+    "全球" = "global";
+    "北美" = "north-america";
+    "南美" = "south-america";
+    "欧洲" = "europe";
+    "亚洲" = "asia";
+    "大洋洲" = "australia";
+    "非洲" = "africa";
+    "中东" = "middle-east"
+}
+
+# 处理指南文件
+Write-Host "Checking guides-md directory..."
+$guideFiles = Get-ChildItem -Path $guidesMdDir -Filter "*.md" -Recurse -ErrorAction SilentlyContinue
+$convertedGuideCount = 0
 
 if ($guideFiles) {
     foreach ($mdFile in $guideFiles) {
@@ -74,7 +86,7 @@ if ($guideFiles) {
             $dirName = $categoryMap[$category]
             Write-Host "映射到目录: $dirName"
         } else {
-            # 如果找不到映射，使用拼音或者默认分类
+            # 如果找不到映射，使用misc
             $dirName = "misc"
             Write-Host "未找到映射，使用默认目录: $dirName"
         }
@@ -118,22 +130,10 @@ if ($guideFiles) {
 
 Write-Host "Guides conversion complete: $convertedGuideCount files processed"
 
-# Process news-md files
+# 处理新闻文件
 Write-Host "Checking news-md directory..."
 $newsFiles = Get-ChildItem -Path $newsMdDir -Filter "*.md" -Recurse -ErrorAction SilentlyContinue
 $convertedNewsCount = 0
-
-# 地区映射表：中文地区名到英文目录名的映射
-$regionMap = @{
-    "全球" = "global"
-    "北美" = "north-america"
-    "南美" = "south-america"
-    "欧洲" = "europe"
-    "亚洲" = "asia"
-    "大洋洲" = "australia"
-    "非洲" = "africa"
-    "中东" = "middle-east"
-}
 
 if ($newsFiles) {
     foreach ($mdFile in $newsFiles) {
@@ -141,7 +141,7 @@ if ($newsFiles) {
         $mdContent = Get-Content -Path $mdFile.FullName -Raw -Encoding UTF8
         
         # 尝试提取region（支持多种格式）
-        $region = "global" # 默认为全球
+        $region = "global"
         
         # 首先尝试匹配单行region定义
         if ($mdContent -match "region:\s*(\S[^\r\n]*)") {
@@ -207,13 +207,8 @@ if ($newsFiles) {
 
 Write-Host "News conversion complete: $convertedNewsCount files processed"
 
-# Summary
-$totalConverted = $convertedGuideCount + $convertedNewsCount
-
-if ($totalConverted -gt 0) {
-    Write-Host "Conversion complete! $totalConverted files were processed."
-    
-    # 更新索引页面
+# 更新索引页面
+if ($convertedGuideCount + $convertedNewsCount -gt 0) {
     Write-Host "Updating index pages..."
     
     # 安装必要的依赖
@@ -242,7 +237,7 @@ if ($totalConverted -gt 0) {
     
     Write-Host "Index pages updated successfully!"
 } else {
-    Write-Host "All files are up to date. No conversion needed."
+    Write-Host "No files were processed."
 }
 
 Write-Host "Press any key to exit..."

@@ -191,6 +191,29 @@
             background-color: #3498db;
             border-radius: 2px;
         }
+        
+        /* 关键字标签样式 */
+        .keywords-container {
+            margin: 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .keyword-tag {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+            border-radius: 2rem;
+            background-color: #f0f7fb;
+            color: #3498db;
+            border: 1px solid #d6eaf8;
+            transition: all 0.2s ease;
+        }
+        
+        .keyword-tag:hover {
+            background-color: #d6eaf8;
+        }
     </style>
 </head>
 <body>
@@ -213,6 +236,10 @@
                 {{IMPORTANCE_TEXT}}
             </div>
         </div>
+        
+        <!-- 关键字标签 -->
+        {{KEYWORDS}}
+        
         <div class="news-content">
             {{CONTENT}}
         </div>

@@ -2,7 +2,17 @@
 title: 测试新文件检测
 date: 2024-04-09
 category: 测试
+categories:
+  - 测试
+  - 监管法规
 importance: important
+region: 全球
+regions:
+  - 全球
+  - 北美
+keywords:
+  - 测试
+  - 自动检测
 ---
 
 # 测试新文件检测

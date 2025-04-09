@@ -71,6 +71,19 @@ function extractMetadata(filePath) {
       importance = 'critical';
     }
     
+    // 提取分类和地区
+    let category = $('.news-category, .tool-category').text().trim();
+    const categories = category.split(',').map(cat => cat.trim());
+    
+    let region = $('.news-region, .tool-region').text().trim();
+    const regions = region.split(',').map(reg => reg.trim().replace(/区域$/, ''));
+    
+    // 提取关键字
+    const keywords = [];
+    $('.keyword-tag').each(function() {
+      keywords.push($(this).text().trim());
+    });
+    
     // 计算文件ID
     const fileName = path.basename(filePath);
     const id = fileName.replace('.html', '');
@@ -81,6 +94,11 @@ function extractMetadata(filePath) {
       date,
       excerpt,
       importance,
+      category,
+      categories,
+      region,
+      regions,
+      keywords,
       filePath: filePath.replace(/\\/g, '/'),
       fileName
     };
@@ -157,6 +175,20 @@ function generateNewsListHTML(articles) {
     const isNew = (new Date() - new Date(article.date)) / (1000 * 60 * 60) < 48;
     const newLabel = isNew ? '<span class="new-label">NEW</span>' : '';
     
+    // 添加关键字（最多显示3个）
+    let keywordsHtml = '';
+    if (article.keywords && article.keywords.length > 0) {
+      const displayKeywords = article.keywords.slice(0, 3);
+      keywordsHtml = '<div class="article-keywords">';
+      displayKeywords.forEach(keyword => {
+        keywordsHtml += `<span class="article-keyword">${keyword}</span>`;
+      });
+      if (article.keywords.length > 3) {
+        keywordsHtml += `<span class="article-keyword-more">+${article.keywords.length - 3}</span>`;
+      }
+      keywordsHtml += '</div>';
+    }
+    
     html += `
       <div class="news-card">
         <div class="news-card-content">
@@ -171,6 +203,7 @@ function generateNewsListHTML(articles) {
             </div>
           </div>
           <p class="news-excerpt">${article.excerpt}</p>
+          ${keywordsHtml}
           <a href="${article.fileName}" class="news-read-more">
             <i class="fas fa-arrow-right mr-1"></i>阅读全文
           </a>
@@ -208,6 +241,20 @@ function generateGuidesListHTML(guides) {
     const isNew = (new Date() - new Date(guide.date)) / (1000 * 60 * 60) < 48;
     const newLabel = isNew ? '<span class="new-label">NEW</span>' : '';
     
+    // 添加关键字（最多显示3个）
+    let keywordsHtml = '';
+    if (guide.keywords && guide.keywords.length > 0) {
+      const displayKeywords = guide.keywords.slice(0, 3);
+      keywordsHtml = '<div class="article-keywords">';
+      displayKeywords.forEach(keyword => {
+        keywordsHtml += `<span class="article-keyword">${keyword}</span>`;
+      });
+      if (guide.keywords.length > 3) {
+        keywordsHtml += `<span class="article-keyword-more">+${guide.keywords.length - 3}</span>`;
+      }
+      keywordsHtml += '</div>';
+    }
+    
     html += `
       <div class="tool-card">
         <div class="tool-card-content">
@@ -222,6 +269,7 @@ function generateGuidesListHTML(guides) {
             </div>
           </div>
           <p class="tool-excerpt">${guide.excerpt}</p>
+          ${keywordsHtml}
           <a href="${guide.fileName}" class="tool-read-more">
             <i class="fas fa-arrow-right mr-1"></i>查看详情
           </a>
@@ -258,6 +306,37 @@ function updateIndexPage(templatePath, outputPath, contentHTML) {
     
     // 使用Cheerio操作HTML
     const $ = cheerio.load(template);
+    
+    // 确保列表页有关键字样式
+    if (!$('style').text().includes('.article-keywords')) {
+      $('head').append(`
+        <style>
+          .article-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.8rem;
+          }
+          .article-keyword {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 2rem;
+            background-color: #f0f0f0;
+            color: #666;
+          }
+          .article-keyword-more {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 2rem;
+            background-color: #e9ecef;
+            color: #6c757d;
+          }
+        </style>
+      `);
+    }
     
     // 更新文章列表区域
     $('.news-list-container .no-news, .news-list-container .news-card, .tools-list-container .no-guides, .tools-list-container .tool-card').remove();
@@ -299,7 +378,19 @@ function updateNewsIndex(region) {
     return;
   }
   
-  const articles = scanDirectory(regionDir);
+  // 获取所有新闻文件
+  const allArticles = scanDirectory(config.news.sourceDir);
+  
+  // 筛选适用于该区域的文章
+  const articles = allArticles.filter(article => {
+    // 检查文件是否位于该区域目录下
+    if (article.directory === region) return true;
+    
+    // 或者文章的regions包含该区域
+    const regionName = getHumanReadableRegion(region);
+    return article.regions && article.regions.includes(regionName);
+  });
+  
   console.log(`区域 ${region} 找到 ${articles.length} 篇文章`);
   
   // 生成列表HTML
@@ -309,19 +400,6 @@ function updateNewsIndex(region) {
   const templatePath = path.join(config.news.sourceDir, config.news.indexTemplateName);
   const outputPath = config.news.getOutputPath(region);
   updateIndexPage(templatePath, outputPath, listHTML);
-}
-
-/**
- * 更新所有区域的新闻列表
- */
-function updateAllNewsIndices() {
-  console.log('开始更新所有新闻列表...');
-  
-  for (const region of config.news.regions) {
-    updateNewsIndex(region);
-  }
-  
-  console.log('所有新闻列表更新完成');
 }
 
 /**
@@ -337,7 +415,19 @@ function updateGuidesIndex(category) {
     return;
   }
   
-  const guides = scanDirectory(categoryDir);
+  // 获取所有指南文件
+  const allGuides = scanDirectory(config.guides.sourceDir);
+  
+  // 筛选适用于该分类的指南
+  const guides = allGuides.filter(guide => {
+    // 检查文件是否位于该分类目录下
+    if (guide.directory === category) return true;
+    
+    // 或者指南的categories包含该分类
+    const categoryName = getHumanReadableCategory(category);
+    return guide.categories && guide.categories.includes(categoryName);
+  });
+  
   console.log(`分类 ${category} 找到 ${guides.length} 个指南`);
   
   // 生成列表HTML
@@ -347,6 +437,72 @@ function updateGuidesIndex(category) {
   const templatePath = path.join(config.guides.sourceDir, config.guides.indexTemplateName);
   const outputPath = config.guides.getOutputPath(category);
   updateIndexPage(templatePath, outputPath, listHTML);
+}
+
+/**
+ * 获取地区的人类可读名称
+ * @param {string} regionCode - 地区代码
+ * @returns {string} - 人类可读的地区名称
+ */
+function getHumanReadableRegion(regionCode) {
+  const regionMap = {
+    'global': '全球',
+    'north-america': '北美',
+    'south-america': '南美',
+    'europe': '欧洲',
+    'asia': '亚洲',
+    'australia': '大洋洲',
+    'africa': '非洲',
+    'middle-east': '中东'
+  };
+  
+  return regionMap[regionCode] || regionCode;
+}
+
+/**
+ * 获取分类的人类可读名称
+ * @param {string} categoryCode - 分类代码
+ * @returns {string} - 人类可读的分类名称
+ */
+function getHumanReadableCategory(categoryCode) {
+  const categoryMap = {
+    'regulations': '监管法规',
+    'customs': '海关指南',
+    'shipping': '运输指南',
+    'packaging': '包装指南',
+    'fba': '亚马逊FBA',
+    'logistics': '物流基础知识',
+    'calculator': '实用工具使用指南',
+    'declaration': '报关指南',
+    'tax': '税务指南',
+    'insurance': '保险指南',
+    'tracking': '物流跟踪',
+    'returns': '退货处理',
+    'international': '国际物流',
+    'express': '快递服务',
+    'commercial': '商业件运输',
+    'biggoods': '超大件运输',
+    'warehouse': '海外仓',
+    'interactive': '互动工具',
+    'guides': '指南',
+    'calculators': '计算工具',
+    'forms': '表单工具'
+  };
+  
+  return categoryMap[categoryCode] || categoryCode;
+}
+
+/**
+ * 更新所有区域的新闻列表
+ */
+function updateAllNewsIndices() {
+  console.log('开始更新所有新闻列表...');
+  
+  for (const region of config.news.regions) {
+    updateNewsIndex(region);
+  }
+  
+  console.log('所有新闻列表更新完成');
 }
 
 /**
