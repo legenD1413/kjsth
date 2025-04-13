@@ -1,0 +1,681 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多分类处理测试指南</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&amp;family=SF+Pro+Text:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    
+    <style>
+        /* 全局字体设置 - 采用Apple风格字体 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 重置基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
+        }
+        
+        /* Header样式 - Apple风格 */
+        header {
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+            backdrop-filter: saturate(180%) blur(20px); /* 毛玻璃效果 */
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02); /* 轻微阴影 */
+        }
+        
+        .main-nav {
+            height: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* 确保右对齐 */
+            padding: 0 20px;
+        }
+        
+        .logo, .nav-menu, .nav-item, .nav-link {
+            height: 48px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 500;
+            margin-right: auto; /* 将logo推到左侧 */
+            letter-spacing: -0.01em; /* Apple风格字间距 */
+        }
+        
+        .logo img {
+            height: 24px;
+            margin-right: 8px;
+        }
+        
+        .logo span {
+            color: #1d1d1f;
+            font-size: 15px;
+        }
+        
+        .nav-menu {
+            list-style: none;
+            display: flex;
+        }
+        
+        .nav-item {
+            margin-left: 48px; /* 增加间距从36px到48px */
+            position: relative;
+        }
+        
+        .nav-link {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: -0.01em; /* Apple风格字间距 */
+            transition: color 0.2s ease;
+            opacity: 0.88; /* 轻微透明，增加高级感 */
+        }
+        
+        .nav-link i {
+            margin-right: 5px;
+            font-size: 13px; /* 稍小的图标尺寸 */
+            color: #1d1d1f;
+            opacity: 0.85;
+        }
+        
+        .nav-link:hover {
+            color: #0066CC; /* Apple蓝色 */
+            opacity: 1;
+        }
+        
+        /* 下拉菜单样式 - Apple风格 */
+        .dropdown-menu {
+            position: absolute;
+            top: 48px;
+            left: 50%;
+            transform: translateX(-50%); /* 水平居中 */
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 160px;
+            display: none;
+            z-index: 1001;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .nav-item:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #1d1d1f;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            opacity: 0.85;
+            letter-spacing: -0.01em;
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: #0066CC;
+            opacity: 1;
+        }
+        
+        .nav-link i.fa-chevron-down {
+            font-size: 9px;
+            margin-left: 4px;
+            margin-right: 0;
+            opacity: 0.7;
+        }
+        
+        /* 媒体查询 */
+        @media (max-width: 768px) {
+            .nav-item {
+                margin-left: 32px; /* 移动端也相应增加间距 */
+            }
+            
+            .main-nav {
+                padding: 0 16px;
+            }
+        }
+        
+        /* 内容容器样式 */
+        .content-container {
+            max-width: 900px;
+            margin: 20px auto 40px;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 12px;
+        }
+        
+        .content-header {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .content-meta {
+            display: flex;
+            align-items: center;
+            color: #6e6e73;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .content-date, .content-category, .content-region {
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-meta i {
+            margin-right: 0.5rem;
+            color: #0071e3;
+        }
+        
+        /* 重要程度标签样式 */
+        .content-importance {
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 1rem;
+            display: inline-block;
+            vertical-align: middle;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .importance-normal {
+            background-color: #f7f7f9;
+            color: #6e6e73;
+            border: 1px solid rgba(110,110,115,0.2);
+        }
+        
+        .importance-important {
+            background-color: #fff9e9;
+            color: #b58e00;
+            border: 1px solid rgba(181,142,0,0.2);
+        }
+        
+        .importance-critical {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid rgba(220,38,38,0.2);
+        }
+        
+        /* 关键词标签样式 */
+        .content-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+        
+        .keyword-tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        
+        .keyword-tag:hover {
+            background-color: #e5e5ea;
+        }
+        
+        /* 内容区域样式 */
+        .content-body {
+            color: #1d1d1f;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .content-body p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .content-body h2 {
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            font-weight: 500;
+        }
+        
+        .content-body h3 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+            font-weight: 500;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .content-body h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+            bottom: 0.2rem;
+            width: 4px;
+            background-color: #0071e3;
+            border-radius: 2px;
+        }
+        
+        .content-body ul, .content-body ol {
+            margin-bottom: 1.2rem;
+            padding-left: 1.5rem;
+        }
+        
+        .content-body li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .content-body a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        
+        .content-body a:hover {
+            text-decoration: underline;
+        }
+        
+        .content-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .content-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .content-body th, .content-body td {
+            padding: 0.8rem;
+            border: 1px solid #d2d2d7;
+            text-align: left;
+        }
+        
+        .content-body th {
+            background-color: #f5f5f7;
+            font-weight: 500;
+        }
+        
+        .content-body blockquote {
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            border-left: 4px solid #0071e3;
+            background-color: #f5f5f7;
+            font-style: italic;
+        }
+        
+        .content-body code {
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+            background-color: #f5f5f7;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        .content-body pre {
+            background-color: #f5f5f7;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        /* 底部导航按钮 */
+        .content-footer {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .content-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.6rem 1.2rem;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        
+        .content-nav-btn:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .content-nav-btn i {
+            color: #0071e3;
+        }
+        
+        .prev-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .next-btn i {
+            margin-left: 0.5rem;
+        }
+        
+        .back-to-list {
+            background-color: #0071e3;
+            color: white;
+        }
+        
+        .back-to-list:hover {
+            background-color: #0058b6;
+        }
+        
+        /* 相关阅读部分 */
+        .related-content {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .related-content h4 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        
+        .related-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .related-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .related-item:last-child {
+            border-bottom: none;
+        }
+        
+        .related-link {
+            display: flex;
+            align-items: center;
+            color: #0071e3;
+            text-decoration: none;
+        }
+        
+        .related-link:hover {
+            text-decoration: underline;
+        }
+        
+        .related-link i {
+            margin-right: 0.8rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 1.5rem;
+                margin: 15px 10px 30px;
+            }
+            
+            .content-title {
+                font-size: 1.5rem;
+            }
+            
+            .content-footer {
+                flex-direction: column;
+            }
+            
+            .content-nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面头部 -->
+    <header>
+        <div class="main-nav">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="/assets/images/logo.PNG" alt="Logo">
+                <span>迈格库物流</span>
+            </div>
+            
+            <!-- 导航菜单 -->
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/products/index.html" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        发什么
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="/products/regular/index.html" class="dropdown-item">普货</a>
+                        <a href="/products/cosmetics/index.html" class="dropdown-item">化妆品</a>
+                        <a href="/products/e-cigarettes/index.html" class="dropdown-item">电子烟</a>
+                        <a href="/products/batteries/index.html" class="dropdown-item">纯电</a>
+                        <a href="/products/electronic-with-battery/index.html" class="dropdown-item">内电</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="/regions/index.html" class="nav-link">
+                        <i class="fas fa-globe-asia"></i>
+                        到哪里
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="/regions/north-america/index.html" class="dropdown-item">北美</a>
+                        <a href="/regions/south-america/index.html" class="dropdown-item">南美</a>
+                        <a href="/regions/europe/index.html" class="dropdown-item">欧洲</a>
+                        <a href="/regions/australia/index.html" class="dropdown-item">澳洲</a>
+                        <a href="/regions/middle-east/index.html" class="dropdown-item">中东</a>
+                        <a href="/regions/southeast-asia/index.html" class="dropdown-item">东南亚</a>
+                        <a href="/regions/africa/index.html" class="dropdown-item">非洲</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="/shipping-methods/index.html" class="nav-link">
+                        <i class="fas fa-truck"></i>
+                        如何发
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="/shipping-methods/air/index.html" class="dropdown-item">空运</a>
+                        <a href="/shipping-methods/sea/index.html" class="dropdown-item">海运</a>
+                        <a href="/shipping-methods/express/index.html" class="dropdown-item">快递</a>
+                        <a href="/shipping-methods/special-line/index.html" class="dropdown-item">专线</a>
+                        <a href="/shipping-methods/fba/index.html" class="dropdown-item">FBA</a>
+                    </div>
+                </li>
+                <li class="nav-item" id="tools-nav-item">
+                    <a href="/tools-guides/index.html" class="nav-link" id="tools-nav-link">
+                        <i class="fas fa-tools"></i>
+                        工具
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/login.html" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        登录
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <script>
+        // 检测当前页面路径，为工具菜单添加激活状态
+        (function() {
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/tools-guides/') || currentPath === '/tools-guides' || currentPath === '/tools-guides/index.html') {
+                document.getElementById('tools-nav-link').classList.add('active');
+            }
+        })();
+        </script>
+    </header>
+    
+    <!-- 主要内容区 -->
+    <main class="main-content">
+        <div class="content-container">
+            <!-- 内容头部区域 -->
+            <header class="content-header">
+                <h1 class="content-title">{{title}}</h1>
+                
+                <div class="content-meta">
+                    <div class="content-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>{{date}}</span>
+                    </div>
+                    
+                    <div class="content-category">
+                        <i class="far fa-folder"></i>
+                        <span>{{category}}</span>
+                    </div>
+                    
+                    <div class="content-region">
+                        <i class="fas fa-globe-asia"></i>
+                        <span>{{region}}</span>
+                    </div>
+                    
+                    <div class="content-importance {{importance_class}}">
+                        {{importance_text}}
+                    </div>
+                </div>
+                
+                <!-- 关键词标签 -->
+                <div class="content-keywords">
+                    {{keywords}}
+                </div>
+            </header>
+            
+            <!-- 主体内容区 -->
+            <div class="content-body">
+                {{content}}
+            </div>
+            
+            <!-- 底部导航 -->
+            <div class="content-footer">
+                <a href="{{prev_link}}" class="content-nav-btn prev-btn" {{#if="" prev_link}}style="display:block" {{else}}style="display:none" {{="" if}}="">
+                    <i class="fas fa-arrow-left"></i>
+                    上一篇
+                </a>
+                
+                <a href="{{category_index}}" class="content-nav-btn back-to-list">
+                    <i class="fas fa-list"></i>
+                    返回列表
+                </a>
+                
+                <a href="{{next_link}}" class="content-nav-btn next-btn" {{#if="" next_link}}style="display:block" {{else}}style="display:none" {{="" if}}="">
+                    下一篇
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- 相关阅读 -->
+            <section class="related-content" {{#if="" related_items}}style="display:block" {{else}}style="display:none" {{="" if}}="">
+                <h4>相关阅读</h4>
+                <ul class="related-list">
+                    {{related_items}}
+                </ul>
+            </section>
+        </div>
+    </main>
+    
+    <!-- 页面底部 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="/assets/images/logo.png" alt="迈格库物流Logo" width="24">
+                    <span>迈格库物流</span>
+                </div>
+                <div class="footer-nav">
+                    <div class="footer-col">
+                        <h4>关于我们</h4>
+                        <ul>
+                            <li><a href="/about/company.html">公司简介</a></li>
+                            <li><a href="/about/contact.html">联系我们</a></li>
+                            <li><a href="/about/careers.html">招贤纳士</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>物流服务</h4>
+                        <ul>
+                            <li><a href="/shipping-methods/air/index.html">空运服务</a></li>
+                            <li><a href="/shipping-methods/sea/index.html">海运服务</a></li>
+                            <li><a href="/shipping-methods/express/index.html">国际快递</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>常用链接</h4>
+                        <ul>
+                            <li><a href="/tools-guides/index.html">工具与指南</a></li>
+                            <li><a href="/static-news/index.html">物流资讯</a></li>
+                            <li><a href="/faq.html">常见问题</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 迈格库物流 | 让全球物流触手可及</p>
+                <div class="footer-links">
+                    <a href="/privacy.html">隐私政策</a>
+                    <a href="/terms.html">使用条款</a>
+                    <a href="/sitemap.html">网站地图</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 全局脚本 -->
+    <script src="/assets/js/main.js"></script>
+
+ </body></html>

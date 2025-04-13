@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} - 跨境物流指南</title>
+    <!-- 全局CSS文件 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/tools-guides.css">
+    <!-- 图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* 文章内容样式 */
+        .article-content {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .article-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .article-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #222;
+        }
+        
+        .article-content h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid #eaeaea;
+            padding-left: 1rem;
+            color: #666;
+            font-style: italic;
+            margin: 1rem 0;
+        }
+        
+        /* 文章元数据区域 */
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .article-meta span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .article-meta span i {
+            margin-right: 0.5rem;
+            color: #888;
+        }
+        
+        /* 关键词标签 */
+        .article-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .article-keyword {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 2rem;
+            background-color: #f0f0f0;
+            color: #666;
+        }
+        
+        /* 导航样式 */
+        .nav-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .nav-header {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .nav-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .nav-list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        
+        .nav-item {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .nav-item:last-child {
+            border-bottom: none;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-link .text {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .nav-link .text i {
+            margin-right: 10px;
+            color: #666;
+        }
+        
+        .nav-link .count {
+            font-size: 12px;
+            color: #999;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 2px 8px;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .nav-link:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .nav-link.active {
+            background-color: #f0f7ff;
+            color: #1a73e8;
+            font-weight: 500;
+        }
+        
+        .nav-link.active i {
+            color: #1a73e8;
+        }
+        
+        .nav-link.active .count {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        /* 物流资讯列表 */
+        .article-list {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        
+        .article-list li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .article-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .article-list a {
+            display: block;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .article-list a:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* 查看全部按钮 */
+        .view-all-container {
+            padding: 10px 15px;
+            border-top: 1px solid #f0f0f0;
+            text-align: right;
+        }
+        
+        .view-all-btn {
+            display: inline-block;
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .view-all-btn i {
+            margin-right: 5px;
+        }
+        
+        /* 顶栏和搜索框样式 */
+        .search-tools {
+            margin-bottom: 20px;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            padding-right: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+        
+        .back-to-top.visible {
+            opacity: 0.8;
+        }
+        
+        .back-to-top:hover {
+            opacity: 1;
+        }
+        
+        /* 面包屑导航 */
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 响应式布局调整 */
+        @media (max-width: 768px) {
+            .tools-main {
+                flex-direction: column;
+            }
+            
+            .tools-content, .tools-nav {
+                width: 100%;
+            }
+            
+            .tools-nav {
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 统一的头部容器 -->
+    <header id="header"></header>
+
+    <main class="main-container" style="padding-top: 8px;">
+        <div class="tools-container">
+            <div class="tools-main">
+                <!-- 左侧内容 -->
+                <div class="tools-content">
+                    <div class="breadcrumb">
+                        <a href="/index.html">首页</a> &gt; 
+                        <a href="/tools-guides/index.html">工具与指南</a> &gt; 
+                        <a href="/tools-guides/warehouse/index.html">海外仓指南</a> &gt; 
+                        <span>{{title}}</span>
+                    </div>
+                    
+                    <!-- 文章标题 -->
+                    <h1 class="article-title">{{title}}</h1>
+                    
+                    <!-- 文章元数据 -->
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar-alt"></i> 发布日期: {{date}}</span>
+                        <span><i class="fas fa-star"></i> 重要性: {{importance}}</span>
+                        <span><i class="fas fa-globe-americas"></i> 适用地区: {{region}}</span>
+                    </div>
+                    
+                    <!-- 文章内容 -->
+                    <div class="article-content">
+                        {{content}}
+                    </div>
+                    
+                    <!-- 关键词标签 -->
+                    <div class="article-keywords">
+                        <strong>关键词:</strong>
+                        {{#each keywords}}
+                        <span class="article-keyword">{{this}}</span>
+                        {{/each}}
+                    </div>
+                    
+                    <!-- 返回按钮 -->
+                    <div class="back-to-all" style="margin-top: 30px;">
+                        <a href="/tools-guides/warehouse/index.html" class="back-button" style="display: inline-flex; align-items: center; color: #1a73e8; text-decoration: none; font-weight: 500;">
+                            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> 返回海外仓指南列表
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 右侧导航 -->
+                <div class="tools-nav">
+                    <!-- 搜索框 -->
+                    <div class="search-tools">
+                        <div class="search-container">
+                            <input type="text" id="search-input" class="search-input" placeholder="搜索指南...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 指南分类 -->
+                    <div class="nav-card">
+                        <div class="nav-header">
+                            <h3>指南分类</h3>
+                        </div>
+                        <ul class="nav-list" id="category-nav">
+                            <!-- 这里将通过JavaScript动态填充分类列表 -->
+                        </ul>
+                    </div>
+                    
+                    <!-- 本类别最新文章 -->
+                    <div class="nav-card" style="margin-top: 20px;">
+                        <div class="nav-header">
+                            <h3>相关文章</h3>
+                        </div>
+                        <ul class="article-list" id="folder-list">
+                            <!-- 这里将通过JavaScript填充内容 -->
+                        </ul>
+                        <div class="view-all-container">
+                            <a href="/tools-guides/warehouse/index.html" class="view-all-btn">
+                                <i class="fas fa-arrow-right"></i> 查看全部
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 最新物流资讯 -->
+                    <div class="nav-card" style="margin-top: 20px;">
+                        <div class="nav-header">
+                            <h3>最新物流资讯</h3>
+                        </div>
+                        <ul class="article-list">
+                            <li>
+                                <a href="/static-news/north-america/30.html" title="美国关税对国际贸易将造成什么影响">
+                                    美国关税对国际贸易将造成什么影响
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/29.html" title="中国强力反击美国关税">
+                                    中国强力反击美国关税
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/25.html" title="美国关税大幅上涨，如何应对">
+                                    美国关税大幅上涨，如何应对
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/19.html" title="为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区">
+                                    为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/18.html" title="加拿大空派专线">
+                                    加拿大空派专线
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="view-all-container">
+                            <a href="/static-news/north-america/index.html" class="view-all-btn">
+                                <i class="fas fa-arrow-right"></i> 查看全部
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 统一的底部容器 -->
+    <footer id="footer"></footer>
+    
+    <!-- 返回顶部按钮 -->
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+    
+    <!-- JavaScript -->
+    <script src="/assets/js/components.js"></script>
+    
+    <script>
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 加载分类列表和本文件夹下的文章列表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取当前路径
+            const currentPath = window.location.pathname;
+            const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+            const currentCategory = currentDir.split('/').pop();
+            
+            // 分类映射
+            const categoryMapping = {
+                'all': { name: '全部工具与指南', icon: 'fas fa-th-large', path: 'index' },
+                'shipping': { name: '运输指南', icon: 'fas fa-ship' },
+                'customs': { name: '海关指南', icon: 'fas fa-passport' },
+                'fba': { name: '亚马逊FBA', icon: 'fab fa-amazon' },
+                'packaging': { name: '包装指南', icon: 'fas fa-box' },
+                'logistics': { name: '物流基础知识', icon: 'fas fa-truck' },
+                'warehouse': { name: '海外仓', icon: 'fas fa-warehouse' },
+                'regulations': { name: '监管法规', icon: 'fas fa-gavel' },
+                'calculator': { name: '实用工具', icon: 'fas fa-calculator' },
+                'declaration': { name: '报关指南', icon: 'fas fa-clipboard-list' },
+                'tax': { name: '税务指南', icon: 'fas fa-file-invoice-dollar' },
+                'insurance': { name: '保险指南', icon: 'fas fa-shield-alt' },
+                'tracking': { name: '物流跟踪', icon: 'fas fa-map-marker-alt' },
+                'returns': { name: '退货处理', icon: 'fas fa-undo' },
+                'international': { name: '国际物流', icon: 'fas fa-globe' },
+                'express': { name: '快递服务', icon: 'fas fa-shipping-fast' },
+                'commercial': { name: '商业件运输', icon: 'fas fa-dolly' },
+                'biggoods': { name: '超大件运输', icon: 'fas fa-truck-loading' }
+            };
+            
+            // 加载本分类下的文章列表
+            fetch(window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/index.html')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const articleLinks = Array.from(doc.querySelectorAll('a[href$=".html"]'))
+                        .filter(link => link.getAttribute('href') !== 'index.html' && 
+                                        link.getAttribute('href') !== currentFile &&
+                                        !link.getAttribute('href').includes('/'));
+                    
+                    const folderList = document.getElementById('folder-list');
+                    
+                    if (articleLinks.length > 0) {
+                        // 限制显示数量
+                        const limitedLinks = articleLinks.slice(0, 5);
+                        
+                        limitedLinks.forEach(link => {
+                            const title = link.textContent.trim() || '未知标题';
+                            const href = link.getAttribute('href');
+                            
+                            const li = document.createElement('li');
+                            const a = document.createElement('a');
+                            a.href = href;
+                            a.textContent = title;
+                            a.title = title; // 添加title属性，鼠标悬停时显示完整标题
+                            li.appendChild(a);
+                            folderList.appendChild(li);
+                        });
+                    } else {
+                        // 如果没有文章，显示提示
+                        const li = document.createElement('li');
+                        const span = document.createElement('span');
+                        span.style.display = 'block';
+                        span.style.padding = '12px 15px';
+                        span.style.color = '#999';
+                        span.textContent = '暂无相关文章';
+                        li.appendChild(span);
+                        folderList.appendChild(li);
+                    }
+                })
+                .catch(error => {
+                    console.error('加载文章列表失败:', error);
+                    // 如果加载失败，显示错误提示
+                    const folderList = document.getElementById('folder-list');
+                    const li = document.createElement('li');
+                    const span = document.createElement('span');
+                    span.style.display = 'block';
+                    span.style.padding = '12px 15px';
+                    span.style.color = '#999';
+                    span.textContent = '加载失败，请稍后再试';
+                    li.appendChild(span);
+                    folderList.appendChild(li);
+                });
+            
+            // 加载分类列表
+            const categoryNav = document.getElementById('category-nav');
+            
+            // 创建Promise数组，用于获取每个分类的文章数量
+            const promises = Object.entries(categoryMapping).map(([key, value]) => {
+                // 对于'all'分类特殊处理
+                if (key === 'all') {
+                    return Promise.resolve({ key, value, count: 0, exists: true });
+                }
+                
+                const url = key === 'all' 
+                    ? '/tools-guides/index.html'
+                    : `/tools-guides/${key}/index.html`;
+                    
+                return fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            return { key, value, count: 0, exists: false };
+                        }
+                        
+                        return response.text().then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const articleLinks = Array.from(doc.querySelectorAll('a[href$=".html"]'))
+                                .filter(link => link.getAttribute('href') !== 'index.html' && 
+                                               !link.getAttribute('href').includes('/'));
+                            
+                            return { 
+                                key, 
+                                value, 
+                                count: articleLinks.length,
+                                exists: articleLinks.length > 0
+                            };
+                        });
+                    })
+                    .catch(() => ({ key, value, count: 0, exists: false }));
+            });
+            
+            // 处理所有Promise结果
+            Promise.all(promises)
+                .then(results => {
+                    // 过滤掉不存在或没有文章的分类
+                    const existingCategories = results.filter(item => item.exists || item.key === 'all');
+                    
+                    // 排序：保持主要分类在前，其他按字母顺序
+                    const orderedCategories = ['all', 'shipping', 'customs', 'fba', 'packaging', 'logistics', 'warehouse'];
+                    
+                    existingCategories.sort((a, b) => {
+                        const indexA = orderedCategories.indexOf(a.key);
+                        const indexB = orderedCategories.indexOf(b.key);
+                        
+                        if (indexA !== -1 && indexB !== -1) {
+                            return indexA - indexB;
+                        }
+                        
+                        if (indexA !== -1) return -1;
+                        if (indexB !== -1) return 1;
+                        
+                        return a.value.name.localeCompare(b.value.name);
+                    });
+                    
+                    // 创建分类导航列表
+                    existingCategories.forEach(item => {
+                        // 跳过没有文章的分类（但全部分类始终显示）
+                        if (item.count === 0 && item.key !== 'all') {
+                            return;
+                        }
+                        
+                        const li = document.createElement('li');
+                        li.className = 'nav-item';
+                        
+                        const a = document.createElement('a');
+                        a.className = 'nav-link';
+                        a.href = item.key === 'all' 
+                            ? '/tools-guides/index.html'
+                            : `/tools-guides/${item.key}/index.html`;
+                            
+                        // 创建文本容器
+                        const textSpan = document.createElement('span');
+                        textSpan.className = 'text';
+                        
+                        // 创建图标
+                        const icon = document.createElement('i');
+                        icon.className = item.value.icon;
+                        textSpan.appendChild(icon);
+                        textSpan.appendChild(document.createTextNode(` ${item.value.name}`));
+                        
+                        a.appendChild(textSpan);
+                        
+                        // 添加计数
+                        if (item.count > 0 && item.key !== 'all') {
+                            const countSpan = document.createElement('span');
+                            countSpan.className = 'count';
+                            countSpan.textContent = item.count;
+                            a.appendChild(countSpan);
+                        }
+                        
+                        // 设置当前分类高亮
+                        if ((item.key === currentCategory) || 
+                            (currentCategory === '' && item.key === 'all')) {
+                            a.classList.add('active');
+                        }
+                        
+                        li.appendChild(a);
+                        categoryNav.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('加载分类列表失败:', error);
+                    // 添加默认分类
+                    const defaultCategories = ['all', 'shipping', 'customs', 'fba', 'packaging', 'logistics'];
+                    defaultCategories.forEach(key => {
+                        if (categoryMapping[key]) {
+                            const li = document.createElement('li');
+                            li.className = 'nav-item';
+                            
+                            const a = document.createElement('a');
+                            a.className = 'nav-link';
+                            
+                            const textSpan = document.createElement('span');
+                            textSpan.className = 'text';
+                            
+                            const icon = document.createElement('i');
+                            icon.className = categoryMapping[key].icon;
+                            textSpan.appendChild(icon);
+                            textSpan.appendChild(document.createTextNode(` ${categoryMapping[key].name}`));
+                            
+                            a.appendChild(textSpan);
+                            a.href = key === 'all' 
+                                ? '/tools-guides/index.html' 
+                                : `/tools-guides/${key}/index.html`;
+                            
+                            if (key === currentCategory || (currentCategory === '' && key === 'all')) {
+                                a.classList.add('active');
+                            }
+                            
+                            li.appendChild(a);
+                            categoryNav.appendChild(li);
+                        }
+                    });
+                });
+                
+            // 搜索功能
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const folderList = document.getElementById('folder-list');
+                    const listItems = folderList.querySelectorAll('li');
+                    
+                    listItems.forEach(item => {
+                        const link = item.querySelector('a');
+                        if (link) {
+                            const title = link.textContent.toLowerCase();
+                            if (title.includes(searchTerm)) {
+                                item.style.display = '';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

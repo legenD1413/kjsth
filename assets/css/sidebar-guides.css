@@ -1,0 +1,109 @@
+/**
+ * 指南/教程侧边栏组件样式
+ * 用于展示教程目录结构
+ */
+
+.guides-sidebar {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    padding: 0;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+/* 侧边栏标题 */
+.guides-sidebar-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1d1d1f;
+    margin: 0;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.01em;
+}
+
+/* 指南列表 */
+.guides-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.guides-list li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 0;
+}
+
+.guides-list li:last-child {
+    border-bottom: none;
+}
+
+/* 指南项目 */
+.guide-item {
+    display: flex;
+    padding: 14px 20px;
+}
+
+.guide-icon {
+    flex: 0 0 20px;
+    margin-right: 10px;
+    color: #0071e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-content {
+    flex: 1;
+}
+
+.guide-title {
+    color: #1d1d1f;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.guide-desc {
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: #6e6e73;
+    line-height: 1.4;
+}
+
+/* 查看全部链接 */
+.guides-view-all {
+    padding: 10px 20px;
+    text-align: right;
+    background-color: #f5f5f7;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.guides-view-all a {
+    color: #0071e3;
+    text-decoration: none;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.guides-view-all a:hover {
+    color: #0062c1;
+}
+
+.guides-view-all a i {
+    margin-left: 5px;
+    font-size: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .guides-sidebar {
+        margin-top: 20px;
+    }
+} 

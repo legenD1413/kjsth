@@ -1,0 +1,72 @@
+<svg width="300" height="440" viewBox="0 0 300 440" xmlns="http://www.w3.org/2000/svg">
+    <!-- 侧边栏背景 -->
+    <rect x="0" y="0" width="300" height="420" rx="12" ry="12" fill="#ffffff" stroke="#e1e1e1" stroke-width="1"/>
+    
+    <!-- 标题部分 -->
+    <text x="20" y="30" font-family="SF Pro Display, sans-serif" font-size="16" font-weight="500" fill="#1d1d1f">工具与指南</text>
+    <line x1="0" y1="45" x2="300" y2="45" stroke="#e6e6e6" stroke-width="1" />
+    
+    <!-- 第一个指南项目 -->
+    <g transform="translate(0, 45)">
+        <rect x="0" y="0" width="300" height="83" fill="#ffffff" />
+        
+        <!-- 图标 -->
+        <circle cx="30" cy="28" r="12" fill="#f5f5f7" />
+        <text x="30" y="32" font-family="FontAwesome, sans-serif" font-size="12" fill="#0071e3" text-anchor="middle">&#xf0e0;</text>
+        
+        <!-- 标题和描述 -->
+        <text x="50" y="23" font-family="SF Pro Display, sans-serif" font-size="15" fill="#1d1d1f">海运货物如何满足亚马逊FBA最新入库标准？</text>
+        <text x="50" y="45" font-family="SF Pro Display, sans-serif" font-size="13" fill="#6e6e73">（含包装、标签、托盘化要求）</text>
+        
+        <line x1="0" y1="83" x2="300" y2="83" stroke="#f5f5f7" stroke-width="1" />
+    </g>
+    
+    <!-- 第二个指南项目 -->
+    <g transform="translate(0, 128)">
+        <rect x="0" y="0" width="300" height="83" fill="#ffffff" />
+        
+        <!-- 图标 -->
+        <circle cx="30" cy="28" r="12" fill="#f5f5f7" />
+        <text x="30" y="32" font-family="FontAwesome, sans-serif" font-size="12" fill="#0071e3" text-anchor="middle">&#xf071;</text>
+        
+        <!-- 标题和描述 -->
+        <text x="50" y="23" font-family="SF Pro Display, sans-serif" font-size="15" fill="#1d1d1f">如何应对加拿大FBA海运途中的常见风险？</text>
+        <text x="50" y="45" font-family="SF Pro Display, sans-serif" font-size="13" fill="#6e6e73">（如海关查验、港口拥堵、FBA拒收）</text>
+        
+        <line x1="0" y1="83" x2="300" y2="83" stroke="#f5f5f7" stroke-width="1" />
+    </g>
+    
+    <!-- 第三个指南项目 -->
+    <g transform="translate(0, 211)">
+        <rect x="0" y="0" width="300" height="83" fill="#ffffff" />
+        
+        <!-- 图标 -->
+        <circle cx="30" cy="28" r="12" fill="#f5f5f7" />
+        <text x="30" y="32" font-family="FontAwesome, sans-serif" font-size="12" fill="#0071e3" text-anchor="middle">&#xf24e;</text>
+        
+        <!-- 标题和描述 -->
+        <text x="50" y="23" font-family="SF Pro Display, sans-serif" font-size="15" fill="#1d1d1f">加拿大FBA补货，选择海运还是空运？</text>
+        <text x="50" y="45" font-family="SF Pro Display, sans-serif" font-size="13" fill="#6e6e73">成本、时效与库存周转综合分析</text>
+        
+        <line x1="0" y1="83" x2="300" y2="83" stroke="#f5f5f7" stroke-width="1" />
+    </g>
+    
+    <!-- 第四个指南项目 -->
+    <g transform="translate(0, 294)">
+        <rect x="0" y="0" width="300" height="83" fill="#ffffff" />
+        
+        <!-- 图标 -->
+        <circle cx="30" cy="28" r="12" fill="#f5f5f7" />
+        <text x="30" y="32" font-family="FontAwesome, sans-serif" font-size="12" fill="#0071e3" text-anchor="middle">&#xf0d1;</text>
+        
+        <!-- 标题和描述 -->
+        <text x="50" y="23" font-family="SF Pro Display, sans-serif" font-size="15" fill="#1d1d1f">快船 vs 普船：哪种加拿大FBA海运服务更适合您的业务需求？</text>
+    </g>
+    
+    <!-- 查看全部部分 -->
+    <g transform="translate(0, 377)">
+        <rect x="0" y="0" width="300" height="43" fill="#f5f5f7" />
+        <text x="250" y="28" font-family="SF Pro Display, sans-serif" font-size="13" fill="#0071e3" text-anchor="end">查看全部</text>
+        <text x="260" y="28" font-family="FontAwesome, sans-serif" font-size="10" fill="#0071e3">&#xf054;</text>
+    </g>
+</svg> 

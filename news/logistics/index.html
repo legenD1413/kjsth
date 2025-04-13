@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物流资讯 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Banner样式 - 与北美页面保持一致 */
+        .region-banner {
+            background-color: #fff;
+            color: #1d1d1f;
+            padding: 60px 0;
+            margin-bottom: 0;
+            margin-top: 30px;
+            position: relative;
+            border-bottom: 1px solid #d2d2d7;
+            min-height: 120px; /* 确保最小高度一致 */
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Banner内容容器样式 */
+        .banner-overlay {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 0 var(--site-padding);
+            text-align: left;
+            width: 100%;
+        }
+        
+        /* 标题和描述的样式 */
+        .banner-title {
+            font-size: 28px; /* 3号字体 */
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+        
+        .banner-description {
+            font-size: 0.83em; /* 5号字体 */
+            color: #6e6e73;
+            max-width: 800px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        /* 物流资讯页面样式 */
+        .news-container {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 40px var(--site-padding);
+        }
+        
+        .news-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-card .card-image {
+            height: 180px;
+            background-color: #f5f5f5;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .news-card .card-content {
+            padding: 15px;
+        }
+        
+        .news-card .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .news-card .card-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-card .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .news-card .card-date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-card .card-date i {
+            margin-right: 5px;
+        }
+        
+        .news-card .card-category {
+            background-color: #f0f7ff;
+            color: #0070f3;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        /* 分类筛选器 */
+        .news-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: #0066cc;
+            color: #fff;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background-color: #e0e0e0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- Banner样式与北美页面保持一致 -->
+    <div class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">物流资讯</h1>
+            <p class="banner-description">了解国际物流最新资讯，包括航运动态、港口情况、运费变化、物流政策和行业趋势分析。</p>
+        </div>
+    </div>
+    
+    <!-- 主要内容区域 -->
+    <main>
+        <div class="news-container">
+            <!-- 分类筛选器 -->
+            <div class="news-filter">
+                <button class="filter-btn active">全部</button>
+                <button class="filter-btn">航运动态</button>
+                <button class="filter-btn">港口情况</button>
+                <button class="filter-btn">运费变化</button>
+                <button class="filter-btn">物流政策</button>
+                <button class="filter-btn">行业趋势</button>
+            </div>
+            
+            <!-- 新闻卡片网格 -->
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/shipping-congestion.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">全球航运拥堵情况最新分析：亚欧航线压力缓解</h3>
+                        <p class="card-description">近期数据显示，亚欧主要航线的拥堵情况有所缓解，船舶周转率提高15%。但北美航线仍面临挑战，预计年底前仍将持续紧张状态...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-06-18</span>
+                            <span class="card-category">航运动态</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/port-automation.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">亚洲主要港口自动化升级加速，效率提升30%</h3>
+                        <p class="card-description">包括上海、深圳、新加坡在内的亚洲主要港口正加速自动化升级，引入AI和机器人技术，港口装卸效率平均提升30%，为全球供应链注入新动力...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-06-05</span>
+                            <span class="card-category">港口情况</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/freight-rates.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">2023年第二季度全球集装箱运价指数分析与预测</h3>
+                        <p class="card-description">第二季度全球集装箱运价指数较上季度下降18%，但较2019年同期仍高出45%。分析师预测，下半年运价将呈现温和上升趋势...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-05-22</span>
+                            <span class="card-category">运费变化</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/policy-update.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">欧盟新版海运排放交易体系(EU ETS)解读与应对策略</h3>
+                        <p class="card-description">欧盟海运排放交易体系将于2024年全面实施，本文详细解读了新政策内容，并提供了航运企业和物流公司的应对策略建议...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-05-10</span>
+                            <span class="card-category">物流政策</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/logistics-innovation.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">物流业数字化转型报告：区块链与物联网应用成主流</h3>
+                        <p class="card-description">最新行业报告显示，区块链技术和物联网在物流领域的应用正加速落地，60%的大型物流企业已部署相关技术，带来平均25%的运营效率提升...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-04-28</span>
+                            <span class="card-category">行业趋势</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/alternative-routes.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">中欧陆路运输崛起：铁路与公路多式联运成新选择</h3>
+                        <p class="card-description">在海运不确定性增加的背景下，中欧铁路和公路多式联运正成为越来越多企业的新选择。2023年上半年，中欧班列运量同比增长35%...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-04-15</span>
+                            <span class="card-category">行业趋势</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+
+    <!-- 引入公共组件脚本 -->
+    <script src="/assets/js/components.js"></script>
+    
+    <script>
+        // 分类筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 分类筛选功能
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const newsCards = document.querySelectorAll('.news-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // 给当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const category = this.textContent.trim();
+                    
+                    // 如果选择"全部"，显示所有新闻
+                    if (category === '全部') {
+                        newsCards.forEach(card => {
+                            card.style.display = 'block';
+                        });
+                    } else {
+                        // 否则，仅显示所选类别的新闻
+                        newsCards.forEach(card => {
+                            const cardCategory = card.querySelector('.card-category').textContent.trim();
+                            if (cardCategory === category) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

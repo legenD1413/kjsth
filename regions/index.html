@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务区域 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* banner样式 */
+        .region-banner {
+            background-color: #fff;
+            color: #1d1d1f;
+            padding: 60px 0;
+            margin-bottom: 0;
+            margin-top: 30px;
+            position: relative;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        /* banner内容容器样式 */
+        .banner-overlay {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 0 var(--site-padding);
+            text-align: left;
+        }
+        
+        /* 标题和描述的样式 */
+        .banner-title {
+            font-size: 28px; /* 3号字体 */
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+        
+        .banner-description {
+            font-size: 0.83em; /* 5号字体 */
+            color: #6e6e73;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        
+        .regions-container {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 40px var(--site-padding);
+        }
+        
+        .regions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .region-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .region-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .region-image-container {
+            width: 100%;
+            padding-top: 75%; /* 4:3的宽高比(75% = 3/4) */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .region-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .region-content {
+            padding: 20px;
+        }
+        
+        .region-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1d1d1f;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .region-title i {
+            font-size: 18px;
+            color: #0066cc;
+        }
+        
+        .region-description {
+            font-size: 14px;
+            color: #6e6e73;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .region-details {
+            font-size: 14px;
+            color: #0066cc;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .regions-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- 区域banner，采用与各区域页面相同的样式 -->
+    <div class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">服务区域</h1>
+            <p class="banner-description">迈格库物流服务覆盖全球主要区域，提供专业的跨境物流解决方案，满足您不同地区的物流需求。</p>
+        </div>
+    </div>
+    
+    <!-- 主要内容区域 -->
+    <main>
+        <div class="regions-container">
+            <div class="regions-grid">
+                <!-- 北美 -->
+                <a href="/regions/north-america/index.html" class="region-card">
+                    <div class="region-image-container">
+                        <img src="/assets/images/regions/north-america.SVG" alt="北美" class="region-image">
+                    </div>
+                    <div class="region-content">
+                        <h2 class="region-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            北美
+                        </h2>
+                        <p class="region-description">包括美国、加拿大等国家的专业物流服务，FBA、专线、快递等多种运输方式。</p>
+                        <div class="region-details">
+                            查看详情 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 欧洲 -->
+                <a href="/regions/europe/index.html" class="region-card">
+                    <div class="region-image-container">
+                        <img src="/assets/images/regions/europe.jpg" alt="欧洲" class="region-image">
+                    </div>
+                    <div class="region-content">
+                        <h2 class="region-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            欧洲
+                        </h2>
+                        <p class="region-description">覆盖英国、德国、法国等欧洲主要国家，提供空运、海运、专线等多种物流方式。</p>
+                        <div class="region-details">
+                            查看详情 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 澳洲 -->
+                <a href="/regions/australia/index.html" class="region-card">
+                    <div class="region-image-container">
+                        <img src="/assets/images/regions/australia.jpg" alt="澳洲" class="region-image">
+                    </div>
+                    <div class="region-content">
+                        <h2 class="region-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            澳洲
+                        </h2>
+                        <p class="region-description">澳大利亚和新西兰等地区的专业物流服务，高效可靠的航线和清关服务。</p>
+                        <div class="region-details">
+                            查看详情 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 中东 -->
+                <a href="/regions/middle-east/index.html" class="region-card">
+                    <div class="region-image-container">
+                        <img src="/assets/images/regions/middle-east.jpg" alt="中东" class="region-image">
+                    </div>
+                    <div class="region-content">
+                        <h2 class="region-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            中东
+                        </h2>
+                        <p class="region-description">阿联酋、沙特阿拉伯等中东国家的物流服务，专业的本地配送和清关支持。</p>
+                        <div class="region-details">
+                            查看详情 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 亚洲 -->
+                <a href="/regions/asia/index.html" class="region-card">
+                    <div class="region-image-container">
+                        <img src="/assets/images/regions/asia.jpg" alt="亚洲" class="region-image">
+                    </div>
+                    <div class="region-content">
+                        <h2 class="region-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            亚洲
+                        </h2>
+                        <p class="region-description">日本、韩国、东南亚等国家和地区的物流服务，快速可靠的运输解决方案。</p>
+                        <div class="region-details">
+                            查看详情 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 非洲 -->
+                <a href="/regions/africa/index.html" class="region-card">
+                    <div class="region-image-container">
+                        <img src="/assets/images/regions/africa.jpg" alt="非洲" class="region-image">
+                    </div>
+                    <div class="region-content">
+                        <h2 class="region-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            非洲
+                        </h2>
+                        <p class="region-description">南非、埃及、尼日利亚等非洲国家的物流服务，专业的当地配送网络支持。</p>
+                        <div class="region-details">
+                            查看详情 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 南美 -->
+                <a href="/regions/south-america/index.html" class="region-card">
+                    <div class="region-image-container">
+                        <img src="/assets/images/regions/south-america.jpg" alt="南美" class="region-image">
+                    </div>
+                    <div class="region-content">
+                        <h2 class="region-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            南美
+                        </h2>
+                        <p class="region-description">巴西、墨西哥、智利等南美国家的物流解决方案，专业的清关和本地配送服务。</p>
+                        <div class="region-details">
+                            查看详情 <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+    
+    <!-- 引入公共组件脚本 -->
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/components.js"></script>
+</body>
+</html> 

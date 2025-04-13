@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{category_name}}指南集合 | 迈格库物流</title>
+    <!-- 全局CSS文件 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/tools-guides.css">
+    <!-- 图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 统一的头部容器 -->
+    <header id="header"></header>
+
+    <main class="main-container" style="padding-top: 8px;">
+        <div class="tools-container">
+            <div class="tools-main">
+                <!-- 左侧工具内容 -->
+                <div class="tools-content">
+                    <!-- 分类标题 -->
+                    <div class="category-header">
+                        <h1><i class="{{category_icon}}"></i> {{category_name}}指南</h1>
+                        <p>{{category_description}}</p>
+                    </div>
+                    
+                    <!-- 工具列表 -->
+                    <div class="tools-list-container">
+                        <ul class="tools-list">
+                            {{guide_items}}
+                        </ul>
+                    </div>
+                    
+                    <!-- 返回按钮 -->
+                    <div class="back-to-all">
+                        <a href="/tools-guides/index.html" class="back-button">
+                            <i class="fas fa-arrow-left"></i> 返回所有工具与指南
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 右侧导航 -->
+                <div class="tools-nav">
+                    <!-- 搜索框 -->
+                    <div class="search-tools">
+                        <div class="search-container">
+                            <input type="text" id="search-input" class="search-input" placeholder="搜索指南...">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 分类导航 -->
+                    <div class="nav-card">
+                        <div class="nav-header">
+                            <h3>指南分类</h3>
+                        </div>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="/tools-guides/index.html" class="nav-link">
+                                    <span class="text"><i class="fas fa-th-large"></i> 全部工具与指南</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/tools-guides/shipping/index.html" class="nav-link">
+                                    <span class="text"><i class="fas fa-ship"></i> 运输指南</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/tools-guides/customs/index.html" class="nav-link">
+                                    <span class="text"><i class="fas fa-passport"></i> 海关指南</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/tools-guides/fba/index.html" class="nav-link">
+                                    <span class="text"><i class="fab fa-amazon"></i> 亚马逊FBA</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/tools-guides/packaging/index.html" class="nav-link">
+                                    <span class="text"><i class="fas fa-box"></i> 包装指南</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/tools-guides/logistics/index.html" class="nav-link">
+                                    <span class="text"><i class="fas fa-truck"></i> 物流基础知识</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 最新物流资讯 -->
+                    <div class="nav-card" style="margin-top: 20px;">
+                        <div class="nav-header">
+                            <h3>最新物流资讯</h3>
+                        </div>
+                        <ul class="article-list">
+                            <li>
+                                <a href="/static-news/north-america/30.html">
+                                    美国关税对国际贸易将造成什么影响
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/29.html">
+                                    中国强力反击美国关税
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/25.html">
+                                    美国关税大幅上涨，如何应对
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/19.html">
+                                    为什么你的大件货物总被加拿大物流商拒收？尺寸限制的6个认知误区
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/static-news/north-america/18.html">
+                                    加拿大空派专线
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="view-all-container">
+                            <a href="/static-news/north-america/index.html" class="view-all-btn">
+                                <i class="fas fa-arrow-right"></i>查看全部
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 统一的底部容器 -->
+    <footer id="footer"></footer>
+    
+    <!-- JavaScript -->
+    <script src="/assets/js/components.js"></script>
+    
+    <script>
+        // 工具搜索功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const toolItems = document.querySelectorAll('.tool-item');
+                    
+                    toolItems.forEach(item => {
+                        const title = item.querySelector('h3')?.textContent.toLowerCase() || '';
+                        const desc = item.querySelector('p')?.textContent.toLowerCase() || '';
+                        
+                        if (title.includes(searchTerm) || desc.includes(searchTerm)) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

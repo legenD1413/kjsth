@@ -1,13 +1,321 @@
-<html><head></head><body><div class="right-section">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中东物流服务 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 中东页面特定样式 */
+        .content-container {
+            display: flex;
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            margin-top: var(--header-height);
+            padding: 2rem var(--site-padding);
+            gap: 2rem;
+        }
+
+        .region-banner {
+            background-color: #fff;
+            color: #1d1d1f;
+            padding: 60px 0;
+            margin-bottom: 0;
+            margin-top: 30px;
+            position: relative;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        /* 添加 banner-overlay 容器样式 */
+        .banner-overlay {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 0 var(--site-padding);
+            text-align: left;
+        }
+        
+        /* 标题和描述的样式 */
+        .banner-title {
+            font-size: 28px; /* 3号字体 */
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+        
+        .banner-description {
+            font-size: 0.83em; /* 5号字体 */
+            color: #6e6e73;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        
+        /* 左侧内容 - 卡片网格布局 */
+        .left-section {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* 右侧边栏 */
+        .right-column {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+
+        .right-section {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        /* 文章列表样式 - 更简洁的样式 */
+        .article-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .article-list li {
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .article-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .article-list a, .article-list span {
+            color: #6e6e73;
+            text-decoration: none;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .article-list a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* 查看全部按钮样式 */
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 0.8rem;
+            background-color: #f2f2f7;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .view-all-btn:hover {
+            background-color: #e8e8ed;
+        }
+        
+        .view-all-btn i {
+            margin-right: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        /* 右侧栏目标题样式 */
+        .right-section h3 {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            .left-section {
+                width: 100%;
+            }
+            
+            .right-column {
+                width: 100%;
+                max-width: none;
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 1rem;
+                margin-top: var(--header-height);
+            }
+
+            .left-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        
+        /* 开发中提示样式 */
+        .under-development {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .under-development i {
+            font-size: 3rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+        
+        .under-development h2 {
+            font-size: 1.5rem;
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+        
+        .under-development p {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 统一的头部容器 -->
+    <header id="header"></header>
+    
+    <div class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">全球物流资讯中心</h1>
+            <p class="banner-description">关注全球各区域最新物流动态、市场趋势和行业政策，助力您的国际物流决策。</p>
+        </div>
+    </div>
+
+    <script>
+        // 动态获取当前区域名称并更新标题
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从URL路径中提取区域名称
+            const pathSegments = window.location.pathname.split('/');
+            const regionIndex = pathSegments.indexOf('regions');
+            
+            if (regionIndex !== -1 && regionIndex + 1 < pathSegments.length) {
+                let regionName = '';
+                
+                // 根据路径名映射区域名称
+                switch(pathSegments[regionIndex + 1]) {
+                    case 'north-america':
+                        regionName = '北美';
+                        break;
+                    case 'europe':
+                        regionName = '欧洲';
+                        break;
+                    case 'asia':
+                        regionName = '亚洲';
+                        break;
+                    case 'australia':
+                        regionName = '澳洲';
+                        break;
+                    case 'middle-east':
+                        regionName = '中东';
+                        break;
+                    case 'africa':
+                        regionName = '非洲';
+                        break;
+                    case 'south-america':
+                        regionName = '南美';
+                        break;
+                    // 可以根据需要添加更多区域
+                    default:
+                        regionName = pathSegments[regionIndex + 1];
+                }
+                
+                // 更新标题和描述
+                const bannerTitle = document.querySelector('.banner-title');
+                if (bannerTitle) {
+                    bannerTitle.textContent = regionName + '地区物流资讯';
+                }
+                
+                const bannerDescription = document.querySelector('.banner-description');
+                if (bannerDescription) {
+                    bannerDescription.textContent = `关注${regionName}地区最新物流动态，包括港口状况、运费变化和政策更新。`;
+                }
+            }
+        });
+    </script>
+
+    <div class="content-container">
+        <div class="left-section">
+            <!-- 开发中提示 -->
+            <div class="under-development" style="grid-column: 1 / -1;">
+                <i class="fas fa-tools"></i>
+                <h2>内容正在建设中</h2>
+                <p>中东地区物流服务页面正在完善中，敬请期待更多物流线路和服务信息。</p>
+                <a href="/regions/index.html" class="view-all-btn">
+                    <i class="fas fa-arrow-left"></i>返回区域总览
+                </a>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="right-section">
                 <h3>中东物流资讯</h3>
                 <ul class="article-list">
                     <li>
-                        <span style="color: #7f8c8d;">暂无中东地区最新资讯</span>
+                        <span>暂无中东地区最新资讯</span>
                     </li>
                 </ul>
                 <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
-                    <a href="../../news/middle-east.html" class="view-all-btn" style="display: inline-block; padding: 0.4rem 0.8rem; background-color: #f8f9fa; color: #3498db; text-decoration: none; border-radius: 4px; font-size: 0.9rem; transition: all 0.3s; border: 1px solid #e9ecef;">
-                        <i class="fas fa-list-ul" style="margin-right: 0.3rem;"></i>查看全部
+                    <a href="/static-news/middle-east/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
                     </a>
                 </div>
-            </div> </body></html>
+            </div>
+            
+            <div class="right-section">
+                <h3>工具与指南</h3>
+                <ul class="article-list">
+                    <li>
+                        <span>暂无中东地区相关指南</span>
+                    </li>
+                </ul>
+                <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
+                    <a href="/tools-guides/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 统一的底部容器 -->
+    <footer id="footer"></footer>
+
+    <!-- JavaScript -->
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/components.js"></script>
+</body>
+</html>

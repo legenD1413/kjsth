@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容Banner组件示例 - 迈格库</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 引入内容banner组件样式 -->
+    <link rel="stylesheet" href="/assets/css/content-banner.css">
+    
+    <!-- 页面特定样式 -->
+    <style>
+        .example-section {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 40px var(--site-padding);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        
+        .example-card {
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .control-panel {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #d2d2d7;
+        }
+        
+        .control-panel label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #1d1d1f;
+        }
+        
+        .control-panel input, .control-panel textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #d2d2d7;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .control-panel button {
+            background-color: #0066CC;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .control-panel button:hover {
+            background-color: #0055b3;
+        }
+        
+        .code-example {
+            background-color: #f5f5f7;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin-top: 24px;
+        }
+        
+        /* 暗色模式示例banner */
+        .dark-banner {
+            background-color: #1d1d1f;
+            color: #f5f5f7;
+        }
+        
+        .dark-banner .content-banner-title {
+            color: #f5f5f7;
+        }
+        
+        .dark-banner .content-banner-description {
+            color: #a1a1a6;
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- 默认内容banner -->
+    <div id="defaultBanner"></div>
+    
+    <!-- 主要内容区 -->
+    <main class="example-section">
+        <h2 class="section-title">内容Banner组件使用示例</h2>
+        
+        <div class="example-card">
+            <p>内容Banner组件用于展示页面的主要标题和描述信息，通常位于页面顶部，提供页面的整体概述。</p>
+        </div>
+        
+        <div class="control-panel">
+            <h3>交互式示例</h3>
+            <label for="bannerTitle">标题:</label>
+            <input type="text" id="bannerTitle" value="内容Banner组件示例">
+            
+            <label for="bannerDescription">描述:</label>
+            <textarea id="bannerDescription" rows="3">这是一个内容Banner组件的使用示例，可以展示页面的标题和概述信息。通过修改表单并点击更新按钮来查看效果。</textarea>
+            
+            <label for="bannerBgColor">背景颜色:</label>
+            <input type="text" id="bannerBgColor" value="#ffffff">
+            
+            <button id="updateBanner">更新Banner</button>
+        </div>
+        
+        <h3 class="section-title">代码示例</h3>
+        
+        <div class="code-example">
+<pre>
+// HTML结构
+&lt;div id="myBanner"&gt;&lt;/div&gt;
+
+// JavaScript初始化
+&lt;script&gt;
+  ContentBanner.create('#myBanner', {
+    title: '页面标题',
+    description: '页面描述内容',
+    bgColor: '#ffffff' // 可选
+  });
+&lt;/script&gt;
+</pre>
+        </div>
+        
+        <h3 class="section-title">暗色模式示例</h3>
+        <div id="darkBanner"></div>
+    </main>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+    
+    <!-- 加载组件脚本 -->
+    <script src="/assets/js/components.js"></script>
+    
+    <!-- 加载内容banner组件脚本 -->
+    <script src="/assets/js/content-banner.js"></script>
+    
+    <!-- 页面特定脚本 -->
+    <script>
+        // 等待DOM加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建默认banner
+            ContentBanner.create('#defaultBanner', {
+                title: '内容Banner组件示例',
+                description: '这是一个内容Banner组件的使用示例，可以展示页面的标题和概述信息。通过修改表单并点击更新按钮来查看效果。'
+            });
+            
+            // 创建暗色模式banner
+            const darkBanner = ContentBanner.create('#darkBanner', {
+                title: '暗色模式Banner示例',
+                description: '这是内容Banner组件的暗色模式示例，适合在深色背景的页面中使用。',
+                bgColor: '#1d1d1f'
+            });
+            
+            // 添加暗色模式类
+            darkBanner.classList.add('dark-banner');
+            
+            // 交互式更新功能
+            const updateBtn = document.getElementById('updateBanner');
+            updateBtn.addEventListener('click', function() {
+                const title = document.getElementById('bannerTitle').value;
+                const description = document.getElementById('bannerDescription').value;
+                const bgColor = document.getElementById('bannerBgColor').value;
+                
+                ContentBanner.update('.content-banner', {
+                    title: title,
+                    description: description,
+                    bgColor: bgColor
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

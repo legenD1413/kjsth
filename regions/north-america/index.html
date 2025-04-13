@@ -30,6 +30,9 @@
             margin-top: 30px;
             position: relative;
             border-bottom: 1px solid #d2d2d7;
+            min-height: 120px; /* 确保最小高度一致 */
+            display: flex;
+            align-items: center;
         }
         
         /* 添加 banner-overlay 容器样式 */
@@ -38,6 +41,7 @@
             margin: 0 auto;
             padding: 0 var(--site-padding);
             text-align: left;
+            width: 100%;
         }
         
         /* 标题和描述的样式 */
@@ -46,6 +50,7 @@
             font-weight: 600;
             margin-bottom: 8px;
             color: #1d1d1f;
+            line-height: 1.2;
         }
         
         .banner-description {
@@ -53,6 +58,7 @@
             color: #6e6e73;
             max-width: 800px;
             line-height: 1.5;
+            margin: 0;
         }
         
         /* 左侧内容 - 卡片网格布局 */

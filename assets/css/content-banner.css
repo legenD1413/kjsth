@@ -1,0 +1,56 @@
+/**
+ * 内容banner组件样式
+ * 用于展示页面主要内容的标题和简要描述
+ */
+
+.content-banner {
+    background-color: #fff;
+    color: #1d1d1f;
+    padding: 60px 0;
+    margin-bottom: 0;
+    margin-top: 30px;
+    position: relative;
+    border-bottom: 1px solid #d2d2d7;
+}
+
+/* banner内容容器 */
+.banner-container {
+    max-width: var(--site-max-width);
+    margin: 0 auto;
+    padding: 0 var(--site-padding);
+    text-align: left;
+}
+
+/* 标题样式 */
+.content-banner-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1d1d1f;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 描述文本样式 */
+.content-banner-description {
+    font-size: 0.83em; /* 5号字体 */
+    color: #6e6e73;
+    max-width: 800px;
+    line-height: 1.5;
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .content-banner {
+        padding: 40px 0;
+        margin-top: 20px;
+    }
+    
+    .content-banner-title {
+        font-size: 24px;
+    }
+    
+    .content-banner-description {
+        font-size: 0.8em;
+    }
+} 

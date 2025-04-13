@@ -7,6 +7,10 @@
 const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
+const moment = require('moment');
+
+// 设置中文日期格式
+moment.locale('zh-cn');
 
 // 配置信息
 const config = {
@@ -19,8 +23,10 @@ const config = {
       'company_news', 'service_updates', 'price_adjustments', 'trade_alerts', 
       'seasonal_updates', 'disruption_alerts', 'success_stories', 'expert_insights'
     ],
-    templateFile: path.resolve(__dirname, '../static-news/news-template.html'),
+    templateFile: path.resolve(__dirname, '../templates/content/content-template.html'),
     indexTemplateName: 'index-template.html',
+    listTemplatePath: path.resolve(__dirname, '../templates/list/category-list-template.html'),
+    mainIndexTemplatePath: path.resolve(__dirname, '../templates/list/index-template.html'),
     getOutputPath: (region) => path.resolve(__dirname, `../static-news/${region}/index.html`)
   },
   // 指南系统配置
@@ -32,8 +38,10 @@ const config = {
       'international', 'express', 'commercial', 'biggoods', 'warehouse',
       'interactive', 'guides', 'calculators', 'forms'
     ],
-    templateFile: path.resolve(__dirname, '../tools-guides/tool-template.html'),
+    templateFile: path.resolve(__dirname, '../templates/content/content-template.html'),
     indexTemplateName: 'index-template.html',
+    listTemplatePath: path.resolve(__dirname, '../templates/list/category-list-template.html'),
+    mainIndexTemplatePath: path.resolve(__dirname, '../templates/list/index-template.html'),
     getOutputPath: (category) => path.resolve(__dirname, `../tools-guides/${category}/index.html`)
   }
 };
@@ -282,161 +290,246 @@ function generateGuidesListHTML(guides) {
 }
 
 /**
- * 更新索引页面内容
+ * 更新索引页面
  * @param {string} templatePath - 模板文件路径
  * @param {string} outputPath - 输出文件路径
- * @param {string} contentHTML - 内容HTML
+ * @param {string} contentHTML - 文章列表HTML
+ * @param {Object} options - 其他选项
  */
-function updateIndexPage(templatePath, outputPath, contentHTML) {
+function updateIndexPage(templatePath, outputPath, contentHTML, options = {}) {
   try {
-    let template;
+    // 确保使用统一模板
+    let templateContent;
     
-    // 尝试读取索引模板
-    if (fs.existsSync(templatePath)) {
-      template = fs.readFileSync(templatePath, 'utf8');
+    // 首先尝试使用统一的模板
+    const type = options.type || 'news';
+    const isMainIndex = options.isMainIndex || false;
+    
+    if (isMainIndex) {
+      // 主索引页面使用index-template
+      const mainTemplatePath = config[type].mainIndexTemplatePath;
+      if (fs.existsSync(mainTemplatePath)) {
+        templateContent = fs.readFileSync(mainTemplatePath, 'utf8');
+      }
     } else {
-      // 模板不存在，尝试读取当前索引文件
-      if (fs.existsSync(outputPath)) {
-        template = fs.readFileSync(outputPath, 'utf8');
-      } else {
-        console.error(`无法找到模板文件: ${templatePath}`);
-        return;
+      // 分类列表页面使用category-list-template
+      const listTemplatePath = config[type].listTemplatePath;
+      if (fs.existsSync(listTemplatePath)) {
+        templateContent = fs.readFileSync(listTemplatePath, 'utf8');
       }
     }
     
-    // 使用Cheerio操作HTML
-    const $ = cheerio.load(template);
-    
-    // 确保列表页有关键字样式
-    if (!$('style').text().includes('.article-keywords')) {
-      $('head').append(`
-        <style>
-          .article-keywords {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            margin-top: 0.5rem;
-            margin-bottom: 0.8rem;
-          }
-          .article-keyword {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            font-size: 0.75rem;
-            border-radius: 2rem;
-            background-color: #f0f0f0;
-            color: #666;
-          }
-          .article-keyword-more {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            font-size: 0.75rem;
-            border-radius: 2rem;
-            background-color: #e9ecef;
-            color: #6c757d;
-          }
-        </style>
-      `);
+    // 如果找不到统一模板，回退到原模板
+    if (!templateContent && fs.existsSync(templatePath)) {
+      templateContent = fs.readFileSync(templatePath, 'utf8');
     }
     
-    // 更新文章列表区域
-    $('.news-list-container .no-news, .news-list-container .news-card, .tools-list-container .no-guides, .tools-list-container .tool-card').remove();
-    $('.news-list-container .news-filter, .tools-list-container .tools-filter').after(contentHTML);
+    if (!templateContent) {
+      throw new Error(`找不到模板文件: ${templatePath}`);
+    }
     
-    // 更新最后更新时间
-    const currentTime = new Date().toLocaleString('zh-CN', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    $('#lastUpdate').text(currentTime);
+    // 准备替换变量
+    const categoryCode = options.categoryCode || '';
+    const categoryName = getHumanReadableName(categoryCode, type);
+    const sectionName = type === 'news' ? '物流资讯' : '工具与指南';
     
-    // 写入输出文件
+    // 替换模板变量
+    let result = templateContent
+      .replace(/{{content_items}}/g, contentHTML)
+      .replace(/{{category_name}}/g, categoryName)
+      .replace(/{{category_code}}/g, categoryCode)
+      .replace(/{{section_name}}/g, sectionName)
+      .replace(/{{site_section_name}}/g, sectionName)
+      .replace(/{{section_id}}/g, type)
+      .replace(/{{current_date}}/g, moment().format('YYYY年MM月DD日'));
+    
+    // 设置分类图标
+    let categoryIcon = 'fas fa-folder';
+    if (type === 'news') {
+      categoryIcon = 'fas fa-newspaper';
+    } else {
+      // 根据分类代码设置图标
+      if (categoryCode === 'shipping') categoryIcon = 'fas fa-ship';
+      else if (categoryCode === 'warehouse') categoryIcon = 'fas fa-warehouse';
+      else if (categoryCode === 'logistics') categoryIcon = 'fas fa-truck';
+      else if (categoryCode === 'customs') categoryIcon = 'fas fa-clipboard-check';
+      else if (categoryCode === 'regulations') categoryIcon = 'fas fa-gavel';
+      else if (categoryCode === 'fba') categoryIcon = 'fab fa-amazon';
+      else if (categoryCode === 'packaging') categoryIcon = 'fas fa-box';
+      else categoryIcon = 'fas fa-tools';
+    }
+    result = result.replace(/{{category_icon}}/g, categoryIcon);
+    
+    // 替换分类描述
+    let categoryDescription = '';
+    if (type === 'news') {
+      categoryDescription = `${categoryName}区域的最新物流资讯，为您提供及时的行业动态和市场趋势。`;
+    } else {
+      categoryDescription = `关于${categoryName}的详细指南和实用工具，帮助您高效处理物流运输环节。`;
+    }
+    result = result.replace(/{{category_description}}/g, categoryDescription);
+    
+    // 添加更多分类导航标签
+    let categoryNavItems = '';
+    if (type === 'news') {
+      // 新闻区域导航
+      config.news.regions.forEach(region => {
+        const name = getHumanReadableRegion(region);
+        const isActive = region === categoryCode ? 'active' : '';
+        categoryNavItems += `<a href="../${region}/index.html" class="category-nav-item ${isActive}">${name}</a>`;
+      });
+    } else {
+      // 指南分类导航
+      config.guides.categories.forEach(cat => {
+        try {
+          const catDirPath = path.join(config.guides.sourceDir, cat);
+          if (!fs.existsSync(catDirPath)) return;
+          
+          const name = getHumanReadableCategory(cat);
+          const isActive = cat === categoryCode ? 'active' : '';
+          categoryNavItems += `<a href="../${cat}/index.html" class="category-nav-item ${isActive}">${name}</a>`;
+        } catch (err) {
+          // 忽略不存在的目录
+        }
+      });
+    }
+    result = result.replace(/{{category_nav_items}}/g, categoryNavItems);
+    
+    // 为主索引页面添加特色分类和最新内容
+    if (isMainIndex) {
+      // 这里可以增加逻辑生成特色分类和最新内容
+      result = result.replace(/{{featured_categories}}/g, '<!-- 特色分类内容 -->');
+      result = result.replace(/{{latest_content}}/g, '<!-- 最新内容 -->');
+      result = result.replace(/{{all_categories}}/g, '<!-- 所有分类 -->');
+      result = result.replace(/{{category_tabs}}/g, '<!-- 分类标签 -->');
+    }
+    
+    // 替换分页
+    result = result.replace(/{{pagination_items}}/g, '<!-- 分页导航 -->');
+    
+    // 写入文件
     const outputDir = path.dirname(outputPath);
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
     
-    fs.writeFileSync(outputPath, $.html(), 'utf8');
+    fs.writeFileSync(outputPath, result, 'utf8');
     console.log(`已更新索引页面: ${outputPath}`);
+    
+    return true;
   } catch (error) {
-    console.error(`更新索引页面${outputPath}时出错:`, error);
+    console.error(`更新索引页面时出错:`, error);
+    return false;
   }
 }
 
 /**
- * 更新新闻列表
- * @param {string} region - 地区
+ * 获取人类可读的名称
+ * @param {string} code - 代码
+ * @param {string} type - 类型 (news 或 guides)
+ * @returns {string} - 人类可读的名称
+ */
+function getHumanReadableName(code, type) {
+  if (type === 'news') {
+    return getHumanReadableRegion(code);
+  } else {
+    return getHumanReadableCategory(code);
+  }
+}
+
+/**
+ * 更新特定区域的新闻索引
+ * @param {string} region - 区域代码
+ * @returns {boolean} - 是否成功
  */
 function updateNewsIndex(region) {
-  // 获取该区域的所有新闻文件
-  const regionDir = path.join(config.news.sourceDir, region);
-  
-  if (!fs.existsSync(regionDir)) {
-    console.log(`区域目录不存在: ${regionDir}`);
-    return;
+  // 验证区域有效性
+  if (!config.news.regions.includes(region)) {
+    console.error(`无效的区域: ${region}`);
+    return false;
   }
   
-  // 获取所有新闻文件
-  const allArticles = scanDirectory(config.news.sourceDir);
-  
-  // 筛选适用于该区域的文章
-  const articles = allArticles.filter(article => {
-    // 检查文件是否位于该区域目录下
-    if (article.directory === region) return true;
+  try {
+    // 构建区域目录路径
+    const regionDir = path.join(config.news.sourceDir, region);
     
-    // 或者文章的regions包含该区域
-    const regionName = getHumanReadableRegion(region);
-    return article.regions && article.regions.includes(regionName);
-  });
-  
-  console.log(`区域 ${region} 找到 ${articles.length} 篇文章`);
-  
-  // 生成列表HTML
-  const listHTML = generateNewsListHTML(articles);
-  
-  // 更新索引页面
-  const templatePath = path.join(config.news.sourceDir, config.news.indexTemplateName);
-  const outputPath = config.news.getOutputPath(region);
-  updateIndexPage(templatePath, outputPath, listHTML);
+    // 确保区域目录存在
+    if (!fs.existsSync(regionDir)) {
+      fs.mkdirSync(regionDir, { recursive: true });
+    }
+    
+    // 扫描该区域的所有新闻文件
+    const articles = scanDirectory(regionDir, '.html', config.news.sourceDir);
+    
+    console.log(`区域 ${region} 找到 ${articles.length} 篇文章`);
+    
+    // 生成新闻列表HTML
+    const newsListHTML = generateNewsListHTML(articles);
+    
+    // 构建索引模板路径
+    const indexTemplatePath = path.join(config.news.sourceDir, config.news.indexTemplateName);
+    
+    // 更新索引页面
+    const outputPath = config.news.getOutputPath(region);
+    return updateIndexPage(indexTemplatePath, outputPath, newsListHTML, {
+      categoryCode: region, 
+      type: 'news',
+      isMainIndex: false
+    });
+  } catch (error) {
+    console.error(`更新${region}区域索引时出错:`, error);
+    return false;
+  }
 }
 
 /**
- * 更新指南列表
- * @param {string} category - 分类
+ * 更新特定分类的指南索引
+ * @param {string} category - 分类代码
+ * @returns {boolean} - 是否成功
  */
 function updateGuidesIndex(category) {
-  // 获取该分类的所有指南文件
-  const categoryDir = path.join(config.guides.sourceDir, category);
-  
-  if (!fs.existsSync(categoryDir)) {
-    console.log(`分类目录不存在: ${categoryDir}`);
-    return;
+  // 验证分类有效性
+  if (!config.guides.categories.includes(category)) {
+    // 如果不是预定义的分类但目录存在，也允许更新
+    const categoryPath = path.join(config.guides.sourceDir, category);
+    if (!fs.existsSync(categoryPath)) {
+      console.error(`无效的分类: ${category}`);
+      return false;
+    }
   }
   
-  // 获取所有指南文件
-  const allGuides = scanDirectory(config.guides.sourceDir);
-  
-  // 筛选适用于该分类的指南
-  const guides = allGuides.filter(guide => {
-    // 检查文件是否位于该分类目录下
-    if (guide.directory === category) return true;
+  try {
+    // 构建分类目录路径
+    const categoryDir = path.join(config.guides.sourceDir, category);
     
-    // 或者指南的categories包含该分类
-    const categoryName = getHumanReadableCategory(category);
-    return guide.categories && guide.categories.includes(categoryName);
-  });
-  
-  console.log(`分类 ${category} 找到 ${guides.length} 个指南`);
-  
-  // 生成列表HTML
-  const listHTML = generateGuidesListHTML(guides);
-  
-  // 更新索引页面
-  const templatePath = path.join(config.guides.sourceDir, config.guides.indexTemplateName);
-  const outputPath = config.guides.getOutputPath(category);
-  updateIndexPage(templatePath, outputPath, listHTML);
+    // 确保分类目录存在
+    if (!fs.existsSync(categoryDir)) {
+      console.error(`分类目录不存在: ${categoryDir}`);
+      return false;
+    }
+    
+    // 扫描该分类的所有指南文件
+    const guides = scanDirectory(categoryDir, '.html', config.guides.sourceDir);
+    
+    console.log(`分类 ${category} 找到 ${guides.length} 个指南`);
+    
+    // 生成指南列表HTML
+    const guidesListHTML = generateGuidesListHTML(guides);
+    
+    // 构建索引模板路径
+    const indexTemplatePath = path.join(config.guides.sourceDir, config.guides.indexTemplateName);
+    
+    // 更新索引页面
+    const outputPath = config.guides.getOutputPath(category);
+    return updateIndexPage(indexTemplatePath, outputPath, guidesListHTML, {
+      categoryCode: category, 
+      type: 'guides',
+      isMainIndex: false
+    });
+  } catch (error) {
+    console.error(`更新${category}分类索引时出错:`, error);
+    return false;
+  }
 }
 
 /**
@@ -493,27 +586,83 @@ function getHumanReadableCategory(categoryCode) {
 }
 
 /**
- * 更新所有区域的新闻列表
+ * 更新新闻主索引页面
+ * @returns {boolean} - 是否成功
+ */
+function updateNewsMainIndex() {
+  try {
+    // 构建主索引模板路径
+    const indexTemplatePath = config.news.mainIndexTemplatePath;
+    
+    // 生成一些示例内容
+    const dummyContentHTML = '<!-- 示例内容 -->';
+    
+    // 更新索引页面
+    const outputPath = path.resolve(__dirname, '../static-news/index.html');
+    return updateIndexPage(indexTemplatePath, outputPath, dummyContentHTML, {
+      type: 'news',
+      isMainIndex: true
+    });
+  } catch (error) {
+    console.error(`更新新闻主索引时出错:`, error);
+    return false;
+  }
+}
+
+/**
+ * 更新指南主索引页面
+ * @returns {boolean} - 是否成功
+ */
+function updateGuidesMainIndex() {
+  try {
+    // 构建主索引模板路径
+    const indexTemplatePath = config.guides.mainIndexTemplatePath;
+    
+    // 生成一些示例内容
+    const dummyContentHTML = '<!-- 示例内容 -->';
+    
+    // 更新索引页面
+    const outputPath = path.resolve(__dirname, '../tools-guides/index.html');
+    return updateIndexPage(indexTemplatePath, outputPath, dummyContentHTML, {
+      type: 'guides',
+      isMainIndex: true
+    });
+  } catch (error) {
+    console.error(`更新指南主索引时出错:`, error);
+    return false;
+  }
+}
+
+/**
+ * 更新所有新闻索引
  */
 function updateAllNewsIndices() {
   console.log('开始更新所有新闻列表...');
   
-  for (const region of config.news.regions) {
+  // 更新新闻主索引
+  updateNewsMainIndex();
+  
+  // 更新所有区域索引
+  config.news.regions.forEach(region => {
     updateNewsIndex(region);
-  }
+  });
   
   console.log('所有新闻列表更新完成');
 }
 
 /**
- * 更新所有分类的指南列表
+ * 更新所有指南索引
  */
 function updateAllGuidesIndices() {
   console.log('开始更新所有指南列表...');
   
-  for (const category of config.guides.categories) {
+  // 更新指南主索引
+  updateGuidesMainIndex();
+  
+  // 更新所有分类索引
+  config.guides.categories.forEach(category => {
     updateGuidesIndex(category);
-  }
+  });
   
   console.log('所有指南列表更新完成');
 }
@@ -552,10 +701,15 @@ if (args.length === 0) {
   }
 }
 
+// 导出模块
 module.exports = {
   updateNewsIndex,
-  updateAllNewsIndices,
   updateGuidesIndex,
+  updateAllNewsIndices,
   updateAllGuidesIndices,
-  updateAllIndices
+  updateAllIndices,
+  updateNewsMainIndex,
+  updateGuidesMainIndex,
+  getHumanReadableRegion,
+  getHumanReadableCategory
 }; 

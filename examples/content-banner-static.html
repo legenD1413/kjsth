@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容Banner静态组件示例 - 迈格库</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 引入内容banner组件样式 -->
+    <link rel="stylesheet" href="/assets/css/content-banner.css">
+    
+    <!-- 页面特定样式 -->
+    <style>
+        .example-section {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 40px var(--site-padding);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        
+        .example-card {
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .code-example {
+            background-color: #f5f5f7;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin-top: 24px;
+        }
+        
+        /* 暗色模式示例banner */
+        .dark-banner {
+            background-color: #1d1d1f;
+        }
+        
+        .dark-banner .content-banner-title {
+            color: #f5f5f7;
+        }
+        
+        .dark-banner .content-banner-description {
+            color: #a1a1a6;
+        }
+        
+        /* 彩色背景示例banner */
+        .colored-banner {
+            background-color: #f2f7ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- 默认内容banner（静态HTML版本） -->
+    <div class="content-banner">
+        <div class="banner-container">
+            <h1 class="content-banner-title">内容Banner静态组件示例</h1>
+            <div class="content-banner-description">这是一个静态HTML版本的内容Banner组件示例，适合直接在HTML中使用，无需JavaScript。</div>
+        </div>
+    </div>
+    
+    <!-- 主要内容区 -->
+    <main class="example-section">
+        <h2 class="section-title">内容Banner静态HTML版本</h2>
+        
+        <div class="example-card">
+            <p>静态HTML版本的内容Banner组件适合那些不需要动态生成内容的页面，可以直接在HTML中编写。</p>
+        </div>
+        
+        <h3 class="section-title">HTML代码示例</h3>
+        
+        <div class="code-example">
+<pre>
+&lt;div class="content-banner"&gt;
+    &lt;div class="banner-container"&gt;
+        &lt;h1 class="content-banner-title"&gt;页面标题&lt;/h1&gt;
+        &lt;div class="content-banner-description"&gt;页面描述内容&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+        </div>
+        
+        <h3 class="section-title">暗色模式示例</h3>
+        
+        <!-- 暗色模式banner（静态HTML版本） -->
+        <div class="content-banner dark-banner">
+            <div class="banner-container">
+                <h1 class="content-banner-title">暗色模式Banner示例</h1>
+                <div class="content-banner-description">这是内容Banner组件的暗色模式示例，适合在深色背景的页面中使用。</div>
+            </div>
+        </div>
+        
+        <h3 class="section-title" style="margin-top: 40px;">彩色背景示例</h3>
+        
+        <!-- 彩色背景banner（静态HTML版本） -->
+        <div class="content-banner colored-banner">
+            <div class="banner-container">
+                <h1 class="content-banner-title">彩色背景Banner示例</h1>
+                <div class="content-banner-description">可以通过添加自定义类来为Banner设置不同的背景颜色，使其与页面风格相协调。</div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+    
+    <!-- 加载组件脚本 -->
+    <script src="/assets/js/components.js"></script>
+</body>
+</html> 

@@ -1,268 +1,756 @@
-
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球物流资讯中心 - 迈格库</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <title>物流资讯 - 全部分类 | 麦极客物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* 全局字体设置 - 采用Apple风格字体 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* 重置基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
         }
-        .page-banner {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/images/global-logistics.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 100px 0;
-            margin-bottom: 50px;
-            text-align: center;
+        
+        /* Header样式 - Apple风格 */
+        header {
+            height: 48px;
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
-        .banner-title {
-            font-size: 2.8rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .banner-description {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-        .regions-container {
+        
+        .main-nav {
+            height: 48px;
             max-width: 1200px;
-            margin: 0 auto 70px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 24px;
+            margin-right: 8px;
+        }
+        
+        .logo span {
+            color: #1d1d1f;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            height: 48px;
+        }
+        
+        .nav-link i {
+            margin-right: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .nav-link:hover {
+            color: #0071e3;
+        }
+        
+        .nav-link i.fa-chevron-down {
+            font-size: 10px;
+            margin-left: 4px;
+            margin-right: 0;
+        }
+        
+        /* 媒体查询 */
+        @media (max-width: 768px) {
+            .nav-link {
+                padding: 0 10px;
+            }
+            
+            .main-nav {
+                padding: 0 10px;
+            }
+        }
+        
+        /* 主页容器 */
+        .index-container {
+            max-width: 1200px;
+            margin: 20px auto 40px;
             padding: 0 15px;
         }
-        .region-card {
-            height: 100%;
+        
+        /* 页面标题 */
+        .page-header {
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .region-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        .region-image {
-            height: 180px;
-            background-size: cover;
-            background-position: center;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            background-image: linear-gradient(to right, #f5f5f7, white);
             position: relative;
+            overflow: hidden;
         }
-        .region-image::after {
+        
+        .page-header::after {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
             right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
+            width: 30%;
+            height: 100%;
+            background-image: url('/assets/images/pattern.svg');
+            background-size: cover;
+            opacity: 0.05;
         }
-        .region-content {
-            padding: 20px;
-        }
-        .region-title {
-            font-size: 1.4rem;
+        
+        .page-title {
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 10px;
-            color: #2c3e50;
+            color: #1d1d1f;
+            margin-bottom: 1rem;
         }
-        .region-description {
-            color: #7f8c8d;
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.5;
+        
+        .page-description {
+            max-width: 70%;
+            color: #6e6e73;
+            line-height: 1.6;
+            font-size: 1.1rem;
         }
-        .view-region {
+        
+        /* 搜索框 */
+        .search-section {
+            margin-top: 2rem;
+            position: relative;
+            max-width: 600px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem;
+            border-radius: 100px;
+            border: none;
+            background-color: rgba(0,0,0,0.03);
+            color: #1d1d1f;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(0,113,227,0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6e6e73;
+            font-size: 1.2rem;
+        }
+        
+        /* 分类导航标签 */
+        .category-tabs {
+            display: flex;
+            margin: 0 -0.5rem 2rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .category-tabs::-webkit-scrollbar-thumb {
+            background-color: #d2d2d7;
+            border-radius: 2px;
+        }
+        
+        .category-tab {
+            flex: 0 0 auto;
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            background-color: white;
+            color: #1d1d1f;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .category-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .category-tab.active {
+            background-color: #0071e3;
+            color: white;
+        }
+        
+        .category-tab i {
+            margin-right: 0.5rem;
+            color: #0071e3;
+        }
+        
+        .category-tab.active i {
+            color: white;
+        }
+        
+        /* 特色区域 */
+        .featured-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 0.8rem;
+            color: #0071e3;
+        }
+        
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        /* 分类卡片样式 */
+        .category-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .category-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: #f5f5f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #0071e3;
+            font-size: 1.2rem;
+        }
+        
+        .category-card-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+        
+        .category-card-count {
+            margin-left: auto;
+            background-color: #f5f5f7;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: #6e6e73;
+        }
+        
+        .category-card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .category-card-description {
+            color: #6e6e73;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .category-item-list {
+            list-style: none;
+        }
+        
+        .category-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .category-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .category-item-link {
+            display: flex;
+            align-items: center;
+            color: #0071e3;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .category-item-link:hover {
+            text-decoration: underline;
+        }
+        
+        .category-item-link i {
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .view-all-link {
             display: inline-block;
-            padding: 8px 20px;
-            background-color: #3498db;
-            color: white;
-            border-radius: 4px;
+            margin-top: 1rem;
+            color: #0071e3;
             text-decoration: none;
-            transition: background-color 0.2s;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
-        .view-region:hover {
-            background-color: #2980b9;
+        
+        .view-all-link:hover {
+            text-decoration: underline;
+        }
+        
+        .view-all-link i {
+            margin-left: 0.3rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .view-all-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        /* 最新内容区域 */
+        .latest-content {
+            margin-bottom: 3rem;
+        }
+        
+        .latest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .latest-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .latest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .latest-image {
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .latest-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .latest-card:hover .latest-image img {
+            transform: scale(1.1);
+        }
+        
+        .latest-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(0,0,0,0.7);
             color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+        }
+        
+        .latest-body {
+            padding: 1.5rem;
+        }
+        
+        .latest-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .latest-title a {
+            color: #1d1d1f;
             text-decoration: none;
         }
-        .update-info {
+        
+        .latest-title a:hover {
+            color: #0071e3;
+        }
+        
+        .latest-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: #6e6e73;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .latest-date, .latest-region {
+            display: flex;
+            align-items: center;
+        }
+        
+        .latest-meta i {
+            margin-right: 0.5rem;
+            color: #0071e3;
+        }
+        
+        .latest-excerpt {
+            font-size: 0.9rem;
+            color: #6e6e73;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+        
+        /* 页面底部导航 */
+        .more-categories {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .category-item-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            font-size: 14px;
-            color: #95a5a6;
-            margin-top: 30px;
+            padding: 1.5rem;
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .category-item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-color: #0071e3;
+            color: white;
+        }
+        
+        .category-item-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+            transition: all 0.3s ease;
+        }
+        
+        .category-item-card:hover i {
+            color: white;
+        }
+        
+        .category-item-name {
+            font-weight: 500;
+            color: #1d1d1f;
+            transition: all 0.3s ease;
+        }
+        
+        .category-item-card:hover .category-item-name {
+            color: white;
+        }
+        
+        .category-item-count {
+            font-size: 0.8rem;
+            color: #6e6e73;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .category-item-card:hover .category-item-count {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 1.5rem;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .page-description {
+                max-width: 100%;
+                font-size: 1rem;
+            }
+            
+            .featured-grid, .latest-grid, .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-tabs {
+                margin: 0 -15px 1.5rem;
+                padding: 0 15px 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 页面头部 -->
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="../index.html">迈格库</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.html">首页</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../about.html">关于我们</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="./index.html">物流资讯</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../contact.html">联系我们</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <div class="main-nav">
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <img src="/assets/images/logo.PNG" alt="Logo">
+                <span>迈格库物流</span>
+            </a>
+            
+            <!-- 导航菜单 -->
+            <nav>
+                <a href="/products" class="nav-link">
+                    <i class="fas fa-box"></i>
+                    发什么
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                
+                <a href="/regions" class="nav-link">
+                    <i class="fas fa-globe-asia"></i>
+                    到哪里
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                
+                <a href="/shipping-methods" class="nav-link">
+                    <i class="fas fa-truck"></i>
+                    如何发
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                
+                <a href="/tools-guides" class="nav-link" id="tools-nav-link">
+                    <i class="fas fa-tools"></i>
+                    工具
+                </a>
+                
+                <a href="/login" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    登录
+                </a>
+            </nav>
+        </div>
+        
+        <script>
+        // 检测当前页面路径，为工具菜单添加激活状态
+        (function() {
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/tools-guides/') || currentPath === '/tools-guides' || currentPath === '/tools-guides/index.html') {
+                document.getElementById('tools-nav-link').classList.add('active');
+            }
+        })();
+        </script>
     </header>
-
-    <div class="page-banner">
-        <div class="container">
-            <h1 class="banner-title">全球物流资讯中心</h1>
-            <p class="banner-description">关注全球各区域最新物流动态、市场趋势和行业政策，助力您的国际物流决策。</p>
+    
+    <!-- 主要内容区 -->
+    <main class="main-content">
+        <div class="index-container">
+            <!-- 页面头部 -->
+            <header class="page-header">
+                <h1 class="page-title">物流资讯</h1>
+                <p class="page-description">{{section_description}}</p>
+                
+                <!-- 搜索框 -->
+                <div class="search-section">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="global-search" placeholder="搜索物流资讯...">
+                </div>
+            </header>
+            
+            <!-- 分类标签导航 -->
+            <div class="category-tabs">
+                <!-- 分类标签 -->
+            </div>
+            
+            <!-- 特色分类 -->
+            <section class="featured-section">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    热门分类
+                </h2>
+                <div class="featured-grid">
+                    <!-- 特色分类内容 -->
+                </div>
+            </section>
+            
+            <!-- 最新内容 -->
+            <section class="latest-content">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>
+                    最新更新
+                </h2>
+                <div class="latest-grid">
+                    <!-- 最新内容 -->
+                </div>
+            </section>
+            
+            <!-- 更多分类 -->
+            <section class="more-categories">
+                <h2 class="section-title">
+                    <i class="fas fa-th-large"></i>
+                    浏览全部分类
+                </h2>
+                <div class="category-grid">
+                    <!-- 所有分类 -->
+                </div>
+            </section>
         </div>
-    </div>
-
-    <div class="regions-container">
-        <div class="row">
-            
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/north-america.jpg');">
+    </main>
+    
+    <!-- 页面底部 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="/assets/images/logo.png" alt="迈格库物流Logo" width="24">
+                    <span>迈格库物流</span>
+                </div>
+                <div class="footer-nav">
+                    <div class="footer-col">
+                        <h4>关于我们</h4>
+                        <ul>
+                            <li><a href="/about/company.html">公司简介</a></li>
+                            <li><a href="/about/contact.html">联系我们</a></li>
+                            <li><a href="/about/careers.html">招贤纳士</a></li>
+                        </ul>
                     </div>
-                    <div class="region-content">
-                        <h3 class="region-title">北美地区</h3>
-                        <p class="region-description">查看北美地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./north-america/index.html" class="view-region">浏览资讯</a>
+                    <div class="footer-col">
+                        <h4>物流服务</h4>
+                        <ul>
+                            <li><a href="/shipping-methods/air/index.html">空运服务</a></li>
+                            <li><a href="/shipping-methods/sea/index.html">海运服务</a></li>
+                            <li><a href="/shipping-methods/express/index.html">国际快递</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>常用链接</h4>
+                        <ul>
+                            <li><a href="/tools-guides/index.html">工具与指南</a></li>
+                            <li><a href="/static-news/index.html">物流资讯</a></li>
+                            <li><a href="/faq.html">常见问题</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            
-
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/middle-east.jpg');">
-                    </div>
-                    <div class="region-content">
-                        <h3 class="region-title">中东地区</h3>
-                        <p class="region-description">查看中东地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./middle-east/index.html" class="view-region">浏览资讯</a>
-                    </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 迈格库物流 | 让全球物流触手可及</p>
+                <div class="footer-links">
+                    <a href="/privacy.html">隐私政策</a>
+                    <a href="/terms.html">使用条款</a>
+                    <a href="/sitemap.html">网站地图</a>
                 </div>
             </div>
-            
-
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/europe.jpg');">
-                    </div>
-                    <div class="region-content">
-                        <h3 class="region-title">欧洲地区</h3>
-                        <p class="region-description">查看欧洲地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./europe/index.html" class="view-region">浏览资讯</a>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/asia.jpg');">
-                    </div>
-                    <div class="region-content">
-                        <h3 class="region-title">亚洲地区</h3>
-                        <p class="region-description">查看亚洲地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./asia/index.html" class="view-region">浏览资讯</a>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/australia.jpg');">
-                    </div>
-                    <div class="region-content">
-                        <h3 class="region-title">澳洲地区</h3>
-                        <p class="region-description">查看澳洲地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./australia/index.html" class="view-region">浏览资讯</a>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/africa.jpg');">
-                    </div>
-                    <div class="region-content">
-                        <h3 class="region-title">非洲地区</h3>
-                        <p class="region-description">查看非洲地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./africa/index.html" class="view-region">浏览资讯</a>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/south-america.jpg');">
-                    </div>
-                    <div class="region-content">
-                        <h3 class="region-title">南美地区</h3>
-                        <p class="region-description">查看南美地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./south-america/index.html" class="view-region">浏览资讯</a>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="region-card">
-                    <div class="region-image" style="background-image: url('../assets/images/regions/global.jpg');">
-                    </div>
-                    <div class="region-content">
-                        <h3 class="region-title">全球地区</h3>
-                        <p class="region-description">查看全球地区最新物流资讯、政策更新和市场动态。</p>
-                        <a href="./global/index.html" class="view-region">浏览资讯</a>
-                    </div>
-                </div>
-            </div>
-            
         </div>
-
-        <div class="update-info">
-            <p>最后更新时间: <span id="lastUpdate"></span></p>
-        </div>
-    </div>
-
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    </footer>
+    
+    <!-- 全局脚本 -->
+    <script src="/assets/js/main.js"></script>
+    
+    <!-- 页面特定脚本 -->
     <script>
-        // 显示最后更新时间
-        document.getElementById('lastUpdate').innerText = new Date().toLocaleString('zh-CN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
+        // 全局搜索功能
+        const globalSearch = document.getElementById('global-search');
+        globalSearch.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.trim();
+                if (searchTerm !== '') {
+                    window.location.href = `/search.html?q=${encodeURIComponent(searchTerm)}&section=news`;
+                }
+            }
         });
     </script>
 </body>
-</html>
-    
+</html> 

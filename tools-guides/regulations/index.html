@@ -1,9 +1,18 @@
-<!DOCTYPE html><html lang="zh-CN"><head>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>法规解读 | 麦极客物流</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <title>监管法规 - 工具与指南 | 麦极客物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 图标和字体 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         /* 全局字体设置 - 采用Apple风格字体 */
         body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
@@ -12,281 +21,795 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        .tools-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        .page-header {
-            margin-bottom: 30px;
-            text-align: center;
-            padding: 30px 0;
-            background-color: #f5f5f7;
-            border-radius: 12px;
-        }
-        
-        .page-header h1 {
-            font-size: 2.2rem;
-            font-weight: 500;
-            color: #1d1d1f;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .page-header h1 i {
-            margin-right: 15px;
-            color: #0071e3;
-        }
-        
-        .page-header p {
-            font-size: 1.1rem;
-            color: #6e6e73;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .tools-list {
-            list-style: none;
+        /* 重置基础样式 */
+        * {
+            margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         
-        .tool-item {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .tool-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .tool-link {
-            display: flex;
-            text-decoration: none;
-            color: inherit;
-            padding: 20px;
-        }
-        
-        .tool-icon {
-            flex: 0 0 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0071e3;
-            font-size: 1.8rem;
-        }
-        
-        .tool-content {
-            flex: 1;
-            padding-left: 15px;
-        }
-        
-        .tool-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin: 0 0 10px 0;
+        body {
+            background-color: #f5f5f7;
             color: #1d1d1f;
-        }
-        
-        .tool-excerpt {
-            color: #6e6e73;
-            font-size: 0.95rem;
-            margin: 0 0 10px 0;
             line-height: 1.5;
         }
         
-        .tool-meta {
+        /* Header样式 - Apple风格 */
+        header {
+            height: 48px;
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .main-nav {
+            height: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            color: #86868b;
-            font-size: 0.85rem;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
         }
         
-        .tool-meta span {
+        .logo {
             display: flex;
             align-items: center;
-            margin-right: 15px;
-        }
-        
-        .tool-meta i {
-            margin-right: 5px;
-        }
-        
-        .importance-tag {
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            margin-left: auto;
-        }
-        
-        .importance-normal {
-            background-color: #f5f5f7;
-            color: #6e6e73;
-        }
-        
-        .importance-important {
-            background-color: #fff9e9;
-            color: #b58e00;
-        }
-        
-        .importance-critical {
-            background-color: #fef2f2;
-            color: #dc2626;
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.8rem 1.2rem;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            margin-top: 30px;
-            transition: all 0.2s ease;
         }
         
-        .back-link:hover {
-            background-color: #e8e8ed;
-        }
-        
-        .back-link i {
+        .logo img {
+            height: 24px;
             margin-right: 8px;
         }
         
+        .logo span {
+            color: #1d1d1f;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            height: 48px;
+        }
+        
+        .nav-link i {
+            margin-right: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .nav-link:hover {
+            color: #0071e3;
+        }
+        
+        .nav-link i.fa-chevron-down {
+            font-size: 10px;
+            margin-left: 4px;
+            margin-right: 0;
+        }
+        
+        /* 媒体查询 */
         @media (max-width: 768px) {
-            .tool-link {
+            .nav-link {
+                padding: 0 10px;
+            }
+            
+            .main-nav {
+                padding: 0 10px;
+            }
+        }
+        
+        /* 分类列表容器 */
+        .category-container {
+            max-width: 1200px;
+            margin: 20px auto 40px;
+            padding: 0 15px;
+        }
+        
+        /* 页面头部 */
+        .category-header {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-title i {
+            margin-right: 1rem;
+            color: #0071e3;
+        }
+        
+        .category-description {
+            color: #6e6e73;
+            line-height: 1.6;
+        }
+        
+        /* 分类导航 */
+        .category-nav {
+            display: flex;
+            margin-top: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .category-nav::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .category-nav::-webkit-scrollbar-thumb {
+            background-color: #d2d2d7;
+            border-radius: 2px;
+        }
+        
+        .category-nav-item {
+            flex: 0 0 auto;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            border-radius: 100px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .category-nav-item:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .category-nav-item.active {
+            background-color: #0071e3;
+            color: white;
+        }
+        
+        /* 内容过滤器 */
+        .content-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-label {
+            display: flex;
+            align-items: center;
+            color: #6e6e73;
+            font-size: 0.9rem;
+        }
+        
+        .filter-label i {
+            margin-right: 0.5rem;
+        }
+        
+        .filter-select {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid #d2d2d7;
+            border-radius: 6px;
+            color: #1d1d1f;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-select:focus {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0,113,227,0.15);
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-input {
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            background-color: white;
+            border: 1px solid #d2d2d7;
+            border-radius: 6px;
+            color: #1d1d1f;
+            font-size: 0.9rem;
+            width: 250px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0,113,227,0.15);
+            width: 300px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6e6e73;
+        }
+        
+        /* 内容列表 */
+        .content-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .content-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card-image {
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .content-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .card-title a {
+            color: #1d1d1f;
+            text-decoration: none;
+        }
+        
+        .card-title a:hover {
+            color: #0071e3;
+        }
+        
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: #6e6e73;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-date, .card-region {
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-meta i {
+            margin-right: 0.5rem;
+            color: #0071e3;
+        }
+        
+        .card-excerpt {
+            font-size: 0.9rem;
+            color: #6e6e73;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .card-tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background-color: #f5f5f7;
+            color: #6e6e73;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .card-tag:hover {
+            background-color: #e5e5ea;
+        }
+        
+        /* 分页 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+            gap: 0.5rem;
+        }
+        
+        .pagination-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            background-color: white;
+            color: #1d1d1f;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .pagination-item:hover {
+            background-color: #e5e5ea;
+        }
+        
+        .pagination-item.active {
+            background-color: #0071e3;
+            color: white;
+        }
+        
+        .pagination-prev, .pagination-next {
+            width: auto;
+            padding: 0 1rem;
+            border-radius: 20px;
+        }
+        
+        .pagination-prev i {
+            margin-right: 0.5rem;
+        }
+        
+        .pagination-next i {
+            margin-left: 0.5rem;
+        }
+        
+        /* 简洁视图 - 列表 */
+        .content-list.list-view {
+            display: block;
+        }
+        
+        .content-list.list-view .content-card {
+            display: flex;
+            margin-bottom: 1rem;
+            min-height: 0;
+        }
+        
+        .content-list.list-view .card-image {
+            width: 120px;
+            height: 100%;
+            flex-shrink: 0;
+        }
+        
+        .content-list.list-view .card-body {
+            flex-grow: 1;
+        }
+        
+        /* 空结果提示 */
+        .empty-results {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .empty-results i {
+            font-size: 3rem;
+            color: #d2d2d7;
+            margin-bottom: 1rem;
+        }
+        
+        .empty-results h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        
+        .empty-results p {
+            color: #6e6e73;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* 视图切换 */
+        .view-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .view-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: white;
+            color: #6e6e73;
+            border: 1px solid #d2d2d7;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .view-option:hover {
+            background-color: #f5f5f7;
+        }
+        
+        .view-option.active {
+            background-color: #0071e3;
+            color: white;
+            border-color: #0071e3;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .category-header {
+                padding: 1.5rem;
+            }
+            
+            .content-filter {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .search-input, .search-input:focus {
+                width: 100%;
+            }
+            
+            .content-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-list.list-view .content-card {
                 flex-direction: column;
             }
             
-            .tool-icon {
-                margin-bottom: 15px;
-            }
-            
-            .tool-content {
-                padding-left: 0;
-            }
-            
-            .tool-meta {
-                flex-wrap: wrap;
-            }
-            
-            .importance-tag {
-                margin-left: 0;
-                margin-top: 10px;
+            .content-list.list-view .card-image {
+                width: 100%;
+                height: 160px;
             }
         }
     </style>
-
-        <style>
-          .article-keywords {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            margin-top: 0.5rem;
-            margin-bottom: 0.8rem;
-          }
-          .article-keyword {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            font-size: 0.75rem;
-            border-radius: 2rem;
-            background-color: #f0f0f0;
-            color: #666;
-          }
-          .article-keyword-more {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            font-size: 0.75rem;
-            border-radius: 2rem;
-            background-color: #e9ecef;
-            color: #6c757d;
-          }
-        </style>
-      </head>
+</head>
 <body>
+    <!-- 页面头部 -->
     <header>
-        <nav class="main-nav">
-            <div class="logo">
-                <img src="../../assets/images/logo.png" alt="麦极客物流Logo">
-                <span>麦极客物流</span>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-globe-americas"></i>
-                        区域
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../regions/north-america/index.html">北美</a></li>
-                        <li><a href="../../regions/south-america/index.html">南美</a></li>
-                        <li><a href="../../regions/europe/index.html">欧洲</a></li>
-                        <li><a href="../../regions/australia/index.html">澳洲</a></li>
-                        <li><a href="../../regions/middle-east/index.html">中东</a></li>
-                        <li><a href="../../regions/southeast-asia/index.html">东南亚</a></li>
-                        <li><a href="../../regions/africa/index.html">非洲</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-box"></i>
-                        货品
-                        <i class="fas fa-chevron-down"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="../../products/regular/index.html">普货</a></li>
-                        <li><a href="../../products/cosmetics/index.html">化妆品</a></li>
-                        <li><a href="../../products/liquids/index.html">液体</a></li>
-                        <li><a href="../../products/e-cigarettes/index.html">电子烟</a></li>
-                        <li><a href="../../products/batteries/index.html">电池</a></li>
-                        <li><a href="../../products/electronic-with-battery/index.html">内电</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="../index.html" class="nav-link active">
-                        <i class="fas fa-tools"></i>
-                        工具与指南
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="../../contact.html" class="nav-link">
-                        <i class="fas fa-envelope"></i>
-                        联系我们
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <div class="tools-container">
-            <div class="page-header">
-                <h1><i class="fas fa-gavel"></i>法规解读</h1>
-                <p>提供最新的国际物流法规解读，帮助您了解各国海关政策、进出口限制、合规要求等重要信息，避免物流障碍。</p>
-            </div>
-            
-            <ul class="tools-list">
-                <li class="tool-item" style="text-align: center; padding: 30px;">
-                    <p>当前分类暂无工具</p>
-                </li></ul>
-            
-            <a href="../index.html" class="back-link">
-                <i class="fas fa-arrow-left"></i>
-                返回所有工具
+        <div class="main-nav">
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <img src="/assets/images/logo.PNG" alt="Logo">
+                <span>迈格库物流</span>
             </a>
+            
+            <!-- 导航菜单 -->
+            <nav>
+                <a href="/products" class="nav-link">
+                    <i class="fas fa-box"></i>
+                    发什么
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                
+                <a href="/regions" class="nav-link">
+                    <i class="fas fa-globe-asia"></i>
+                    到哪里
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                
+                <a href="/shipping-methods" class="nav-link">
+                    <i class="fas fa-truck"></i>
+                    如何发
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                
+                <a href="/tools-guides" class="nav-link" id="tools-nav-link">
+                    <i class="fas fa-tools"></i>
+                    工具
+                </a>
+                
+                <a href="/login" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    登录
+                </a>
+            </nav>
+        </div>
+        
+        <script>
+        // 检测当前页面路径，为工具菜单添加激活状态
+        (function() {
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/tools-guides/') || currentPath === '/tools-guides' || currentPath === '/tools-guides/index.html') {
+                document.getElementById('tools-nav-link').classList.add('active');
+            }
+        })();
+        </script>
+    </header>
+    
+    <!-- 主要内容区 -->
+    <main class="main-content">
+        <div class="category-container">
+            <!-- 分类头部 -->
+            <header class="category-header">
+                <h1 class="category-title">
+                    <i class="fas fa-gavel"></i>
+                    监管法规
+                </h1>
+                <p class="category-description">关于监管法规的详细指南和实用工具，帮助您高效处理物流运输环节。</p>
+                
+                <!-- 分类导航 -->
+                <div class="category-nav">
+                    <a href="../regulations/index.html" class="category-nav-item active">监管法规</a><a href="../customs/index.html" class="category-nav-item ">海关指南</a><a href="../shipping/index.html" class="category-nav-item ">运输指南</a><a href="../packaging/index.html" class="category-nav-item ">包装指南</a><a href="../fba/index.html" class="category-nav-item ">亚马逊FBA</a><a href="../logistics/index.html" class="category-nav-item ">物流基础知识</a><a href="../calculator/index.html" class="category-nav-item ">实用工具使用指南</a><a href="../declaration/index.html" class="category-nav-item ">报关指南</a><a href="../tax/index.html" class="category-nav-item ">税务指南</a><a href="../insurance/index.html" class="category-nav-item ">保险指南</a><a href="../tracking/index.html" class="category-nav-item ">物流跟踪</a><a href="../returns/index.html" class="category-nav-item ">退货处理</a><a href="../international/index.html" class="category-nav-item ">国际物流</a><a href="../express/index.html" class="category-nav-item ">快递服务</a><a href="../commercial/index.html" class="category-nav-item ">商业件运输</a><a href="../biggoods/index.html" class="category-nav-item ">超大件运输</a><a href="../warehouse/index.html" class="category-nav-item ">海外仓</a><a href="../interactive/index.html" class="category-nav-item ">互动工具</a><a href="../guides/index.html" class="category-nav-item ">指南</a><a href="../forms/index.html" class="category-nav-item ">表单工具</a>
+                </div>
+            </header>
+            
+            <!-- 内容过滤器 -->
+            <div class="content-filter">
+                <div class="filter-options">
+                    <label class="filter-label">
+                        <i class="fas fa-sort-amount-down"></i>
+                        排序:
+                    </label>
+                    <select class="filter-select" id="sort-select">
+                        <option value="latest">最新发布</option>
+                        <option value="oldest">最早发布</option>
+                        <option value="importance">按重要性</option>
+                        <option value="title">按标题</option>
+                    </select>
+                    
+                    <label class="filter-label">
+                        <i class="fas fa-filter"></i>
+                        筛选:
+                    </label>
+                    <select class="filter-select" id="filter-select">
+                        <option value="all">全部</option>
+                        <option value="important">重要</option>
+                        <option value="normal">一般</option>
+                    </select>
+                </div>
+                
+                <div class="view-options">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="搜索监管法规...">
+                    </div>
+                    
+                    <div class="view-switch">
+                        <button class="view-option active" data-view="grid">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-option" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 内容列表 -->
+            <div class="content-list" id="content-list">
+                
+      <div class="no-guides">
+        <h3><i class="fas fa-info-circle mr-2"></i> 暂无指南</h3>
+        <p>目前该分类暂无工具和指南，请稍后再来查看。</p>
+        <a href="../index.html" class="btn btn-outline-primary mt-3">查看其他分类</a>
+      </div>
+    
+            </div>
+            
+            <!-- 空结果 -->
+            <div class="empty-results" style="display: none;">
+                <i class="far fa-folder-open"></i>
+                <h3>没有找到相关内容</h3>
+                <p>尝试调整搜索条件或查看其他分类</p>
+            </div>
+            
+            <!-- 分页 -->
+            <div class="pagination">
+                <!-- 分页导航 -->
+            </div>
         </div>
     </main>
     
-    <footer>
-        <p>© 2024 麦极客物流 | 让全球物流触手可及</p>
+    <!-- 页面底部 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="/assets/images/logo.png" alt="迈格库物流Logo" width="24">
+                    <span>迈格库物流</span>
+                </div>
+                <div class="footer-nav">
+                    <div class="footer-col">
+                        <h4>关于我们</h4>
+                        <ul>
+                            <li><a href="/about/company.html">公司简介</a></li>
+                            <li><a href="/about/contact.html">联系我们</a></li>
+                            <li><a href="/about/careers.html">招贤纳士</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>物流服务</h4>
+                        <ul>
+                            <li><a href="/shipping-methods/air/index.html">空运服务</a></li>
+                            <li><a href="/shipping-methods/sea/index.html">海运服务</a></li>
+                            <li><a href="/shipping-methods/express/index.html">国际快递</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>常用链接</h4>
+                        <ul>
+                            <li><a href="/tools-guides/index.html">工具与指南</a></li>
+                            <li><a href="/static-news/index.html">物流资讯</a></li>
+                            <li><a href="/faq.html">常见问题</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 迈格库物流 | 让全球物流触手可及</p>
+                <div class="footer-links">
+                    <a href="/privacy.html">隐私政策</a>
+                    <a href="/terms.html">使用条款</a>
+                    <a href="/sitemap.html">网站地图</a>
+                </div>
+            </div>
+        </div>
     </footer>
-
-</body></html>
+    
+    <!-- 全局脚本 -->
+    <script src="/assets/js/main.js"></script>
+    
+    <!-- 页面特定脚本 -->
+    <script>
+        // 视图切换
+        document.querySelectorAll('.view-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // 移除所有视图选项的active类
+                document.querySelectorAll('.view-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                
+                // 给当前选中的选项添加active类
+                this.classList.add('active');
+                
+                // 切换内容列表的视图类
+                const view = this.getAttribute('data-view');
+                const contentList = document.getElementById('content-list');
+                
+                if (view === 'list') {
+                    contentList.classList.add('list-view');
+                } else {
+                    contentList.classList.remove('list-view');
+                }
+            });
+        });
+        
+        // 搜索功能
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const contentItems = document.querySelectorAll('.content-card');
+            let hasResults = false;
+            
+            contentItems.forEach(item => {
+                const title = item.querySelector('.card-title').textContent.toLowerCase();
+                const excerpt = item.querySelector('.card-excerpt').textContent.toLowerCase();
+                const tags = Array.from(item.querySelectorAll('.card-tag')).map(tag => tag.textContent.toLowerCase());
+                
+                // 检查是否匹配搜索条件
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm) || tags.some(tag => tag.includes(searchTerm))) {
+                    item.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // 显示或隐藏空结果提示
+            document.querySelector('.empty-results').style.display = hasResults ? 'none' : 'block';
+        });
+        
+        // 排序功能
+        document.getElementById('sort-select').addEventListener('change', function() {
+            const sortValue = this.value;
+            const contentList = document.getElementById('content-list');
+            const contentItems = Array.from(contentList.querySelectorAll('.content-card'));
+            
+            contentItems.sort((a, b) => {
+                if (sortValue === 'latest') {
+                    return Date.parse(b.getAttribute('data-date')) - Date.parse(a.getAttribute('data-date'));
+                } else if (sortValue === 'oldest') {
+                    return Date.parse(a.getAttribute('data-date')) - Date.parse(b.getAttribute('data-date'));
+                } else if (sortValue === 'importance') {
+                    return b.getAttribute('data-importance') - a.getAttribute('data-importance');
+                } else if (sortValue === 'title') {
+                    return a.querySelector('.card-title').textContent.localeCompare(b.querySelector('.card-title').textContent);
+                }
+            });
+            
+            // 重新排序DOM
+            contentItems.forEach(item => {
+                contentList.appendChild(item);
+            });
+        });
+        
+        // 筛选功能
+        document.getElementById('filter-select').addEventListener('change', function() {
+            const filterValue = this.value;
+            const contentItems = document.querySelectorAll('.content-card');
+            let hasResults = false;
+            
+            contentItems.forEach(item => {
+                if (filterValue === 'all') {
+                    item.style.display = 'block';
+                    hasResults = true;
+                } else if (filterValue === 'important' && item.getAttribute('data-importance') >= 2) {
+                    item.style.display = 'block';
+                    hasResults = true;
+                } else if (filterValue === 'normal' && item.getAttribute('data-importance') < 2) {
+                    item.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // 显示或隐藏空结果提示
+            document.querySelector('.empty-results').style.display = hasResults ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html> 

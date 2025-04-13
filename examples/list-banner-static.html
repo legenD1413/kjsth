@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表页Banner静态组件示例 - 迈格库</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 引入列表页banner组件样式 -->
+    <link rel="stylesheet" href="/assets/css/list-banner.css">
+    
+    <!-- 页面特定样式 -->
+    <style>
+        .example-section {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 40px var(--site-padding);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        
+        .example-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #d2d2d7;
+        }
+        
+        .code-example {
+            background-color: #f5f5f7;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin-top: 24px;
+        }
+        
+        /* 模拟列表项 */
+        .list-items {
+            margin-top: 30px;
+        }
+        
+        .list-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-item h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .list-item p {
+            font-size: 14px;
+            color: #6e6e73;
+        }
+        
+        .list-item .date {
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 8px;
+        }
+        
+        /* 间隔样式 */
+        .spacer {
+            height: 40px;
+        }
+        
+        /* 自定义banner样式 */
+        .colored-banner {
+            background-color: #edf4ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- 默认列表页banner（静态HTML版本） -->
+    <div class="list-banner">
+        <div class="list-banner-container">
+            <h1 class="list-banner-title">北美地区物流资讯</h1>
+            <div class="list-banner-description">关注北美地区最新物流动态，包括港口状况、运费变化和政策更新。</div>
+        </div>
+    </div>
+    
+    <!-- 主要内容区 -->
+    <main class="example-section">
+        <h2 class="section-title">列表页Banner静态HTML版本</h2>
+        
+        <div class="example-card">
+            <p>列表页Banner组件用于展示列表页面的主要标题和描述信息，适合用于新闻列表、产品列表等页面。静态HTML版本便于直接在页面中使用，无需JavaScript动态生成。内部采用上下60px的内边距，提供足够的视觉空间。</p>
+        </div>
+        
+        <h3 class="section-title">HTML代码示例</h3>
+        
+        <div class="code-example">
+<pre>
+&lt;div class="list-banner"&gt;
+    &lt;div class="list-banner-container"&gt;
+        &lt;h1 class="list-banner-title"&gt;北美地区物流资讯&lt;/h1&gt;
+        &lt;div class="list-banner-description"&gt;关注北美地区最新物流动态，包括港口状况、运费变化和政策更新。&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+        </div>
+        
+        <h3 class="section-title">模拟列表内容</h3>
+        
+        <div class="list-items">
+            <div class="list-item">
+                <h3>美国西海岸港口工人罢工影响物流运输</h3>
+                <p>近日，美国西海岸港口工人发起大规模罢工活动，导致多个主要港口货物积压严重，预计将对跨太平洋航线造成显著影响。</p>
+                <div class="date">2024-06-15</div>
+            </div>
+            <div class="list-item">
+                <h3>加拿大海关新政策解读</h3>
+                <p>加拿大边境服务局近期发布新的进口政策，对电子产品和化妆品类商品实施更严格的检查标准，卖家需及时调整申报信息。</p>
+                <div class="date">2024-06-10</div>
+            </div>
+            <div class="list-item">
+                <h3>美国东海岸运费上涨趋势分析</h3>
+                <p>受燃油价格上涨和箱源紧张影响，近两个月美国东海岸航线运费出现明显上涨，本文分析其原因及未来趋势预测。</p>
+                <div class="date">2024-06-05</div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <h3 class="section-title">暗色模式示例</h3>
+    </main>
+    
+    <!-- 暗色模式banner（静态HTML版本） -->
+    <div class="list-banner dark-banner">
+        <div class="list-banner-container">
+            <h1 class="list-banner-title">物流新闻资讯</h1>
+            <div class="list-banner-description">最新的物流行业动态、政策解读和市场趋势分析，助您把握市场脉搏。</div>
+        </div>
+    </div>
+    
+    <div class="spacer"></div>
+    
+    <!-- 自定义背景色banner（静态HTML版本） -->
+    <div class="list-banner colored-banner">
+        <div class="list-banner-container">
+            <h1 class="list-banner-title">欧洲地区物流资讯</h1>
+            <div class="list-banner-description">关注欧洲地区最新物流动态，包括各国政策、运输线路和市场趋势。</div>
+        </div>
+    </div>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+    
+    <!-- 加载组件脚本 -->
+    <script src="/assets/js/components.js"></script>
+</body>
+</html> 

@@ -1,18 +1,21 @@
 {
   "name": "md-to-html",
   "version": "1.0.0",
-  "main": "auto-converter.js",
+  "description": "将Markdown文件转换为HTML的工具",
+  "main": "md-convert.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "process-news": "node auto-news-processor.js",
+    "process-guides": "node auto-guides-processor.js",
+    "process-all": "npm run process-news && npm run process-guides"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "cheerio": "^1.0.0",
-    "chokidar": "^4.0.3",
-    "fs-extra": "^11.3.0",
-    "marked": "^15.0.8"
+    "cheerio": "^1.0.0-rc.12",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.4.5",
+    "marked": "^12.0.0",
+    "moment": "^2.30.1"
   }
 }

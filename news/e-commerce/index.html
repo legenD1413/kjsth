@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电商资讯 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 引入列表页banner组件样式 -->
+    <link rel="stylesheet" href="/assets/css/list-banner.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 电商资讯页面样式 */
+        .news-container {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 40px var(--site-padding);
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-card .card-image {
+            height: 180px;
+            background-color: #f5f5f5;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .news-card .card-content {
+            padding: 15px;
+        }
+        
+        .news-card .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .news-card .card-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-card .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .news-card .card-date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-card .card-date i {
+            margin-right: 5px;
+        }
+        
+        .news-card .card-category {
+            background-color: #f0f7ff;
+            color: #0070f3;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        /* 分类筛选器 */
+        .news-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: #0066cc;
+            color: #fff;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background-color: #e0e0e0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- 列表页banner -->
+    <div class="list-banner">
+        <div class="list-banner-container">
+            <h1 class="list-banner-title">电商资讯</h1>
+            <div class="list-banner-description">了解最新跨境电商动态，包括平台政策、行业趋势、运营技巧、市场分析及新兴电商机会。</div>
+        </div>
+    </div>
+    
+    <!-- 主要内容区域 -->
+    <main>
+        <div class="news-container">
+            <!-- 分类筛选器 -->
+            <div class="news-filter">
+                <button class="filter-btn active">全部</button>
+                <button class="filter-btn">平台政策</button>
+                <button class="filter-btn">行业趋势</button>
+                <button class="filter-btn">运营技巧</button>
+                <button class="filter-btn">市场分析</button>
+                <button class="filter-btn">新兴市场</button>
+            </div>
+            
+            <!-- 新闻卡片网格 -->
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/amazon-policy.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">亚马逊2023年下半年重要政策更新汇总</h3>
+                        <p class="card-description">亚马逊近期发布了一系列重要政策更新，涉及库存限制、FBA费用调整和新品牌注册审核流程。这些变化将于9月生效，本文详细解析这些政策对卖家的影响...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-06-20</span>
+                            <span class="card-category">平台政策</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/tiktok-shop.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">TikTok Shop全球扩张计划：2023年进入五大新市场</h3>
+                        <p class="card-description">TikTok Shop宣布将在2023年下半年进入五个新市场，包括德国、法国、意大利、西班牙和巴西。据消息人士透露，该平台将采用前所未有的优惠政策吸引卖家...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-06-15</span>
+                            <span class="card-category">行业趋势</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/e-commerce-ai.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">AI驱动跨境电商：从产品开发到客户服务的全流程应用</h3>
+                        <p class="card-description">随着生成式AI技术的成熟，跨境电商企业正在各个环节应用AI工具提升效率。从AI辅助产品开发、内容创作到多语言客户服务，本文分享先行企业的实践经验...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-06-08</span>
+                            <span class="card-category">运营技巧</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/southeast-asia.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">东南亚电商市场报告：2023年增速最快的三个国家</h3>
+                        <p class="card-description">最新市场研究表明，东南亚电商市场中越南、菲律宾和印度尼西亚增长最为迅猛，年增长率超过35%。本报告深入分析各国消费者行为特点和热销品类变化...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-05-25</span>
+                            <span class="card-category">市场分析</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/social-commerce.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">社交电商新模式：Instagram与WhatsApp购物功能全球扩展</h3>
+                        <p class="card-description">Meta集团宣布将在全球范围内扩展Instagram和WhatsApp的购物功能，打造无缝社交购物体验。新功能包括直播带货、AR试用和AI个性化推荐...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-05-18</span>
+                            <span class="card-category">行业趋势</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/middle-east-ecom.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">中东电商市场崛起：沙特和阿联酋成为新蓝海</h3>
+                        <p class="card-description">中东地区特别是沙特阿拉伯和阿联酋正成为全球跨境电商的新兴市场。这些国家高收入人群比例大，电商渗透率仍低，为外国卖家提供巨大机会...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-05-10</span>
+                            <span class="card-category">新兴市场</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+
+    <!-- 引入公共组件脚本 -->
+    <script src="/assets/js/components.js"></script>
+    
+    <script>
+        // 分类筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 分类筛选功能
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const newsCards = document.querySelectorAll('.news-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // 给当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const category = this.textContent.trim();
+                    
+                    // 如果选择"全部"，显示所有新闻
+                    if (category === '全部') {
+                        newsCards.forEach(card => {
+                            card.style.display = 'block';
+                        });
+                    } else {
+                        // 否则，仅显示所选类别的新闻
+                        newsCards.forEach(card => {
+                            const cardCategory = card.querySelector('.card-category').textContent.trim();
+                            if (cardCategory === category) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

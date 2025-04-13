@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亚洲物流服务 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 亚洲页面特定样式 */
+        .content-container {
+            display: flex;
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            margin-top: var(--header-height);
+            padding: 2rem var(--site-padding);
+            gap: 2rem;
+        }
+
+        .region-banner {
+            background-color: #fff;
+            color: #1d1d1f;
+            padding: 60px 0;
+            margin-bottom: 0;
+            margin-top: 30px;
+            position: relative;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        /* 添加 banner-overlay 容器样式 */
+        .banner-overlay {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 0 var(--site-padding);
+            text-align: left;
+        }
+        
+        /* 标题和描述的样式 */
+        .banner-title {
+            font-size: 28px; /* 3号字体 */
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+        
+        .banner-description {
+            font-size: 0.83em; /* 5号字体 */
+            color: #6e6e73;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        
+        /* 左侧内容 - 卡片网格布局 */
+        .left-section {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* 右侧边栏 */
+        .right-column {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+
+        .right-section {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        /* 文章列表样式 - 更简洁的样式 */
+        .article-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .article-list li {
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .article-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .article-list a, .article-list span {
+            color: #6e6e73;
+            text-decoration: none;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .article-list a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* 查看全部按钮样式 */
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 0.8rem;
+            background-color: #f2f2f7;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .view-all-btn:hover {
+            background-color: #e8e8ed;
+        }
+        
+        .view-all-btn i {
+            margin-right: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        /* 右侧栏目标题样式 */
+        .right-section h3 {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            .left-section {
+                width: 100%;
+            }
+            
+            .right-column {
+                width: 100%;
+                max-width: none;
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 1rem;
+                margin-top: var(--header-height);
+            }
+
+            .left-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        
+        /* 开发中提示样式 */
+        .under-development {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .under-development i {
+            font-size: 3rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+        
+        .under-development h2 {
+            font-size: 1.5rem;
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+        
+        .under-development p {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 服务卡片样式 - 新的卡片式设计 */
+        .showcase-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+            height: 100%;
+            position: relative;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        /* 新的卡片内部布局 */
+        .showcase-card-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* 卡片图片容器 */
+        .showcase-image-container {
+            height: 180px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showcase-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 卡片内容区 */
+        .showcase-right-section {
+            display: flex;
+            flex-direction: column;
+            padding: 1.2rem;
+            flex: 1;
+        }
+
+        /* 标签容器样式 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* 标签样式 - 扁平化标签 */
+        .showcase-tag {
+            background: #f2f2f7;
+            color: var(--text-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-align: center;
+            box-shadow: none;
+            transition: all 0.2s ease;
+            font-weight: 400;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .showcase-tag i {
+            font-size: 0.7rem;
+            color: var(--primary-color);
+        }
+
+        /* 卡片标题样式 */
+        .showcase-title {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .showcase-title:after {
+            display: none;
+        }
+
+        /* 线路介绍样式 */
+        .route-features {
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            flex: 1;
+            color: #6e6e73;
+        }
+
+        .route-features i {
+            color: var(--primary-color);
+            margin-right: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        /* 查询价格按钮 */
+        .ai-price-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            box-shadow: none;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .ai-price-btn:hover {
+            background: #0077ed;
+            transform: none;
+            box-shadow: 0 1px 4px rgba(0, 113, 227, 0.3);
+        }
+
+        .ai-price-btn i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* 热门标签样式 */
+        .hot-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #e51e2e;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.25rem 0.8rem;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- 统一的头部容器 -->
+    <header id="header"></header>
+    
+    <div class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">全球物流资讯中心</h1>
+            <p class="banner-description">关注全球各区域最新物流动态、市场趋势和行业政策，助力您的国际物流决策。</p>
+        </div>
+    </div>
+
+    <script>
+        // 动态获取当前区域名称并更新标题
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从URL路径中提取区域名称
+            const pathSegments = window.location.pathname.split('/');
+            const regionIndex = pathSegments.indexOf('regions');
+            
+            if (regionIndex !== -1 && regionIndex + 1 < pathSegments.length) {
+                let regionName = '';
+                
+                // 根据路径名映射区域名称
+                switch(pathSegments[regionIndex + 1]) {
+                    case 'north-america':
+                        regionName = '北美';
+                        break;
+                    case 'europe':
+                        regionName = '欧洲';
+                        break;
+                    case 'asia':
+                        regionName = '亚洲';
+                        break;
+                    case 'australia':
+                        regionName = '澳洲';
+                        break;
+                    case 'middle-east':
+                        regionName = '中东';
+                        break;
+                    case 'africa':
+                        regionName = '非洲';
+                        break;
+                    case 'south-america':
+                        regionName = '南美';
+                        break;
+                    // 可以根据需要添加更多区域
+                    default:
+                        regionName = pathSegments[regionIndex + 1];
+                }
+                
+                // 更新标题和描述
+                const bannerTitle = document.querySelector('.banner-title');
+                if (bannerTitle) {
+                    bannerTitle.textContent = regionName + '地区物流资讯';
+                }
+                
+                const bannerDescription = document.querySelector('.banner-description');
+                if (bannerDescription) {
+                    bannerDescription.textContent = `关注${regionName}地区最新物流动态，包括港口状况、运费变化和政策更新。`;
+                }
+            }
+        });
+    </script>
+
+    <div class="content-container">
+        <div class="left-section">
+            <div class="showcase-card">
+                <div class="hot-tag">热门</div>
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/air-freight.png" alt="日本专线" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fas fa-plane"></i>空运</span>
+                            <span class="showcase-tag"><i class="fas fa-truck"></i>配送</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>日本</span>
+                        </div>
+                        <h3 class="showcase-title">日本专线空运</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 专业日本通关服务，5-7天到达</p>
+                            <p><i class="fas fa-location-dot"></i> 覆盖东京、大阪等日本主要城市</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=japan-air'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/express.jpg" alt="韩国专线" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fas fa-plane"></i>空运</span>
+                            <span class="showcase-tag"><i class="fas fa-box"></i>普货</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>韩国</span>
+                        </div>
+                        <h3 class="showcase-title">韩国专线</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 高效跨境物流解决方案，6-8天到达</p>
+                            <p><i class="fas fa-location-dot"></i> 覆盖首尔、釜山等韩国主要城市</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=korea-express'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/air-freight.png" alt="新加坡专线" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fas fa-plane"></i>空运</span>
+                            <span class="showcase-tag"><i class="fas fa-truck"></i>配送</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>新加坡</span>
+                        </div>
+                        <h3 class="showcase-title">新加坡专线</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 专业东南亚物流解决方案，5-7天到达</p>
+                            <p><i class="fas fa-location-dot"></i> 全境覆盖，门到门配送服务</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=singapore-express'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/express.jpg" alt="马来西亚专线" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fas fa-percentage"></i>特惠专线</span>
+                            <span class="showcase-tag"><i class="fas fa-plane"></i>空运</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>马来西亚</span>
+                        </div>
+                        <h3 class="showcase-title">马来西亚特惠专线</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 性价比高的物流方案，7-10天到达</p>
+                            <p><i class="fas fa-location-dot"></i> 覆盖吉隆坡、槟城等主要城市</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=malaysia-special'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="right-section">
+                <h3>亚洲物流资讯</h3>
+                <ul class="article-list">
+                    <li>
+                        <a href="/static-news/asia/80.html">
+                            日本海关最新政策解析：电商卖家需要了解的变化
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static-news/asia/78.html">
+                            韩国物流市场分析：机遇与挑战并存
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static-news/asia/76.html">
+                            东南亚跨境电商物流趋势：新加坡作为区域枢纽的优势
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static-news/asia/74.html">
+                            2023年亚洲主要港口拥堵情况及解决方案
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static-news/asia/73.html">
+                            亚洲区域物流成本优化指南：如何降低跨境运输费用
+                        </a>
+                    </li>
+                </ul>
+                <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
+                    <a href="/static-news/asia/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
+                    </a>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <h3>工具与指南</h3>
+                <div class="tools-list">
+                    <a href="/tools-guides/guides/80.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 日本电商物流全攻略：通关、配送与退货流程
+                    </a>
+                    <a href="/tools-guides/guides/81.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 韩国跨境物流指南：物流方式选择与通关要点
+                    </a>
+                    <a href="/tools-guides/guides/82.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 东南亚物流解决方案：新加坡、马来西亚、泰国市场解析
+                    </a>
+                    <a href="/tools-guides/guides/83.html">
+                        <i class="fas fa-book"></i> <strong>指南教程</strong> - 亚洲地区特殊商品运输指南：限制类商品及应对策略
+                    </a>
+                </div>
+                <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
+                    <a href="/tools-guides/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 统一的底部容器 -->
+    <footer id="footer"></footer>
+
+    <!-- JavaScript -->
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/ai-pricing.js"></script>
+    <script>
+        // 根据ai-pricing.js中的配置显示热门标签
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有卡片
+            const cards = document.querySelectorAll('.showcase-card');
+            
+            // 遍历卡片
+            cards.forEach(card => {
+                // 获取卡片ID
+                const aiPriceBtn = card.querySelector('.ai-price-btn');
+                if (!aiPriceBtn) return;
+                
+                const href = aiPriceBtn.getAttribute('onclick');
+                if (!href) return;
+                
+                const match = href.match(/id=([^'&"]+)/);
+                if (!match || !match[1]) return;
+                
+                const routeId = match[1];
+                
+                // 检查是否在routeData中存在且isHot为true
+                if (window.routeData && routeData[routeId] && routeData[routeId].isHot) {
+                    // 查找已有的热门标签
+                    let hotTag = card.querySelector('.hot-tag');
+                    
+                    // 如果不存在，则创建
+                    if (!hotTag) {
+                        hotTag = document.createElement('div');
+                        hotTag.className = 'hot-tag';
+                        hotTag.textContent = '热门';
+                        card.appendChild(hotTag);
+                    }
+                    
+                    // 确保热门标签可见
+                    hotTag.style.display = 'block';
+                } else {
+                    // 如果不是热门，则隐藏标签
+                    const hotTag = card.querySelector('.hot-tag');
+                    if (hotTag) {
+                        hotTag.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

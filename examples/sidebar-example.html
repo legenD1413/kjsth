@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏组件示例 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/sidebar.css">
+    
+    <!-- 图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 示例页面特定样式 */
+        .example-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+        
+        .main-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .main-content h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        
+        .main-content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #1d1d1f;
+        }
+        
+        .sidebar-area {
+            /* 侧边栏容器，使用grid布局将其放置在右侧 */
+        }
+        
+        .demo-buttons {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .demo-button {
+            padding: 8px 16px;
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .demo-button:hover {
+            background-color: #0062c1;
+        }
+        
+        code {
+            background-color: #f5f5f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .code-block {
+            background-color: #f5f5f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: auto;
+        }
+        
+        .code-block pre {
+            font-family: monospace;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .example-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 统一的头部容器 -->
+    <header id="header"></header>
+    
+    <!-- 主要内容区 -->
+    <main>
+        <div class="example-container">
+            <div class="main-content">
+                <h1>通用侧边栏组件示例</h1>
+                
+                <p>这个页面展示了如何使用通用侧边栏组件来显示文章列表，保持网站风格的一致性。侧边栏组件可以在网站的任何页面使用，只需要添加必要的HTML元素和JavaScript代码即可。</p>
+                
+                <div class="demo-buttons">
+                    <button class="demo-button" onclick="changeSidebarCategory('north-america')">北美物流资讯</button>
+                    <button class="demo-button" onclick="changeSidebarCategory('asia')">亚洲物流资讯</button>
+                    <button class="demo-button" onclick="changeSidebarCategory('')">全球物流资讯</button>
+                </div>
+                
+                <h2>如何使用</h2>
+                
+                <p>1. 在HTML中添加侧边栏容器</p>
+                <div class="code-block">
+                    <pre><code>&lt;div id="news-sidebar"&gt;&lt;/div&gt;</code></pre>
+                </div>
+                
+                <p>2. 在页面底部引入必要的JavaScript文件</p>
+                <div class="code-block">
+                    <pre><code>&lt;script src="/assets/js/sidebar-component.js"&gt;&lt;/script&gt;</code></pre>
+                </div>
+                
+                <p>3. 初始化侧边栏组件</p>
+                <div class="code-block">
+                    <pre><code>// 创建侧边栏实例
+const newsSidebar = new SidebarComponent('news-sidebar', {
+    title: '北美物流资讯',
+    category: 'north-america',
+    limit: 5,
+    viewAllUrl: '/news/north-america/',
+    viewAllText: '查看全部'
+});</code></pre>
+                </div>
+                
+                <h2>组件参数</h2>
+                <p>侧边栏组件支持以下配置选项：</p>
+                <ul>
+                    <li><code>title</code>: 侧边栏标题</li>
+                    <li><code>category</code>: 文章类别</li>
+                    <li><code>limit</code>: 显示文章数量</li>
+                    <li><code>viewAllUrl</code>: "查看全部"链接地址</li>
+                    <li><code>viewAllText</code>: "查看全部"按钮文本</li>
+                    <li><code>apiUrl</code>: 文章数据API地址</li>
+                    <li><code>loadOnInit</code>: 是否在初始化时加载数据</li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-area">
+                <!-- 侧边栏容器 -->
+                <div id="news-sidebar"></div>
+                
+                <!-- 另一个侧边栏示例 -->
+                <div id="popular-sidebar"></div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 统一的底部容器 -->
+    <footer id="footer"></footer>
+    
+    <!-- JavaScript -->
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/sidebar-component.js"></script>
+    
+    <script>
+        // 初始化侧边栏
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建北美物流资讯侧边栏
+            window.newsSidebar = new SidebarComponent('news-sidebar', {
+                title: '北美物流资讯',
+                category: 'north-america',
+                limit: 5,
+                viewAllUrl: '/news/north-america/',
+                viewAllText: '查看全部'
+            });
+            
+            // 创建热门文章侧边栏
+            window.popularSidebar = new SidebarComponent('popular-sidebar', {
+                title: '热门阅读',
+                category: '',
+                limit: 3,
+                viewAllUrl: '/news/popular/',
+                viewAllText: '更多热门'
+            });
+        });
+        
+        // 更改侧边栏类别
+        function changeSidebarCategory(category) {
+            let title = '全球物流资讯';
+            let viewAllUrl = '/news/';
+            
+            if (category === 'north-america') {
+                title = '北美物流资讯';
+                viewAllUrl = '/news/north-america/';
+            } else if (category === 'asia') {
+                title = '亚洲物流资讯';
+                viewAllUrl = '/news/asia/';
+            }
+            
+            if (window.newsSidebar) {
+                window.newsSidebar.updateTitle(title);
+                window.newsSidebar.options.viewAllUrl = viewAllUrl;
+                window.newsSidebar.changeCategory(category);
+                
+                // 更新"查看全部"链接
+                const viewAllLink = document.querySelector('#news-sidebar .view-all-link a');
+                if (viewAllLink) {
+                    viewAllLink.href = viewAllUrl;
+                }
+            }
+        }
+    </script>
+</body>
+</html> 

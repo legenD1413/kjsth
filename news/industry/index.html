@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行业新闻 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 引入列表页banner组件样式 -->
+    <link rel="stylesheet" href="/assets/css/list-banner.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 行业新闻页面样式 */
+        .news-container {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 40px var(--site-padding);
+        }
+        
+        .news-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-card .card-image {
+            height: 180px;
+            background-color: #f5f5f5;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .news-card .card-content {
+            padding: 15px;
+        }
+        
+        .news-card .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .news-card .card-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-card .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .news-card .card-date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-card .card-date i {
+            margin-right: 5px;
+        }
+        
+        .news-card .card-category {
+            background-color: #f0f7ff;
+            color: #0070f3;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        /* 分类筛选器 */
+        .news-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: #0066cc;
+            color: #fff;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background-color: #e0e0e0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- 列表页banner -->
+    <div class="list-banner">
+        <div class="list-banner-container">
+            <h1 class="list-banner-title">行业新闻</h1>
+            <div class="list-banner-description">了解最新物流行业动态，掌握市场趋势和政策变化，助力您的物流决策更加精准。</div>
+        </div>
+    </div>
+    
+    <!-- 主要内容区域 -->
+    <main>
+        <div class="news-container">
+            <!-- 分类筛选器 -->
+            <div class="news-filter">
+                <button class="filter-btn active">全部</button>
+                <button class="filter-btn">物流趋势</button>
+                <button class="filter-btn">供应链创新</button>
+                <button class="filter-btn">国际贸易</button>
+                <button class="filter-btn">技术发展</button>
+                <button class="filter-btn">行业政策</button>
+            </div>
+            
+            <!-- 新闻卡片网格 -->
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/logistics-trend.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">全球物流行业2023年趋势分析：数字化转型加速</h3>
+                        <p class="card-description">随着全球供应链中断持续影响各行各业，物流公司正加速数字化转型以提高弹性和效率。本文分析了2023年物流行业的主要发展趋势...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-06-15</span>
+                            <span class="card-category">物流趋势</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/supply-chain.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">供应链数字孪生技术：物流运营的下一个突破</h3>
+                        <p class="card-description">数字孪生技术正在彻底改变供应链管理和物流运营方式，通过创建物理系统的虚拟复制品，企业能够更准确地预测问题并优化流程...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-05-28</span>
+                            <span class="card-category">供应链创新</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/international-trade.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">RCEP协议实施一周年：亚太贸易格局深度变化</h3>
+                        <p class="card-description">区域全面经济伙伴关系协定(RCEP)实施一周年后，亚太地区贸易格局发生了哪些变化？本文深入分析了协议对跨境物流的影响...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-05-10</span>
+                            <span class="card-category">国际贸易</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/tech-innovation.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">区块链技术如何重塑国际物流与供应链管理</h3>
+                        <p class="card-description">区块链技术正在为国际物流带来前所未有的透明度和效率。本文探讨了区块链在供应链管理中的应用案例和未来发展方向...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-04-22</span>
+                            <span class="card-category">技术发展</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/green-logistics.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">绿色物流发展报告：碳中和目标下的行业转型</h3>
+                        <p class="card-description">在全球碳中和目标的推动下，物流行业正经历绿色转型。本文分析了绿色物流的最新进展、挑战以及成功企业的实践经验...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-04-08</span>
+                            <span class="card-category">物流趋势</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="card-image" style="background-image: url('/assets/images/news/policy-update.jpg');"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">2023年中国跨境电商物流政策解读与展望</h3>
+                        <p class="card-description">近期发布的一系列跨境电商物流政策将如何影响行业发展？本文深入分析了最新政策内容、解读政策背后的趋势和对企业的影响...</p>
+                        <div class="card-meta">
+                            <span class="card-date"><i class="far fa-calendar-alt"></i> 2023-03-25</span>
+                            <span class="card-category">行业政策</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+
+    <!-- 引入公共组件脚本 -->
+    <script src="/assets/js/components.js"></script>
+    
+    <script>
+        // 分类筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 分类筛选功能
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const newsCards = document.querySelectorAll('.news-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // 给当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const category = this.textContent.trim();
+                    
+                    // 如果选择"全部"，显示所有新闻
+                    if (category === '全部') {
+                        newsCards.forEach(card => {
+                            card.style.display = 'block';
+                        });
+                    } else {
+                        // 否则，仅显示所选类别的新闻
+                        newsCards.forEach(card => {
+                            const cardCategory = card.querySelector('.card-category').textContent.trim();
+                            if (cardCategory === category) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

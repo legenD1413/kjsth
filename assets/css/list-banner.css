@@ -1,0 +1,81 @@
+/**
+ * 列表页banner组件样式
+ * 用于展示列表页标题和简要描述
+ */
+
+.list-banner {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    padding: 60px 0;
+    margin-bottom: 0;
+    position: relative;
+    border-bottom: 1px solid #d2d2d7;
+}
+
+/* banner内容容器 */
+.list-banner-container {
+    max-width: var(--site-max-width);
+    margin: 0 auto;
+    padding: 0 var(--site-padding);
+    text-align: left;
+}
+
+/* 标题样式 */
+.list-banner-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1d1d1f;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 描述文本样式 */
+.list-banner-description {
+    font-size: 14px; /* 与图片中的字体大小一致 */
+    color: #6e6e73;
+    max-width: 800px;
+    line-height: 1.5;
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 暗色模式 */
+.list-banner.dark-banner {
+    background-color: #1d1d1f;
+}
+
+.list-banner.dark-banner .list-banner-title {
+    color: #f5f5f7;
+}
+
+.list-banner.dark-banner .list-banner-description {
+    color: #a1a1a6;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .list-banner {
+        padding: 45px 0;
+    }
+    
+    .list-banner-title {
+        font-size: 28px;
+    }
+    
+    .list-banner-description {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .list-banner {
+        padding: 35px 0;
+    }
+    
+    .list-banner-title {
+        font-size: 24px;
+    }
+    
+    .list-banner-description {
+        font-size: 12px;
+    }
+} 

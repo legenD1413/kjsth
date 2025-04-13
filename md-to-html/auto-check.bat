@@ -1,14 +1,25 @@
 @echo off
+chcp 65001 >nul
 echo ======================================================
-echo       Markdown自动检测、转换及索引更新工具
+echo       Markdown Auto Detect, Convert and Index Update Tool
 echo ======================================================
 echo.
-echo 该工具将：
-echo 1. 检测新的或已更新的Markdown文件
-echo 2. 将Markdown文件转换为HTML
-echo 3. 自动更新相关的索引页面
+echo This tool will:
+echo 1. Detect new or updated Markdown files
+echo 2. Convert Markdown files to HTML
+echo 3. Automatically update related index pages
+echo 4. Sort files into appropriate directories based on categories and regions
 echo.
-echo 开始处理...
+echo Starting process...
 echo.
 
-powershell -ExecutionPolicy Bypass -File "%~dp0file-check.ps1" 
+powershell -ExecutionPolicy Bypass -NoProfile -File "%~dp0file-check-fixed.ps1" -Verbose
+echo.
+echo 继续处理指南文件...
+echo.
+powershell -ExecutionPolicy Bypass -NoProfile -File "%~dp0guide-check-fixed.ps1" -Verbose
+
+echo.
+echo 所有处理完成!
+echo.
+pause 

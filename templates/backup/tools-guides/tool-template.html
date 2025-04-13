@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} | 迈格库物流</title>
+    <!-- 全局CSS文件 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/tools-guides.css">
+    <!-- 图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* 全局字体设置 - 采用Apple风格字体 */
+        body, h1, h2, h3, h4, h5, h6, p, a, span, div, button {
+            font-family: "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .tool-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .tool-header {
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 30px 0;
+            background-color: #f5f5f7;
+            border-radius: 12px;
+        }
+        
+        .tool-header h1 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 15px;
+        }
+        
+        .tool-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            color: #6e6e73;
+            font-size: 0.95rem;
+        }
+        
+        .tool-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tool-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .tool-content p {
+            line-height: 1.6;
+            color: #1d1d1f;
+            margin-bottom: 1em;
+        }
+        
+        .tool-content h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin: 1.5em 0 0.5em;
+        }
+        
+        .tool-content h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin: 1.2em 0 0.4em;
+        }
+        
+        .tool-content ul, .tool-content ol {
+            margin: 1em 0;
+            padding-left: 1.5em;
+        }
+        
+        .tool-content li {
+            margin-bottom: 0.5em;
+            line-height: 1.6;
+        }
+        
+        .tool-content code {
+            background-color: #f5f5f7;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+            font-size: 0.9em;
+        }
+        
+        .tool-content pre {
+            background-color: #f5f5f7;
+            padding: 1em;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        
+        .tool-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .tool-content blockquote {
+            border-left: 4px solid #0071e3;
+            margin: 1em 0;
+            padding: 0.5em 1em;
+            background-color: #f5f5f7;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tool-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1em 0;
+        }
+        
+        .tool-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        
+        .tool-content th, .tool-content td {
+            padding: 0.75em;
+            border: 1px solid #e5e5e5;
+            text-align: left;
+        }
+        
+        .tool-content th {
+            background-color: #f5f5f7;
+            font-weight: 500;
+        }
+        
+        .tool-content tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .interactive-tool {
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .related-tools {
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .related-tools h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 15px;
+        }
+        
+        .related-tools-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .related-tools-list li {
+            margin-bottom: 10px;
+        }
+        
+        .related-tool-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #1d1d1f;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .related-tool-link:hover {
+            background-color: #e8e8ed;
+        }
+        
+        .related-tool-link i {
+            color: #0071e3;
+            font-size: 1.2rem;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            margin-top: 30px;
+            transition: all 0.2s ease;
+        }
+        
+        .back-link:hover {
+            background-color: #e8e8ed;
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .tool-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 统一的头部容器 -->
+    <header id="header"></header>
+
+    <main>
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>{{TITLE}}</h1>
+                <div class="tool-meta">
+                    <div class="tool-meta-item">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>{{DATE}}</span>
+                    </div>
+                    <div class="tool-meta-item">
+                        <i class="fas fa-folder"></i>
+                        <span>{{CATEGORY}}</span>
+                    </div>
+                    <div class="tool-meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{REGION}}</span>
+                    </div>
+                    <div class="tool-meta-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span class="importance-tag {{IMPORTANCE_CLASS}}">{{IMPORTANCE_TEXT}}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tool-content">
+                {{CONTENT}}
+            </div>
+            
+            {{INTERACTIVE_TOOL}}
+            
+            {{RELATED_TOOLS}}
+            
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                返回工具列表
+            </a>
+        </div>
+    </main>
+    
+    <!-- 统一的底部容器 -->
+    <footer id="footer"></footer>
+
+    <!-- JavaScript -->
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/script.js"></script>
+</body>
+</html> 

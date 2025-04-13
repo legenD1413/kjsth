@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南美物流服务 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 南美页面特定样式 */
+        .content-container {
+            display: flex;
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            margin-top: var(--header-height);
+            padding: 2rem var(--site-padding);
+            gap: 2rem;
+        }
+
+        .region-banner {
+            background-color: #fff;
+            color: #1d1d1f;
+            padding: 60px 0;
+            margin-bottom: 0;
+            margin-top: 30px;
+            position: relative;
+            border-bottom: 1px solid #d2d2d7;
+            min-height: 120px; /* 确保最小高度一致 */
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 添加 banner-overlay 容器样式 */
+        .banner-overlay {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 0 var(--site-padding);
+            text-align: left;
+            width: 100%;
+        }
+        
+        /* 标题和描述的样式 */
+        .banner-title {
+            font-size: 28px; /* 3号字体 */
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+        
+        .banner-description {
+            font-size: 0.83em; /* 5号字体 */
+            color: #6e6e73;
+            max-width: 800px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        /* 左侧内容 - 卡片网格布局 */
+        .left-section {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* 右侧边栏 */
+        .right-column {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+
+        .right-section {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* 服务卡片样式 - 新的卡片式设计 */
+        .showcase-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+            height: 100%;
+            position: relative;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        /* 新的卡片内部布局 */
+        .showcase-card-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* 卡片图片容器 */
+        .showcase-image-container {
+            height: 180px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showcase-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 卡片内容区 */
+        .showcase-right-section {
+            display: flex;
+            flex-direction: column;
+            padding: 1.2rem;
+            flex: 1;
+        }
+
+        /* 卡片标题样式 */
+        .showcase-title {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .showcase-title:after {
+            display: none;
+        }
+
+        /* 描述文本样式 */
+        .showcase-desc {
+            color: #6e6e73;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        /* 线路介绍样式 */
+        .route-features {
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            flex: 1;
+            color: #6e6e73;
+        }
+
+        .route-features i {
+            color: var(--primary-color);
+            margin-right: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        /* 标签容器样式 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* 标签样式 - 扁平化标签 */
+        .showcase-tag {
+            background: #f2f2f7;
+            color: var(--text-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-align: center;
+            box-shadow: none;
+            transition: all 0.2s ease;
+            font-weight: 400;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .showcase-tag i {
+            font-size: 0.7rem;
+            color: var(--primary-color);
+        }
+
+        /* 查询价格按钮 */
+        .ai-price-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            box-shadow: none;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .ai-price-btn:hover {
+            background: #0077ed;
+            transform: none;
+            box-shadow: 0 1px 4px rgba(0, 113, 227, 0.3);
+        }
+
+        .ai-price-btn i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* 热门标签样式 */
+        .hot-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #e51e2e;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.25rem 0.8rem;
+            z-index: 2;
+        }
+        
+        /* 文章列表样式 - 更简洁的样式 */
+        .article-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .article-list li {
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .article-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .article-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .article-list a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 实用工具列表 */
+        .tools-list a {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem 0;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .tools-list a:hover {
+            color: var(--primary-color);
+        }
+        
+        .tools-list a:last-child {
+            border-bottom: none;
+        }
+        
+        .tools-list i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            width: 1.2rem;
+            text-align: center;
+        }
+        
+        .tools-list strong {
+            font-weight: 500;
+        }
+        
+        /* 查看全部按钮样式 */
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 0.8rem;
+            background-color: #f2f2f7;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .view-all-btn:hover {
+            background-color: #e8e8ed;
+        }
+        
+        .view-all-btn i {
+            margin-right: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        /* 右侧栏目标题样式 */
+        .right-section h3 {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            width: 100%;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            .left-section {
+                width: 100%;
+            }
+            
+            .right-column {
+                width: 100%;
+                max-width: none;
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 1rem;
+                margin-top: var(--header-height);
+            }
+
+            .left-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header id="header"></header>
+    
+    <!-- 区域banner，采用与北美页面相同的样式 -->
+    <div class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">南美物流服务</h1>
+            <p class="banner-description">迈格库为您提供覆盖巴西、阿根廷、智利等南美主要国家的全方位物流解决方案，包括空运、海运、FBA清关等服务，助力您的跨境电商业务拓展南美市场。</p>
+        </div>
+    </div>
+    
+    <!-- 主要内容区域 -->
+    <div class="content-container">
+        <!-- 左侧内容区 - 服务展示卡片 -->
+        <div class="left-section">
+            <!-- 巴西空运服务 -->
+            <div class="showcase-card">
+                <div class="hot-tag">热门</div>
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/air-freight.png" alt="巴西空运专线" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fas fa-plane"></i>空运</span>
+                            <span class="showcase-tag"><i class="fas fa-shipping-fast"></i>专线</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>巴西</span>
+                        </div>
+                        <h3 class="showcase-title">巴西空运专线</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 空运时效：7-9天</p>
+                            <p><i class="fas fa-circle-check"></i> 重量限制：0.1-300kg</p>
+                            <p><i class="fas fa-location-dot"></i> 主要城市：圣保罗、里约热内卢、巴西利亚</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=brazil-air'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 阿根廷专线 -->
+            <div class="showcase-card">
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/sea-freight.png" alt="阿根廷专线服务" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fas fa-ship"></i>海运</span>
+                            <span class="showcase-tag"><i class="fas fa-shopping-cart"></i>电商物流</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>阿根廷</span>
+                        </div>
+                        <h3 class="showcase-title">阿根廷专线服务</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 海运时效：30-35天，空运时效：10-12天</p>
+                            <p><i class="fas fa-circle-check"></i> 清关代理与目的地派送</p>
+                            <p><i class="fas fa-location-dot"></i> 布宜诺斯艾利斯、罗萨里奥、科尔多瓦</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=argentina'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 智利物流服务 -->
+            <div class="showcase-card">
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/logistics.png" alt="智利综合物流服务" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fas fa-ship"></i>海运</span>
+                            <span class="showcase-tag"><i class="fas fa-plane"></i>空运</span>
+                            <span class="showcase-tag"><i class="fas fa-flag"></i>智利</span>
+                        </div>
+                        <h3 class="showcase-title">智利综合物流服务</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 全年无休服务</p>
+                            <p><i class="fas fa-circle-check"></i> 西班牙语客服</p>
+                            <p><i class="fas fa-location-dot"></i> 圣地亚哥、瓦尔帕莱索</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=chile'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 南美FBA物流 -->
+            <div class="showcase-card">
+                <div class="showcase-card-inner">
+                    <div class="showcase-image-container">
+                        <img src="/assets/images/fba.png" alt="南美FBA一站式物流" class="showcase-image">
+                    </div>
+                    <div class="showcase-right-section">
+                        <div class="tags-container">
+                            <span class="showcase-tag"><i class="fab fa-amazon"></i>FBA</span>
+                            <span class="showcase-tag"><i class="fas fa-globe-americas"></i>跨境电商</span>
+                            <span class="showcase-tag"><i class="fas fa-box"></i>一站式服务</span>
+                        </div>
+                        <h3 class="showcase-title">南美FBA一站式物流</h3>
+                        <div class="route-features">
+                            <p><i class="fas fa-circle-check"></i> 亚马逊合规、FBA标签服务</p>
+                            <p><i class="fas fa-circle-check"></i> 仓储与货物合并</p>
+                            <p><i class="fas fa-location-dot"></i> 巴西、墨西哥、智利</p>
+                        </div>
+                        <button class="ai-price-btn" onclick="window.location.href='ai-pricing.html?id=south-america-fba'"><i class="fas fa-calculator"></i>查询价格</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧内容区 - 物流资讯和工具 -->
+        <div class="right-column">
+            <!-- 南美物流资讯 -->
+            <div class="right-section">
+                <h3>南美物流资讯</h3>
+                <ul class="article-list">
+                    <li><a href="#">巴西海关新政解读与应对策略</a></li>
+                    <li><a href="#">2023年南美电商物流市场分析报告</a></li>
+                    <li><a href="#">阿根廷进口限制与通关指南</a></li>
+                    <li><a href="#">智利电商物流发展趋势与机遇</a></li>
+                    <li><a href="#">南美跨境电商平台物流对接指南</a></li>
+                </ul>
+                <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
+                    <a href="/static-news/south-america/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 南美物流工具 -->
+            <div class="right-section">
+                <h3>物流工具</h3>
+                <div class="tools-list">
+                    <a href="#"><i class="fas fa-calculator"></i> <strong>工具</strong> - 南美运费计算器</a>
+                    <a href="#"><i class="fas fa-search"></i> <strong>工具</strong> - 物流追踪查询</a>
+                    <a href="#"><i class="fas fa-map-marked-alt"></i> <strong>工具</strong> - 南美FBA仓库分布图</a>
+                    <a href="#"><i class="fas fa-calendar-week"></i> <strong>工具</strong> - 出货时间计划工具</a>
+                    <a href="#"><i class="fas fa-file-invoice-dollar"></i> <strong>工具</strong> - 关税预估计算器</a>
+                </div>
+                <div class="view-all-container" style="text-align: right; margin-top: 1rem;">
+                    <a href="/tools-guides/index.html" class="view-all-btn">
+                        <i class="fas fa-arrow-right"></i>查看全部
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 联系我们 -->
+            <div class="right-section">
+                <h3>联系我们</h3>
+                <div class="tools-list">
+                    <a href="#"><i class="fas fa-headset"></i> <strong>客服</strong> - 在线咨询</a>
+                    <a href="#"><i class="fas fa-envelope"></i> <strong>邮件</strong> - 邮件联系</a>
+                    <a href="#"><i class="fas fa-phone-alt"></i> <strong>电话</strong> - 电话咨询</a>
+                    <a href="#"><i class="fab fa-whatsapp"></i> <strong>社交</strong> - WhatsApp 联系</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 网站页脚 -->
+    <footer id="footer"></footer>
+
+    <!-- 引入公共组件脚本 -->
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/ai-pricing.js"></script>
+    
+    <script>
+        // 动态更新banner标题和描述
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从URL中获取区域名称
+            const pathParts = window.location.pathname.split('/');
+            const regionIndex = pathParts.indexOf('regions');
+            
+            if (regionIndex !== -1 && regionIndex + 1 < pathParts.length) {
+                // 根据区域更新banner标题和描述
+                const bannerTitle = document.querySelector('.banner-title');
+                const bannerDescription = document.querySelector('.banner-description');
+                
+                // 标题和描述已在HTML中设置好，无需动态更新
+            }
+            
+            // 热门标签显示逻辑
+            const routeData = {
+                'brazil-air': true,  // 热门路线
+                'argentina': false,
+                'chile': false,
+                'south-america-fba': false
+            };
+            
+            // 根据ai-pricing.js中的配置显示热门标签
+            const cards = document.querySelectorAll('.showcase-card');
+            
+            // 遍历卡片
+            cards.forEach(card => {
+                // 获取卡片ID
+                const aiPriceBtn = card.querySelector('.ai-price-btn');
+                if (!aiPriceBtn) return;
+                
+                const href = aiPriceBtn.getAttribute('onclick');
+                if (!href) return;
+                
+                const match = href.match(/id=([^'&"]+)/);
+                if (!match || !match[1]) return;
+                
+                const routeId = match[1];
+                
+                // 检查路线ID是否应该显示热门标签
+                if (routeId in routeData && !routeData[routeId]) {
+                    // 查找热门标签
+                    const hotTag = card.querySelector('.hot-tag');
+                    if (hotTag) {
+                        hotTag.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻 - Maigeeku</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/lists.css">
+    <style>
+        /* 新闻列表特定样式 */
+        .item-list {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .list-item {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            background-color: #fff;
+        }
+        
+        .list-item a {
+            display: block;
+            padding: 20px;
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .list-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .item-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .item-date::before {
+            content: "📅 ";
+        }
+        
+        .item-region::before {
+            content: "🌎 ";
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .page-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 26px;
+            }
+            
+            .item-title {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="container">
+                <div class="logo">
+                    <a href="../../index.html">Maigeeku</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">首页</a></li>
+                    <li><a href="../../tools-guides/index.html">工具指南</a></li>
+                    <li><a href="../../static-news/index.html" class="active">新闻</a></li>
+                    <li><a href="../../about.html">关于我们</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1 class="page-title">区域新闻</h1>
+        <p class="page-description">获取最新的物流资讯和行业动态</p>
+    </div>
+
+    <main class="container">
+        <div class="item-list">
+            <!-- 新闻项目将在这里动态生成 -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3>关于 Maigeeku</h3>
+                    <p>我们致力于提供高质量的物流解决方案和信息资源，帮助跨境电商卖家更好地开展业务。</p>
+                </div>
+                <div class="footer-section links">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="../../index.html">首页</a></li>
+                        <li><a href="../../tools-guides/index.html">工具指南</a></li>
+                        <li><a href="../../static-news/index.html">新闻</a></li>
+                        <li><a href="../../about.html">关于我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-envelope"></i> contact@maigeeku.com</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Maigeeku | 跨境物流解决方案
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

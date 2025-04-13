@@ -121,6 +121,55 @@
             color: #1d1d1f;
             cursor: pointer;
         }
+        
+        /* 用户头像样式 */
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+        }
+        
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            min-width: 180px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:hover .user-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .user-info {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 8px;
+        }
+        
+        .user-name {
+            font-weight: 500;
+            font-size: 14px;
+            color: #1d1d1f;
+        }
+        
+        .user-email {
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 4px;
+            word-break: break-all;
+        }
 
         @media (max-width: 768px) {
             .menu-toggle {
@@ -144,7 +193,7 @@
                 gap: 16px;
             }
 
-            .dropdown-menu {
+            .dropdown-menu, .user-dropdown-menu {
                 position: static;
                 box-shadow: none;
                 opacity: 1;
@@ -170,71 +219,164 @@
         <!-- 导航菜单 -->
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="/products/index.html" class="nav-link">
-                    <i class="fas fa-box"></i>
-                    发什么
-                    <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="/products/regular/index.html" class="dropdown-item">普货</a>
-                    <a href="/products/cosmetics/index.html" class="dropdown-item">化妆品</a>
-                    <a href="/products/e-cigarettes/index.html" class="dropdown-item">电子烟</a>
-                    <a href="/products/batteries/index.html" class="dropdown-item">纯电</a>
-                    <a href="/products/electronic-with-battery/index.html" class="dropdown-item">内电</a>
-                </div>
-            </li>
-            <li class="nav-item">
                 <a href="/regions/index.html" class="nav-link">
                     <i class="fas fa-globe-asia"></i>
-                    到哪里
+                    服务区域
                     <i class="fas fa-chevron-down"></i>
                 </a>
                 <div class="dropdown-menu">
                     <a href="/regions/north-america/index.html" class="dropdown-item">北美</a>
-                    <a href="/regions/south-america/index.html" class="dropdown-item">南美</a>
                     <a href="/regions/europe/index.html" class="dropdown-item">欧洲</a>
                     <a href="/regions/australia/index.html" class="dropdown-item">澳洲</a>
                     <a href="/regions/middle-east/index.html" class="dropdown-item">中东</a>
-                    <a href="/regions/southeast-asia/index.html" class="dropdown-item">东南亚</a>
+                    <a href="/regions/asia/index.html" class="dropdown-item">亚洲</a>
                     <a href="/regions/africa/index.html" class="dropdown-item">非洲</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a href="/shipping-methods/index.html" class="nav-link">
-                    <i class="fas fa-truck"></i>
-                    如何发
-                    <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="/shipping-methods/air/index.html" class="dropdown-item">空运</a>
-                    <a href="/shipping-methods/sea/index.html" class="dropdown-item">海运</a>
-                    <a href="/shipping-methods/express/index.html" class="dropdown-item">快递</a>
-                    <a href="/shipping-methods/special-line/index.html" class="dropdown-item">专线</a>
-                    <a href="/shipping-methods/fba/index.html" class="dropdown-item">FBA</a>
+                    <a href="/regions/south-america/index.html" class="dropdown-item">南美</a>
                 </div>
             </li>
             <li class="nav-item" id="tools-nav-item">
                 <a href="/tools-guides/index.html" class="nav-link" id="tools-nav-link">
                     <i class="fas fa-tools"></i>
-                    工具
+                    工具指南
+                    <i class="fas fa-chevron-down"></i>
                 </a>
+                <div class="dropdown-menu">
+                    <a href="/tools-guides/tools/index.html" class="dropdown-item">实用工具</a>
+                    <a href="/tools-guides/shipping-guides/index.html" class="dropdown-item">运输指南</a>
+                </div>
             </li>
             <li class="nav-item">
-                <a href="/login.html" class="nav-link">
-                    <i class="fas fa-user"></i>
+                <a href="/news/index.html" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    跨境资讯
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/news/ecommerce/index.html" class="dropdown-item">电商资讯</a>
+                    <a href="/news/logistics/index.html" class="dropdown-item">物流资讯</a>
+                </div>
+            </li>
+            
+            <!-- 未登录状态显示 -->
+            <li class="nav-item" id="login-menu-item">
+                <a href="/pages/account/auth/login.html" class="nav-link">
+                    <i class="fas fa-sign-in-alt"></i>
                     登录
                 </a>
+            </li>
+            <li class="nav-item" id="register-menu-item">
+                <a href="/pages/account/auth/register.html" class="nav-link">
+                    <i class="fas fa-user-plus"></i>
+                    注册
+                </a>
+            </li>
+            
+            <!-- 已登录状态显示 -->
+            <li class="nav-item" id="user-menu-item" style="display: none;">
+                <a href="javascript:void(0);" class="nav-link">
+                    <img src="/assets/images/default-avatar.png" alt="头像" class="user-avatar" id="user-avatar">
+                    <span id="username-display">用户名</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="user-dropdown-menu">
+                    <div class="user-info">
+                        <div class="user-name" id="dropdown-username">用户名</div>
+                        <div class="user-email" id="user-email">user@example.com</div>
+                    </div>
+                    <a href="/pages/account/dashboard.html" class="dropdown-item">
+                        <i class="fas fa-tachometer-alt"></i> 控制面板
+                    </a>
+                    <a href="/pages/account/orders.html" class="dropdown-item">
+                        <i class="fas fa-shipping-fast"></i> 我的订单
+                    </a>
+                    <a href="/pages/account/addresses.html" class="dropdown-item">
+                        <i class="fas fa-map-marker-alt"></i> 地址管理
+                    </a>
+                    <a href="/pages/account/settings.html" class="dropdown-item">
+                        <i class="fas fa-cog"></i> 账号设置
+                    </a>
+                    <a href="javascript:void(0);" class="dropdown-item" id="logout-button">
+                        <i class="fas fa-sign-out-alt"></i> 退出登录
+                    </a>
+                </div>
             </li>
         </ul>
     </div>
 </header>
 
 <script>
-// 检测当前页面路径，为工具菜单添加激活状态
+// 检测当前页面路径，为菜单项添加激活状态
 (function() {
     const currentPath = window.location.pathname;
+    
+    // 工具指南菜单激活
     if (currentPath.includes('/tools-guides/') || currentPath === '/tools-guides' || currentPath === '/tools-guides/index.html') {
         document.getElementById('tools-nav-link').classList.add('active');
     }
+    
+    // 为所有导航链接添加激活状态检测
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && currentPath.includes(href) && href !== '/' && href !== '/index.html') {
+            link.classList.add('active');
+        }
+    });
+    
+    // 为所有下拉菜单项添加激活状态检测
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href && currentPath.includes(href)) {
+            item.classList.add('active');
+            // 同时激活父菜单
+            const parentNavItem = item.closest('.nav-item');
+            if (parentNavItem) {
+                const parentNavLink = parentNavItem.querySelector('.nav-link');
+                if (parentNavLink) {
+                    parentNavLink.classList.add('active');
+                }
+            }
+        }
+    });
+    
+    // 检查用户登录状态并更新菜单
+    checkLoginStatus();
 })();
+
+// 检查用户登录状态
+function checkLoginStatus() {
+    // 从localStorage获取用户信息
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    
+    if (userInfo && userInfo.isLoggedIn) {
+        // 已登录状态
+        document.getElementById('login-menu-item').style.display = 'none';
+        document.getElementById('register-menu-item').style.display = 'none';
+        document.getElementById('user-menu-item').style.display = 'block';
+        
+        // 更新用户信息显示
+        document.getElementById('username-display').textContent = userInfo.username || '用户';
+        document.getElementById('dropdown-username').textContent = userInfo.username || '用户';
+        document.getElementById('user-email').textContent = userInfo.email || '';
+        
+        // 如果有头像
+        if (userInfo.avatar) {
+            document.getElementById('user-avatar').src = userInfo.avatar;
+        }
+        
+        // 添加退出登录事件监听
+        document.getElementById('logout-button').addEventListener('click', function() {
+            // 清除用户登录信息
+            localStorage.removeItem('userInfo');
+            // 刷新页面
+            window.location.reload();
+        });
+    } else {
+        // 未登录状态
+        document.getElementById('login-menu-item').style.display = 'block';
+        document.getElementById('register-menu-item').style.display = 'block';
+        document.getElementById('user-menu-item').style.display = 'none';
+    }
+}
 </script>

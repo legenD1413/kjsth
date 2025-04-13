@@ -372,6 +372,7 @@
                 <div class="hot-tag">HOT</div>
             </div>
             
+            
             <div class="info-card">
                 <h3><i class="fas fa-award"></i> 渠道优势</h3>
                 <div id="route-advantages" class="route-advantages">
@@ -417,20 +418,108 @@
 
     <footer id="footer"></footer>
 
-    <script src="../../assets/js/components.js"></script>
-    <script src="../../assets/js/script.js"></script>
-    <script src="../../assets/js/ai-pricing.js"></script>
+    <!-- 确保组件库加载 -->
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/script.js"></script>
+    
+    <!-- 先通过脚本检测确认文件是否可访问 -->
     <script>
-        // 扩展JS逻辑，添加对优势和注意事项的支持
-        document.addEventListener('DOMContentLoaded', function() {
+        console.log('开始加载JS文件，检查路径是否正确...');
+        
+        // 创建函数检测资源是否可用
+        function checkResourceExists(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('HEAD', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    callback(xhr.status !== 404);
+                }
+            };
+            xhr.send();
+        }
+        
+        // 检查js文件是否存在
+        checkResourceExists('/assets/js/ai-pricing.js', function(exists) {
+            console.log('ai-pricing.js 文件状态:', exists ? '存在' : '不存在');
+            
+            if (!exists) {
+                // 如果绝对路径不存在，尝试相对路径
+                checkResourceExists('../../assets/js/ai-pricing.js', function(exists) {
+                    console.log('相对路径 ai-pricing.js 文件状态:', exists ? '存在' : '不存在');
+                    
+                    if (exists) {
+                        loadScript('../../assets/js/ai-pricing.js');
+                    } else {
+                        document.getElementById('route-features').innerHTML = '<p style="color:red;"><i class="fas fa-exclamation-circle"></i> 无法加载JS文件，请联系管理员</p>';
+                    }
+                });
+            } else {
+                loadScript('/assets/js/ai-pricing.js');
+            }
+        });
+        
+        // 动态加载脚本
+        function loadScript(url) {
+            var script = document.createElement('script');
+            script.src = url;
+            script.onload = function() {
+                console.log('脚本加载完成:', url);
+                console.log('routeData状态:', typeof routeData !== 'undefined' ? '已定义' : '未定义');
+                
+                // 脚本加载后立即初始化数据
+                initRouteData();
+            };
+            script.onerror = function() {
+                console.error('脚本加载失败:', url);
+                document.getElementById('route-features').innerHTML = '<p style="color:red;"><i class="fas fa-exclamation-circle"></i> 脚本加载失败，请刷新页面重试</p>';
+            };
+            document.body.appendChild(script);
+        }
+    </script>
+    
+    <!-- 主要处理逻辑 -->
+    <script>
+        // 初始化路线数据
+        function initRouteData() {
+            console.log('初始化路线数据...');
+            
+            // 检查routeData是否已定义
+            if (typeof routeData === 'undefined') {
+                console.error('routeData变量未定义，JS文件可能未正确加载');
+                document.getElementById('route-features').innerHTML = '<p style="color:red;"><i class="fas fa-exclamation-circle"></i> 加载数据失败，请刷新页面重试</p>';
+                document.getElementById('route-advantages').innerHTML = '<p style="color:red;"><i class="fas fa-exclamation-circle"></i> 加载数据失败，请刷新页面重试</p>';
+                document.getElementById('route-notes').innerHTML = '<p style="color:red;"><i class="fas fa-exclamation-circle"></i> 加载数据失败，请刷新页面重试</p>';
+                return;
+            }
+            
             // 获取URL参数
             const urlParams = new URLSearchParams(window.location.search);
             const routeId = urlParams.get('id');
             
+            console.log('路线ID:', routeId);
+            console.log('可用路线:', Object.keys(routeData));
+            
             if (routeId && routeData[routeId]) {
                 const route = routeData[routeId];
+                console.log('加载路线数据:', route.title);
                 
-                // 填充渠道优势
+                // 更新页面标题
+                document.getElementById('route-title').textContent = route.title + '智能询价';
+                document.title = route.title + ' - 物流智能询价';
+                
+                // 1. 填充渠道说明
+                if (route.features) {
+                    const featuresContainer = document.getElementById('route-features');
+                    featuresContainer.innerHTML = ''; // 清空现有内容
+                    
+                    route.features.forEach(feature => {
+                        const p = document.createElement('p');
+                        p.innerHTML = feature;
+                        featuresContainer.appendChild(p);
+                    });
+                }
+                
+                // 2. 填充渠道优势
                 if (route.advantages) {
                     const advantagesContainer = document.getElementById('route-advantages');
                     advantagesContainer.innerHTML = ''; // 清空现有内容
@@ -442,7 +531,7 @@
                     });
                 }
                 
-                // 填充注意事项
+                // 3. 填充注意事项
                 if (route.notes) {
                     const notesContainer = document.getElementById('route-notes');
                     notesContainer.innerHTML = ''; // 清空现有内容
@@ -454,7 +543,7 @@
                     });
                 }
                 
-                // 填充快捷问题
+                // 4. 填充快捷问题
                 if (route.quickQuestions) {
                     const quickQuestionsContainer = document.querySelector('.quick-questions');
                     quickQuestionsContainer.innerHTML = ''; // 清空现有内容
@@ -470,15 +559,155 @@
                     });
                 }
                 
-                // 处理热门标签
+                // 5. 处理热门标签
                 if (route.isHot) {
                     const hotTag = document.querySelector('.hot-tag');
                     if (hotTag) {
                         hotTag.style.display = 'block';
                     }
                 }
+                
+                // 显示欢迎消息
+                if (route.welcomeMessage) {
+                    setTimeout(function() {
+                        addMessage(route.welcomeMessage);
+                    }, 800);
+                }
+            } else {
+                // 没有找到路线ID或路线数据
+                console.warn('未找到路线信息:', routeId);
+                
+                // 显示错误信息
+                const message = routeId ? 
+                    `未找到ID为"${routeId}"的路线数据` : 
+                    '未指定路线ID，请通过正确的链接访问此页面';
+                
+                document.getElementById('route-features').innerHTML = `<p><i class="fas fa-info-circle"></i> ${message}</p>`;
+                document.getElementById('route-advantages').innerHTML = `<p><i class="fas fa-info-circle"></i> 可用路线: ${Object.keys(routeData).join(', ')}</p>`;
+                document.getElementById('route-notes').innerHTML = '<p><i class="fas fa-info-circle"></i> 请在URL中添加?id=路线ID参数</p>';
+            }
+        }
+        
+        // 聊天功能
+        const chatMessages = document.getElementById('chat-messages');
+        
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = isUser ? 'message user-message' : 'message ai-message';
+            messageDiv.innerHTML = content;
+            chatMessages.appendChild(messageDiv);
+            
+            // 滚动到底部
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // 定义快速提问功能
+        window.askQuickQuestion = function(question) {
+            console.log('提问:', question);
+            const chatInput = document.getElementById('chat-input');
+            if (chatInput) {
+                chatInput.value = question;
+                
+                // 触发发送按钮点击
+                const sendButton = document.getElementById('send-btn');
+                if (sendButton && typeof sendButton.click === 'function') {
+                    sendButton.click();
+                } else {
+                    // 如果按钮不可用，手动处理发送
+                    handleSend();
+                }
+            }
+        };
+        
+        // 发送消息处理
+        function handleSend() {
+            const userInput = document.getElementById('chat-input');
+            const userMessage = userInput.value.trim();
+            
+            if (userMessage) {
+                // 添加用户消息
+                addMessage(userMessage, true);
+                userInput.value = '';
+                
+                // 显示正在输入指示
+                showTypingIndicator();
+                
+                // 模拟延迟，获取AI回复
+                setTimeout(function() {
+                    removeTypingIndicator();
+                    const botResponse = getBotResponse(userMessage);
+                    addMessage(botResponse);
+                }, 1500);
+            }
+        }
+        
+        // 在DOM准备好时绑定事件
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM已加载，绑定事件...');
+            
+            // 绑定发送按钮事件
+            const sendButton = document.getElementById('send-btn');
+            if (sendButton) {
+                sendButton.addEventListener('click', handleSend);
+            }
+            
+            // 绑定输入框回车事件
+            const chatInput = document.getElementById('chat-input');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        handleSend();
+                    }
+                });
             }
         });
+        
+        // 这些函数需要在全局上下文中定义，以便在其他地方调用
+        function showTypingIndicator() {
+            const indicatorDiv = document.createElement('div');
+            indicatorDiv.className = 'message ai-message';
+            indicatorDiv.id = 'typing-indicator';
+            
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('span');
+                typingIndicator.appendChild(dot);
+            }
+            
+            indicatorDiv.appendChild(typingIndicator);
+            chatMessages.appendChild(indicatorDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+        
+        function getBotResponse(userMessage) {
+            // 模拟AI回复
+            const responses = [
+                "根据您提供的信息，我们的加拿大商业件大件海运专线价格为$140/立方米，预计运输时间20-25天。您可以联系我们的客服获取更详细的报价。",
+                "请问您的货物体积和重量分别是多少？是否含有特殊货品（如电池、液体等）？这些信息可以帮助我计算更准确的运费。",
+                "对于您的货物，我建议选择我们的专线服务，价格约为$120/立方米，包含从中国到加拿大的全程服务，包括：国内提货、国际干线、清关和派送。",
+                "您好，基本运费为$6.5/kg，如果体积重较大则按照体积重计费，计算公式为：长(cm)×宽(cm)×高(cm)÷6000=体积重(kg)。"
+            ];
+            
+            // 简单的关键词匹配，使回复更相关
+            if (userMessage.includes("FBA") || userMessage.includes("亚马逊")) {
+                return "我们的FBA专线可提供DDU和DDP两种服务，价格分别为$5.8/kg和$6.5/kg，包含清关和派送到亚马逊仓库。您需要提前3天预约入仓。";
+            } else if (userMessage.includes("电池") || userMessage.includes("内电")) {
+                return "带电产品需要通过特殊渠道运输，我们的内电专线价格为$8.2/kg，需要提供产品MSDS和电池UN38.3测试报告。";
+            } else if (userMessage.includes("时效") || userMessage.includes("多久")) {
+                return "我们的空运专线约4-7个工作日送达，海运专线约18-25天送达，快船服务约12-15天送达。具体时效受清关和目的地配送影响。";
+            }
+            
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
     </script>
 </body>
 </html> 
