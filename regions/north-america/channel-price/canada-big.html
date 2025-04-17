@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加拿大商业大件服务 - 迈格库物流</title>
+    
+    <!-- 引入全局样式 -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    
+    <!-- 公共图标和字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Canada-Big 页面特定样式 - Apple 风格 */
+        .content-container {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 2rem var(--site-padding);
+            margin-top: 0; /* 重置为0，让内容紧跟在banner下方 */
+            display: flex;
+            gap: 2rem;
+        }
+        
+        /* 页面标题区域 - 使用与index.html一致的样式 */
+        .region-banner {
+            background-color: #fff;
+            color: #1d1d1f;
+            padding: 60px 0;
+            margin-bottom: 0;
+            margin-top: var(--header-height); /* 与header高度保持一致 */
+            position: relative;
+            border-bottom: 1px solid #d2d2d7;
+            min-height: 120px; /* 确保最小高度一致 */
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 添加 banner-overlay 容器样式 */
+        .banner-overlay {
+            max-width: var(--site-max-width);
+            margin: 0 auto;
+            padding: 0 var(--site-padding);
+            text-align: left;
+            width: 100%;
+        }
+        
+        /* 标题和描述的样式 */
+        .banner-title {
+            font-size: 28px; /* 3号字体 */
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+        
+        .banner-description {
+            font-size: 0.83em; /* 5号字体 */
+            color: #6e6e73;
+            max-width: 800px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        /* 左侧对话框区域 - 调整比例为7 */
+        .chat-column {
+            flex: 7;
+            min-width: 350px;
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        
+        /* 标签卡片板块样式 */
+        .info-tabs-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid #e5e5e7;
+            background: #f9f9fa;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 16px 10px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: #6e6e73;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .tab-button:hover {
+            color: #0071e3;
+        }
+        
+        .tab-button.active {
+            color: #0071e3;
+            border-bottom-color: #0071e3;
+            background: white;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .info-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-icon {
+            flex: 0 0 24px;
+            margin-right: 12px;
+            margin-top: 2px;
+            color: #0071e3;
+        }
+        
+        .info-text {
+            flex: 1;
+            color: #1d1d1f;
+            font-size: 15px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .info-desc {
+            color: #6e6e73;
+        }
+        
+        /* 对话框头部 */
+        .chat-header {
+            background: linear-gradient(135deg, #1565C0, #0071e3);
+            color: white;
+            padding: 16px 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.01em;
+        }
+        
+        .chat-header i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        /* 对话消息区域 */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9fa;
+        }
+        
+        /* 输入区域 */
+        .chat-input-container {
+            display: flex;
+            padding: 16px;
+            border-top: 1px solid #e5e5e7;
+            background-color: #ffffff;
+        }
+        
+        .chat-input {
+            flex: 1;
+            border: 1px solid #d2d2d7;
+            border-radius: 18px;
+            padding: 12px 18px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: "SF Pro Text", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        
+        .chat-input:focus {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+        }
+        
+        .send-btn {
+            background: #0071e3;
+            color: white;
+            border-radius: 18px;
+            padding: 0 20px;
+            margin-left: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+        
+        .send-btn:hover {
+            background: #0062c1;
+        }
+        
+        .send-btn i {
+            margin-left: 6px;
+        }
+        
+        /* 快捷问题区域 */
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0 16px 16px;
+            background-color: #ffffff;
+        }
+        
+        .quick-question {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            padding: 8px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e5e5e7;
+            white-space: nowrap;
+        }
+        
+        .quick-question:hover {
+            background-color: #e8e8ed;
+            color: #0071e3;
+        }
+        
+        /* 右侧项目列表 - 调整比例为3 */
+        .projects-column {
+            flex: 3;
+            min-width: 280px;
+        }
+        
+        .projects-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .projects-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e7;
+            letter-spacing: -0.02em;
+        }
+        
+        /* 项目卡片列表 */
+        .projects-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        
+        .project-card {
+            background: #f9f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e5e7;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        .project-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #0071e3;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+        }
+        
+        .project-title:hover {
+            text-decoration: underline;
+        }
+        
+        .project-title i {
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .project-desc {
+            font-size: 14px;
+            color: #6e6e73;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        /* 消息样式 */
+        .message {
+            max-width: 80%;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.4;
+            position: relative;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background: #0071e3;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .ai-message {
+            align-self: flex-start;
+            background: #e5e5ea;
+            color: #1d1d1f;
+            border-bottom-left-radius: 4px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            .chat-column, .projects-column {
+                width: 100%;
+            }
+            
+            .chat-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 引入页头 -->
+    <header id="header"></header>
+
+    <!-- 页面标题区域 -->
+    <section class="region-banner">
+        <div class="banner-overlay">
+            <h1 class="banner-title">加拿大商业大件服务</h1>
+            <p class="banner-description">提供快速、可靠的中国至加拿大商业大件物流解决方案，让您的跨境物流更加高效</p>
+        </div>
+    </section>
+
+    <!-- 主要内容区域 -->
+    <div class="content-container">
+        <!-- 左侧对话框 -->
+        <div class="chat-column">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <i class="fas fa-robot"></i>
+                    <span>加拿大商业大件物流助手</span>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai-message">
+                        您好！我是加拿大商业大件物流助手。请问有什么可以帮到您的？可以咨询运费、时效、限制物品等问题。
+                    </div>
+                    <!-- 消息区域初始为空，由JavaScript动态填充 -->
+                </div>
+                
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="请输入您的问题...">
+                    <button class="send-btn" id="send-btn">发送 <i class="fas fa-paper-plane"></i></button>
+                </div>
+                
+                <!-- 快捷问题区域 -->
+                <div class="quick-questions">
+                    <div class="quick-question" data-question="这条专线的价格是多少？">价格查询</div>
+                    <div class="quick-question" data-question="从下单到送达需要多少天？">时效查询</div>
+                    <div class="quick-question" data-question="有哪些货物限制？">货物限制</div>
+                    <div class="quick-question" data-question="如何跟踪我的货物？">物流跟踪</div>
+                </div>
+            </div>
+            
+            <!-- 标签卡片信息板块 -->
+            <div class="info-tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="pricing-guide">查价指引</button>
+                    <button class="tab-button" data-tab="channel-info">渠道说明</button>
+                    <button class="tab-button" data-tab="channel-advantages">渠道优势</button>
+                    <button class="tab-button" data-tab="channel-notes">注意事项与指南</button>
+                </div>
+                
+                <!-- 查价指引内容 -->
+                <div id="pricing-guide" class="tab-content active">
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-desc">价格查询大概需要3分钟，请耐心等待</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">查询最优的格式：</span>
+                                <span class="info-desc">信息越具体，得到的价格越准确</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 渠道说明内容 -->
+                <div id="channel-info" class="tab-content">
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">特点</span>
+                                <span class="info-desc">小批量快速空运，主要承接：电子产品、服装、鞋帽、箱包等</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">时效</span>
+                                <span class="info-desc">5-7个工作日送达</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">价格</span>
+                                <span class="info-desc">$6.5-8.2/kg，根据货物体积重量计算</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-ruler-combined"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">尺寸限制</span>
+                                <span class="info-desc">单边不超过120cm，单件不超过50kg</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 渠道优势内容 -->
+                <div id="channel-advantages" class="tab-content">
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">稳定可靠</span>
+                                <span class="info-desc">多年运营经验，专业物流团队，高效处理各类货物</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">价格优势</span>
+                                <span class="info-desc">直接对接海外合作伙伴，省去中间环节，提供更具竞争力的价格</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">全程跟踪</span>
+                                <span class="info-desc">先进物流系统，实时追踪货物位置和状态</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">专业服务</span>
+                                <span class="info-desc">一对一客服跟进，及时解决运输过程中的各类问题</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 注意事项与指南内容 -->
+                <div id="channel-notes" class="tab-content">
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-desc">特殊货品（如电池、液体等）需提前告知，可能需要额外资料和费用</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-cloud-sun-rain"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-desc">运输时效受海关查验、天气等因素影响，可能有所波动</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-address-card"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-desc">请提供准确的收件人信息，错误信息可能导致派送延误</span>
+                            </div>
+                        </li>
+                        <li class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-desc">大件物品请提前与客服确认尺寸和限制和附加费用</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧项目列表 -->
+        <div class="projects-column">
+            <div class="projects-container">
+                <h2 class="projects-title">更多北美专线服务</h2>
+                
+                <div class="projects-list">
+                    <div class="project-card">
+                        <a href="#" class="project-title">美国专线 <i class="fas fa-arrow-right"></i></a>
+                        <p class="project-desc">提供中国至美国的快速物流服务，覆盖全美50个州</p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <a href="#" class="project-title">墨西哥专线 <i class="fas fa-arrow-right"></i></a>
+                        <p class="project-desc">中国至墨西哥的专业物流解决方案，支持海运和空运</p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <a href="#" class="project-title">北美FBA头程 <i class="fas fa-arrow-right"></i></a>
+                        <p class="project-desc">亚马逊卖家专用物流服务，直达美国和加拿大仓库</p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <a href="#" class="project-title">加美边境专线 <i class="fas fa-arrow-right"></i></a>
+                        <p class="project-desc">专业处理加拿大和美国之间的跨境物流服务</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入页脚 -->
+    <footer id="footer"></footer>
+
+    <!-- 加载组件库和脚本 -->
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/script.js"></script>
+    
+    <script>
+        /**
+         * 初始化聊天功能
+         * 处理用户输入和聊天界面交互
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            const chatMessages = document.getElementById('chat-messages');
+            
+            /**
+             * 发送消息处理函数
+             * 将用户输入添加到聊天界面并模拟响应
+             */
+            function handleSend() {
+                const userInput = chatInput.value.trim();
+                if (userInput === '') return;
+                
+                // 添加用户消息
+                appendMessage(userInput, 'user');
+                chatInput.value = '';
+                
+                // 显示加载状态
+                showTypingIndicator();
+                
+                // 模拟回复延迟
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    
+                    // 这里将来会对接COZE工作流，现在先模拟一个简单回复
+                    const response = getSimulatedResponse(userInput);
+                    appendMessage(response, 'ai');
+                }, 1500);
+            }
+            
+            /**
+             * 处理快捷问题点击
+             * @param {string} question - 快捷问题文本
+             */
+            function askQuickQuestion(question) {
+                chatInput.value = question;
+                handleSend();
+            }
+            
+            // 绑定快捷问题点击事件
+            document.querySelectorAll('.quick-question').forEach(button => {
+                button.addEventListener('click', function() {
+                    const question = this.getAttribute('data-question');
+                    askQuickQuestion(question);
+                });
+            });
+            
+            /**
+             * 添加消息到聊天界面
+             * @param {string} text - 消息文本
+             * @param {string} sender - 发送者类型 ('user' 或 'ai')
+             */
+            function appendMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                messageDiv.textContent = text;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            /**
+             * 显示正在输入的提示
+             */
+            function showTypingIndicator() {
+                const indicatorDiv = document.createElement('div');
+                indicatorDiv.className = 'message ai-message';
+                indicatorDiv.id = 'typing-indicator';
+                indicatorDiv.style.padding = '8px 16px';
+                
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator';
+                typingIndicator.innerHTML = '正在思考<span>.</span><span>.</span><span>.</span>';
+                
+                indicatorDiv.appendChild(typingIndicator);
+                chatMessages.appendChild(indicatorDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            /**
+             * 移除正在输入的提示
+             */
+            function removeTypingIndicator() {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            }
+            
+            /**
+             * 获取模拟回复
+             * @param {string} userInput - 用户输入
+             * @return {string} - 模拟的回复内容
+             */
+            function getSimulatedResponse(userInput) {
+                const lowerInput = userInput.toLowerCase();
+                
+                if (lowerInput.includes('价格') || lowerInput.includes('费用') || lowerInput.includes('多少钱')) {
+                    return '加拿大商业大件服务的价格根据货物体积和重量有所不同。一般来说，体积大件空运约65-75元/公斤，海运整柜约1.5-1.8万元/柜。具体价格可以提供您的货物信息，我可以为您精准报价。';
+                }
+                
+                if (lowerInput.includes('时效') || lowerInput.includes('多久') || lowerInput.includes('几天')) {
+                    return '加拿大商业大件服务的运输时效：空运大件约7-12个工作日，海运约25-40天。实际时间可能受清关、天气等因素影响。我们有专业团队全程跟进，确保货物安全准时送达。';
+                }
+                
+                if (lowerInput.includes('限制') || lowerInput.includes('违禁') || lowerInput.includes('不能寄')) {
+                    return '加拿大商业大件服务禁运物品包括：易燃易爆物品、毒品、武器弹药、活体动植物、假冒伪劣商品、特殊化学品等。大型机械设备、电子产品、家具等需要特殊申报，建议发货前与我们的专业顾问确认您的物品是否可以通过我们的渠道运输。';
+                }
+                
+                if (lowerInput.includes('跟踪') || lowerInput.includes('查询') || lowerInput.includes('物流状态')) {
+                    return '您可以通过我们的官网或APP输入运单号进行查询。加拿大商业大件服务提供全程跟踪服务，包括起运、转运、清关和派送等环节的状态更新。对于大件货物，我们还提供专人对接服务，确保您随时了解货物状态。';
+                }
+                
+                return '感谢您的咨询。针对加拿大商业大件服务，我们提供专业的大型货物物流解决方案，包括机械设备、大型电子产品、商业展览用品等的运输服务。您可以咨询价格、时效、限制物品等问题，我会为您提供详细信息。您还有其他问题吗？';
+            }
+            
+            // 绑定发送按钮事件
+            sendBtn.addEventListener('click', handleSend);
+            
+            // 绑定输入框回车事件
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleSend();
+                }
+            });
+        });
+        
+        /**
+         * 标签卡片切换功能
+         * 处理标签卡片的点击和内容切换
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            
+            // 为每个标签按钮添加点击事件监听器
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 获取目标标签的ID
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // 移除所有标签和内容的活动状态
+                    document.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // 激活当前点击的标签和对应内容
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -632,13 +632,189 @@
                 // 显示正在输入指示
                 showTypingIndicator();
                 
-                // 模拟延迟，获取AI回复
-                setTimeout(function() {
-                    removeTypingIndicator();
-                    const botResponse = getBotResponse(userMessage);
-                    addMessage(botResponse);
-                }, 1500);
+                // 调用Coze API，最多尝试2次
+                callCozeAPIWithRetry(userMessage, 2)
+                    .then(response => {
+                        // 移除输入指示器
+                        removeTypingIndicator();
+                        // 添加机器人回复
+                        addMessage(response);
+                    });
             }
+        }
+        
+        // 带重试的API调用函数
+        async function callCozeAPIWithRetry(userMessage, maxRetries) {
+            let lastError = null;
+            
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    console.log(`API调用尝试 ${attempt}/${maxRetries}...`);
+                    const response = await callCozeAPI(userMessage);
+                    
+                    // 检查是否包含错误信息
+                    if (response.includes("服务器问题") || 
+                        response.includes("server issues") || 
+                        response.includes("请稍后再试")) {
+                        // 记录错误但继续重试
+                        lastError = response;
+                        console.log(`API调用返回错误，将重试(${attempt}/${maxRetries})`);
+                        
+                        // 最后一次尝试失败，返回错误信息
+                        if (attempt === maxRetries) {
+                            return createUserFriendlyErrorMessage(lastError);
+                        }
+                        
+                        // 等待一段时间再重试
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        continue;
+                    }
+                    
+                    // 成功响应
+                    return response;
+                } catch (error) {
+                    console.error(`API调用尝试${attempt}失败:`, error);
+                    lastError = error.message;
+                    
+                    // 最后一次尝试失败，返回错误信息
+                    if (attempt === maxRetries) {
+                        return createUserFriendlyErrorMessage(lastError);
+                    }
+                    
+                    // 等待一段时间再重试
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                }
+            }
+            
+            // 所有尝试都失败
+            return createUserFriendlyErrorMessage(lastError);
+        }
+        
+        // 创建用户友好的错误消息
+        function createUserFriendlyErrorMessage(errorDetail) {
+            return `
+            <div style="background-color: #f8f9fa; padding: 10px; border-radius: 8px; border-left: 4px solid #dc3545;">
+                <h4 style="color: #dc3545; margin-top: 0;">服务暂时不可用</h4>
+                <p>很抱歉，我们的服务器暂时遇到了一些问题，无法处理您的请求。</p>
+                <ul style="margin-bottom: 0;">
+                    <li>请稍后再次尝试</li>
+                    <li>如果问题持续存在，请联系客服</li>
+                </ul>
+                <details style="margin-top: 10px; font-size: 12px; color: #6c757d;">
+                    <summary>技术细节</summary>
+                    <pre style="margin: 5px 0 0;">${errorDetail}</pre>
+                </details>
+            </div>
+            `;
+        }
+        
+        // 调用Coze API的函数
+        async function callCozeAPI(userMessage) {
+            try {
+                console.log('开始调用Coze API...');
+                
+                const response = await fetch('https://api.coze.cn/v1/workflow/run', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer pat_tBXGg2Mmuj1GWwQmvIVmrh3QI1OPI84LP6phXYODQchQaiQYPyhIPxgOZN5922Nk',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "parameters": {
+                            "input": userMessage
+                        },
+                        "workflow_id": "7492784557034340362"
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Coze API响应状态:', response.status);
+                console.log('Coze API响应内容:', data);
+                
+                // 调试显示器(开发环境可用，生产环境可以注释掉)
+                // const debugMessage = `<div style="font-size:10px;color:#888;margin-bottom:5px;display:none;">原始数据: ${JSON.stringify(data)}</div>`;
+                
+                // 显示API调用状态
+                const statusMessage = `<div style="font-size:12px;color:#888;margin-bottom:5px;display:none;">API状态: ${response.ok ? '✅ 成功' : '❌ 失败'} (${response.status})</div>`;
+                
+                if (!response.ok) {
+                    // API调用失败
+                    const errorMessage = data.error || data.message || `API请求失败: ${response.status}`;
+                    console.error('API调用失败:', errorMessage);
+                    return statusMessage + `<div>抱歉，API调用出现问题: ${errorMessage}</div>`;
+                }
+                
+                // 检查API返回信息是否包含错误信息
+                if (data && data.msg && (
+                    data.msg.includes("server issues") || 
+                    data.msg.includes("experiencing") ||
+                    data.msg.toLowerCase().includes("error")
+                )) {
+                    throw new Error(data.msg);
+                }
+                
+                // 根据您提供的实际返回数据格式解析内容
+                // 格式: {"code":0,"cost":"0","data":"{\"output\":\"实际内容\"}","debug_url":"...","msg":"Success","token":25721}
+                let resultMessage = "";
+                
+                if (data && data.code === 0 && data.data) {
+                    try {
+                        // 解析嵌套的JSON字符串
+                        const parsedData = JSON.parse(data.data);
+                        if (parsedData.output) {
+                            // 将Markdown格式转换为HTML
+                            resultMessage = convertMarkdownToHtml(parsedData.output);
+                        } else {
+                            resultMessage = "API返回成功，但未找到输出内容";
+                        }
+                    } catch (parseError) {
+                        console.error('解析返回的data字段失败:', parseError);
+                        resultMessage = data.data; // 如果解析失败，直接显示原始data字符串
+                    }
+                } else if (data && data.msg) {
+                    resultMessage = `API返回信息: ${data.msg}`;
+                } else {
+                    resultMessage = "收到响应，但无法提取内容";
+                }
+                
+                return statusMessage + resultMessage;
+            } catch (error) {
+                console.error('调用Coze API发生错误:', error);
+                throw error; // 抛出错误以便重试机制可以捕获
+            }
+        }
+        
+        // 辅助函数：将Markdown转换为HTML
+        function convertMarkdownToHtml(markdown) {
+            if (!markdown) return "";
+            
+            // 基本的Markdown转HTML规则
+            let html = markdown
+                // 转换标题
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                
+                // 转换粗体和斜体
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                
+                // 转换列表
+                .replace(/^\- (.*$)/gim, '<li>$1</li>')
+                .replace(/<\/li>\n<li>/g, '</li><li>')
+                .replace(/<\/li>\n/g, '</li></ul>\n')
+                .replace(/\n<li>/g, '\n<ul><li>')
+                
+                // 转换链接
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                
+                // 转换分隔线
+                .replace(/^---$/gim, '<hr>')
+                
+                // 转换段落
+                .replace(/\n\n/g, '<br><br>');
+            
+            return html;
         }
         
         // 在DOM准备好时绑定事件
@@ -686,27 +862,6 @@
             if (indicator) {
                 indicator.remove();
             }
-        }
-        
-        function getBotResponse(userMessage) {
-            // 模拟AI回复
-            const responses = [
-                "根据您提供的信息，我们的加拿大商业件大件海运专线价格为$140/立方米，预计运输时间20-25天。您可以联系我们的客服获取更详细的报价。",
-                "请问您的货物体积和重量分别是多少？是否含有特殊货品（如电池、液体等）？这些信息可以帮助我计算更准确的运费。",
-                "对于您的货物，我建议选择我们的专线服务，价格约为$120/立方米，包含从中国到加拿大的全程服务，包括：国内提货、国际干线、清关和派送。",
-                "您好，基本运费为$6.5/kg，如果体积重较大则按照体积重计费，计算公式为：长(cm)×宽(cm)×高(cm)÷6000=体积重(kg)。"
-            ];
-            
-            // 简单的关键词匹配，使回复更相关
-            if (userMessage.includes("FBA") || userMessage.includes("亚马逊")) {
-                return "我们的FBA专线可提供DDU和DDP两种服务，价格分别为$5.8/kg和$6.5/kg，包含清关和派送到亚马逊仓库。您需要提前3天预约入仓。";
-            } else if (userMessage.includes("电池") || userMessage.includes("内电")) {
-                return "带电产品需要通过特殊渠道运输，我们的内电专线价格为$8.2/kg，需要提供产品MSDS和电池UN38.3测试报告。";
-            } else if (userMessage.includes("时效") || userMessage.includes("多久")) {
-                return "我们的空运专线约4-7个工作日送达，海运专线约18-25天送达，快船服务约12-15天送达。具体时效受清关和目的地配送影响。";
-            }
-            
-            return responses[Math.floor(Math.random() * responses.length)];
         }
     </script>
 </body>
